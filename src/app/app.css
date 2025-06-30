@@ -1,0 +1,9 @@
+.modal-tamano-grande .mat-dialog-container {
+    width: 1200px !important;
+    height: 900px !important;
+    max-width: none !important;
+    max-height: none !important;
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+  

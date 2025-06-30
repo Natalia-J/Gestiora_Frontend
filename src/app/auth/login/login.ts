@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth';
 import { LoginRequest } from '../../shared/schemas/login-request.schema';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -16,21 +16,18 @@ export class Login {
   loginForm!:FormGroup
   submitted=false
 
-  constructor(private authService: AuthService, private fb: FormBuilder){}
+  constructor(private authService: AuthService, private fb: FormBuilder, private router:Router){}
 
   ngOnInit(){
     this.loginForm = this.fb.group({
       email:['', [Validators.required, Validators.email]],
       password:['', Validators.required],
     });
-    // hacer un form con formGroup y conectarlo a tus inputs en el archivo login.html, y conectar la etiqueta form, al formGroup
+
   }
   get f(){
     return this.loginForm.controls;
   }
-
-  // Que es CORS en la web
-  // Como configurar CORS en mi proyecto de Spring Boot 
 
   onSubmit(){
     this.submitted = true
@@ -46,16 +43,16 @@ export class Login {
     this.loggearse(loginData);
   }
 
-  loggearse(data: LoginRequest){
-    console.log(data)
+  loggearse(data: LoginRequest) {
     this.authService.login(data).subscribe({
-      next: () =>{
-        console.log('Login exitoso')
+      next: () => {
+        console.log('Login exitoso');
+        this.router.navigate(['/dashboard']);
       },
-      error: (err) =>{
-        console.log('Error al iniciar sesion', err)
+      error: (err) => {
+        console.error('Error al iniciar sesión', err);
       }
     });
   }
-
+  
 }

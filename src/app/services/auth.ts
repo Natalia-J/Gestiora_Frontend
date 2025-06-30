@@ -16,27 +16,26 @@ export class AuthService {
   
 
   login(credentials: LoginRequest): Observable<LoginResponse> {
-    return this.http.post<any>(`${this.api}/login`, credentials).pipe(
+    return this.http.post<LoginResponse>(`${this.api}/login`, credentials).pipe(
       tap(response => {
-        this.saveToken(response.accessToken)
+        this.saveToken(response.accessToken);
       })
     );
   }
-  
 
   register(data: {username:string, password:string, mail:string}){
     return this.http.post<any>(`${this.api}/register`, data)
   }
 
   saveToken(token:string){
-    localStorage.setItem('jwt', token)
+    localStorage.setItem('token', token)
   }
 
   getoken(): string | null {
-    return localStorage.getItem('jwt')
+    return localStorage.getItem('token')
   }
 
   logout(){
-    localStorage.removeItem('jwt')
+    localStorage.removeItem('token')
   }
 }
