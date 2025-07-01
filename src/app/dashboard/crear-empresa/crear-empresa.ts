@@ -1,16 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatTabsModule } from '@angular/material/tabs';
 import { DatosGenerales } from './datos-generales/datos-generales';
 import { DatosAdicionales } from './datos-adicionales/datos-adicionales';
 import { Registros } from './registros/registros';
 import { EmpresaService } from '../../services/empresaService';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-crear-empresa',
   standalone: true,
-  imports: [CommonModule, MatButtonModule, MatTabsModule, DatosGenerales, DatosAdicionales, Registros],
+  imports: [CommonModule, DatosGenerales, DatosAdicionales, Registros],
   templateUrl: './crear-empresa.html',
   styleUrls: ['./crear-empresa.css']
 })
@@ -21,8 +20,12 @@ export class CrearEmpresa {
   @ViewChild(DatosAdicionales) datosAdicionalesComponent!: DatosAdicionales;
   @ViewChild(Registros) registroComponent!: Registros;
 
-  constructor(private empresaService: EmpresaService) {}
+  activeTab: string = 'generales';
 
+  constructor(
+    private empresaService: EmpresaService,
+    private dialogRef: MatDialogRef<CrearEmpresa>
+  ) {}
 
   guardar(): void {
     const formGeneral = this.datosGeneralesComponent?.formDatosGenerales;
@@ -35,21 +38,20 @@ export class CrearEmpresa {
       const registros = formRegistros.value;
 
       const datosCompletos = {
-        datosGenerales:datosGenerales,
-        datosAdicionales:datosAdicionales,
-        registros:registros
+        datosGenerales: datosGenerales,
+        datosAdicionales: datosAdicionales,
+        registros: registros
       };
 
       this.empresaService.guardarEmpresa(datosCompletos).subscribe({
         next: () => {
           console.log('Empresa guardada con éxito');
-          this.cerrarModal.emit();
+          this.dialogRef.close();
         },
         error: (error) => {
           console.error('Error guardando empresa:', error);
         }
       });
-
     } else {
       formGeneral?.markAllAsTouched();
       formAdicional?.markAllAsTouched();
@@ -63,5 +65,9 @@ export class CrearEmpresa {
       this.datosAdicionalesComponent?.formDatosAdicionales?.valid &&
       this.registroComponent?.formDatosRegistro?.valid
     );
+  }
+
+  cerrar(): void {
+    this.dialogRef.close();
   }
 }

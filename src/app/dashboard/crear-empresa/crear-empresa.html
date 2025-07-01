@@ -3,31 +3,48 @@
 </div>
 
 <div class="modal-content">
-  <mat-tab-group>
-    <mat-tab label="Datos Generales">
-      <app-datos-generales></app-datos-generales>
-    </mat-tab>
 
-    <mat-tab label="Datos Adicionales">
-      <app-datos-adicionales></app-datos-adicionales>
-    </mat-tab>
+  <div class="tabs">
+    <button 
+      type="button" 
+      [class.active]="activeTab === 'generales'"
+      (click)="activeTab = 'generales'">
+      Datos Generales
+    </button>
+    <button 
+      type="button" 
+      [class.active]="activeTab === 'adicionales'"
+      (click)="activeTab = 'adicionales'">
+      Datos Adicionales
+    </button>
+    <button 
+      type="button" 
+      [class.active]="activeTab === 'registros'"
+      (click)="activeTab = 'registros'">
+      Registros
+    </button>
+  </div>
 
-    <mat-tab label="Registros">
-      <app-registros></app-registros>
-    </mat-tab>
-  </mat-tab-group>
+  <div class="tab-content">
+    <app-datos-generales *ngIf="activeTab === 'generales'"></app-datos-generales>
+    <app-datos-adicionales *ngIf="activeTab === 'adicionales'"></app-datos-adicionales>
+    <app-registros *ngIf="activeTab === 'registros'"></app-registros>
+  </div>
 
   <div class="modal-footer">
-    <button
-      mat-raised-button
-      color="primary"
+    <button 
+      type="button" 
+      class="primary"
       (click)="guardar()"
-      [disabled]="!formulariosValidos()"
-    >
+      [disabled]="!formulariosValidos()">
       Crear empresa
     </button>
-    <button mat-button (click)="cerrarModal.emit()">
+
+    <button 
+      type="button" 
+      (click)="cerrar()">
       Cancelar
     </button>
   </div>
+
 </div>

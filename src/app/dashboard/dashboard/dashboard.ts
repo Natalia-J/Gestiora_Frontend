@@ -2,6 +2,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { CrearEmpresa } from '../crear-empresa/crear-empresa'; // Asegúrate de que el path sea correcto
+import { SeleccionarEmpresa } from '../seleccionar-empresa/seleccionar-empresa';
 
 @Component({
   selector: 'app-dashboard',
@@ -25,9 +26,23 @@ export class Dashboard {
   }
 
   seleccionarEmpresa(): void {
-    console.log('Navegando a seleccionar empresa...');
-    alert('Función seleccionar empresa - Implementar según tus necesidades');
+    console.log('Abriendo modal de seleccionar empresa...');
+  
+    const dialogRef = this.dialog.open(SeleccionarEmpresa, {
+      width: '700px',
+      disableClose: true
+    });
+  
+    dialogRef.afterClosed().subscribe((empresaSeleccionada) => {
+      if (empresaSeleccionada) {
+        console.log('Empresa seleccionada:', empresaSeleccionada);
+        // Aquí puedes hacer algo con la empresa seleccionada
+      } else {
+        console.log('Selección cancelada');
+      }
+    });
   }
+  
 
   @Output() cerrar = new EventEmitter<void>();
 

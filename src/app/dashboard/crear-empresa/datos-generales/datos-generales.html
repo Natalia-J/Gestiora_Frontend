@@ -1,25 +1,25 @@
 <form [formGroup]="formDatosGenerales">
 
-  <div>
-    <label for="nombreEmpresa">Nombre de la empresa *</label><br />
+  <div class="form-group">
+    <label for="nombreEmpresa">Nombre de la empresa *</label>
     <input id="nombreEmpresa" type="text" formControlName="nombreEmpresa" />
     <div *ngIf="formDatosGenerales.get('nombreEmpresa')?.touched && formDatosGenerales.get('nombreEmpresa')?.invalid" class="error">
       El nombre es obligatorio.
     </div>
   </div>
 
-  <div>
-    <label for="mascarillaCodigo">Mascarilla del código de empleado (solo 'X') *</label><br />
+  <div class="form-group">
+    <label for="mascarillaCodigo">Mascarilla del código de empleado (solo 'X') *</label>
     <input id="mascarillaCodigo" type="text" maxlength="10" formControlName="mascarillaCodigo" (input)="soloX($event)" />
     <div *ngIf="formDatosGenerales.get('mascarillaCodigo')?.touched && formDatosGenerales.get('mascarillaCodigo')?.invalid" class="error">
       Solo se permiten las 'X'.
     </div>
   </div>
 
-  <div>
-    <label for="tipoCodigoEmpleado">Tipo del código de empleado *</label><br />
+  <div class="form-group">
+    <label for="tipoCodigoEmpleado">Tipo del código de empleado *</label>
     <select id="tipoCodigoEmpleado" formControlName="tipoCodigoEmpleado" required>
-      <option value="" disabled>Selecciona un tipo</option>
+      <option value="" disabled selected>Selecciona un tipo</option>
       <option *ngFor="let tipo of tipoCodigoEmpleado" [value]="tipo.id">{{ tipo.name }}</option>
     </select>
     <div *ngIf="formDatosGenerales.get('tipoCodigoEmpleado')?.touched && formDatosGenerales.get('tipoCodigoEmpleado')?.invalid" class="error">
@@ -27,26 +27,26 @@
     </div>
   </div>
 
-  <div>
-    <label for="ejercicioVigente">Ejercicio vigente (Año) *</label><br />
+  <div class="form-group">
+    <label for="ejercicioVigente">Ejercicio vigente (Año) *</label>
     <input id="ejercicioVigente" type="number" formControlName="ejercicioVigente" min="1900" max="2100" />
     <div *ngIf="formDatosGenerales.get('ejercicioVigente')?.touched && formDatosGenerales.get('ejercicioVigente')?.invalid" class="error">
       Ingresa un año válido.
     </div>
   </div>
 
-  <div>
-    <label for="fechaInicioHistorial">Fecha de inicio de historial *</label><br />
+  <div class="form-group">
+    <label for="fechaInicioHistorial">Fecha de inicio de historial *</label>
     <input id="fechaInicioHistorial" type="date" formControlName="fechaInicioHistorial" />
     <div *ngIf="formDatosGenerales.get('fechaInicioHistorial')?.touched && formDatosGenerales.get('fechaInicioHistorial')?.invalid" class="error">
       Ingresa una fecha válida.
     </div>
   </div>
 
-  <div>
-    <label for="zonaSalarioGeneral">Zona salario general *</label><br />
+  <div class="form-group">
+    <label for="zonaSalarioGeneral">Zona salario general *</label>
     <select id="zonaSalarioGeneral" formControlName="zonaSalarioGeneral" required>
-      <option value="" disabled>Selecciona una zona</option>
+      <option value="" disabled selected>Selecciona una zona</option>
       <option *ngFor="let zona of zonaSalarioGeneral" [value]="zona.id">{{ zona.name }}</option>
     </select>
     <div *ngIf="formDatosGenerales.get('zonaSalarioGeneral')?.touched && formDatosGenerales.get('zonaSalarioGeneral')?.invalid" class="error">
@@ -54,8 +54,8 @@
     </div>
   </div>
 
-  <div>
-    <label for="factorNoDeducible">Factor no deducible por ingresos exentos *</label><br />
+  <div class="form-group">
+    <label for="factorNoDeducible">Factor no deducible por ingresos exentos *</label>
     <input id="factorNoDeducible" type="number" formControlName="factorNoDeducible" min="0" step="0.01" />
     <div *ngIf="formDatosGenerales.get('factorNoDeducible')?.touched && formDatosGenerales.get('factorNoDeducible')?.invalid" class="error">
       Ingresa un número válido (mayor o igual a 0).
@@ -63,5 +63,3 @@
   </div>
 
 </form>
-
-  

@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 
 @Component({
   selector: 'app-datos-adicionales',
+  standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './datos-adicionales.html',
   styleUrls: ['./datos-adicionales.css']
@@ -37,5 +38,4 @@ export class DatosAdicionales implements OnInit {
       this.formDatosAdicionales.markAllAsTouched();
     }
   }
-
 }

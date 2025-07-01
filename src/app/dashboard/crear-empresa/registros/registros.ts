@@ -7,7 +7,7 @@ import { CatalogosService } from '../../../services/catalogosService';
   selector: 'app-registros',
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './registros.html',
-  styleUrl: './registros.css'
+  styleUrls: ['./registros.css']
 })
 export class Registros implements OnInit {
 

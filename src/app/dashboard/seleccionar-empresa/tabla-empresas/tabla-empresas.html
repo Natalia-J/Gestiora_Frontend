@@ -1,0 +1,22 @@
+<table class="tabla-empresas">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>RFC</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let empresa of empresas"
+        (dblclick)="seleccionarEmpresa(empresa)"
+        [class.seleccionada]="empresa === empresaSeleccionada"
+        (click)="seleccionarEmpresa(empresa)"
+        tabindex="0"
+        role="button"
+      >
+        <td>{{ empresa.nombre }}</td>
+        <td>{{ empresa.rfc }}</td>
+      </tr>
+    </tbody>
+  </table>
+  

@@ -1,0 +1,52 @@
+/* Contenedor del formulario */
+form {
+    max-width: 500px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+    color: #333;
+  }
+  
+  /* Estilo para cada grupo de campo */
+  form > div {
+    margin-bottom: 16px;
+  }
+  
+  /* Etiquetas */
+  label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 6px;
+  }
+  
+  /* Inputs y selects */
+  input[type="text"],
+  select {
+    width: 100%;
+    padding: 8px 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease-in-out;
+  }
+  
+  /* Efecto al enfocar */
+  input[type="text"]:focus,
+  select:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  /* Mensajes de error */
+  .error {
+    color: #d9534f;
+    font-size: 0.875rem;
+    margin-top: 4px;
+  }
+  
+  /* Opcional: cursor para el select deshabilitado */
+  select:disabled {
+    background-color: #f8f9fa;
+    cursor: not-allowed;
+  }
+  

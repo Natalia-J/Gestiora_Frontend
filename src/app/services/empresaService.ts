@@ -7,7 +7,7 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class EmpresaService {
-  private apiUrl = 'http://localhost:8080/api/empresa';
+  private apiUrl = 'http://localhost:8080/api/empresa/crear';
 
   constructor(private http: HttpClient) {}
 

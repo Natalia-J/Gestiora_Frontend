@@ -1,11 +1,12 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CatalogosService } from '../../../services/catalogosService';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-datos-generales',
-  imports:[CommonModule, ReactiveFormsModule],
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './datos-generales.html',
   styleUrls: ['./datos-generales.css']
 })
@@ -13,7 +14,6 @@ export class DatosGenerales implements OnInit {
 
   tipoCodigoEmpleado: { id: string; name: string }[] = [];
   zonaSalarioGeneral: { id: string; name: string }[] = [];
-
 
   formDatosGenerales!: FormGroup;
 
@@ -37,14 +37,12 @@ export class DatosGenerales implements OnInit {
       },
       error: (error) => console.error('Error al cargar catálogos', error)
     });
-    
   }
 
   soloX(event: Event): void {
     const input = event.target as HTMLInputElement;
     const soloX = input.value.toUpperCase().replace(/[^X]/g, '');
     input.value = soloX;
-
     this.formDatosGenerales.get('mascarillaCodigo')?.setValue(soloX, { emitEvent: false });
   }
 
