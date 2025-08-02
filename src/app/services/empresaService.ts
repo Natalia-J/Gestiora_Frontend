@@ -11,6 +11,10 @@ export class EmpresaService {
 
   constructor(private http: HttpClient) {}
 
+  getCatalogos(): Observable<any> {
+    return this.http.get<any>(this.apiUrl);
+  }
+
   guardarEmpresa(datos: any): Observable<any> {
     const datosPreparados = this.prepararDatosEmpresa(datos);
     console.log("datos preparados:", datosPreparados);

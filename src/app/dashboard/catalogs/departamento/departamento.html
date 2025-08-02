@@ -1,0 +1,69 @@
+<div class="panel-container">
+
+  <div class="lista-departamentos">
+    <div class="encabezado">
+      <h3 class="titulo-departamento">Departamentos existentes</h3>
+      <div class="acciones">
+        <button class="btn crear" (click)="abrirModal()">+ Crear</button>
+        <button
+          class="btn eliminar"
+          (click)="activarModoEliminar()"
+          [disabled]="departamentos.length === 0"
+          title="Eliminar departamentos"
+        >
+          🗑️
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="cargando">Cargando...</div>
+    <div *ngIf="departamentos.length === 0 && !cargando">No hay departamentos registrados.</div>
+
+    <div class="tarjetas">
+      <div
+        class="tarjeta"
+        *ngFor="let depto of departamentos"
+        [class.modo-eliminar]="modoEliminar"
+        [class.seleccionado]="depto.id === departamentoSeleccionadoId"
+        (click)="modoEliminar ? eliminarDepartamento(depto) : seleccionar(depto)"
+      >
+        <div class="contenido-tarjeta">
+          <h3>{{ depto.codigo }}</h3>
+          <p>{{ depto.nombreDepartamento }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal-overlay" *ngIf="mostrarModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>Crear Departamento</h2>
+      </div>
+      <form [formGroup]="form" (ngSubmit)="guardar()">
+        <div class="modal-body">
+          <label for="codigo">Código *</label>
+          <input id="codigo" type="text" formControlName="codigo" />
+          <div class="error" *ngIf="form.get('codigo')?.touched && form.get('codigo')?.invalid">
+            Código requerido
+          </div>
+
+          <label for="nombreDepartamento">Nombre *</label>
+          <input id="nombreDepartamento" type="text" formControlName="nombreDepartamento" />
+          <div class="error" *ngIf="form.get('nombreDepartamento')?.touched && form.get('nombreDepartamento')?.invalid">
+            Nombre requerido
+          </div>
+
+          <div *ngIf="error" class="error">{{ error }}</div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" (click)="cancelar()">Cancelar</button>
+          <button type="submit" [disabled]="!form.valid">Crear</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</div>

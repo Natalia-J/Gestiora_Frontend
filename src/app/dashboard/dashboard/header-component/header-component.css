@@ -1,0 +1,210 @@
+/* Layout principal con CSS Grid */
+.dashboard-container {
+    display: grid;
+    grid-template-columns: auto 1fr; /* Sidebar automático, contenido resto del espacio */
+    grid-template-rows: auto 1fr; /* Header automático, contenido resto del espacio */
+    grid-template-areas: 
+      "sidebar header"
+      "sidebar main";
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  .sidebar {
+    grid-area: sidebar;
+    position: sticky; /* Vuelve a sticky para que funcione con grid */
+    top: 0;
+    height: 100vh;
+    width: 90px;
+    background-color: #f4f6fb;
+    color: #1e2a44;
+    transition: width 0.3s ease;
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    font-family: 'Poppins', sans-serif;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+  }
+  
+  .sidebar.expandido {
+    width: 230px;
+  }
+  
+  .header {
+    grid-area: header;
+    height: 60px;
+    background-color: #f5f7fb;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1.5rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    font-family: 'Poppins', sans-serif;
+    z-index: 50;
+  }
+  
+  .contenido-principal {
+    grid-area: main;
+    padding: 20px;
+    overflow-y: auto;
+  }
+  
+  /* Resto del CSS del sidebar sin cambios */
+  .sidebar-top {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    flex-shrink: 0;
+  }
+  
+  .toggle-btn {
+    background: none;
+    border: none;
+    color: #1e2a44;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  
+  .toggle-btn:hover {
+    transform: scale(1.1);
+  }
+  
+  .sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex: 1;
+    padding: 0 1rem;
+  }
+  
+  .sidebar-menu li {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.8rem 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    color: #1e2a44;
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+  
+  .sidebar-menu li:hover {
+    background-color: #eef3fa;
+  }
+  
+  .sidebar-menu li.activo {
+    background-color: #d9e7fa;
+    font-weight: 600;
+  }
+  
+  .sidebar-menu li i {
+    font-size: 1.2rem;
+    color: #1e3a64;
+    background: #e6edf7;
+    padding: 10px;
+    border-radius: 12px;
+    min-width: 40px;
+    text-align: center;
+    transition: background 0.3s, transform 0.2s;
+  }
+  
+  .sidebar-menu li i:hover {
+    background: #d4e2f7;
+    transform: scale(1.08);
+  }
+  
+  .sidebar-menu li span {
+    white-space: nowrap;
+    opacity: 1;
+    transition: opacity 0.2s ease;
+    font-size: 0.95rem;
+    color: #1e2a44;
+  }
+  
+  .sidebar:not(.expandido) .sidebar-menu li span {
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  /* CSS del header sin cambios */
+  .left-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .title {
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+  
+  .btn-menu {
+    background: none;
+    border: none;
+    font-size: 1.3rem;
+    cursor: pointer;
+    color: #1e3a64;
+  }
+  
+  .right-section {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  .crear-dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .crear-btn {
+    background-color: #262651;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .crear-btn i {
+    font-size: 1rem;
+  }
+  
+  .dropdown-menu {
+    position: absolute;
+    right: 0;
+    top: 110%;
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    list-style: none;
+    padding: 0.5rem 0;
+    margin: 0;
+    border-radius: 6px;
+    min-width: 150px;
+    z-index: 999;
+  }
+  
+  .dropdown-menu li {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-weight: 500;
+  }
+  
+  .dropdown-menu li:hover {
+    background-color: #f0f0f0;
+  }

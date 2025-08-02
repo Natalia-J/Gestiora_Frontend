@@ -1,0 +1,55 @@
+<!-- Contenedor principal del dashboard -->
+<div class="dashboard-container">
+  
+  <!-- Sidebar Navigation -->
+  <nav [class.expandido]="expandido" class="sidebar">
+    <div class="sidebar-top">
+      <button class="toggle-btn" (click)="toggleSidebar()" aria-label="Toggle Sidebar">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+    
+    <ul class="sidebar-menu">
+      <li (click)="navegar('departamentos')" [class.activo]="activo === 'departamentos'">
+        <i class="fas fa-building"></i>
+        <span *ngIf="expandido">Departamentos</span>
+      </li>
+      
+      <li (click)="navegar('dias-horas')" [class.activo]="activo === 'dias-horas'">
+        <i class="fas fa-clock"></i>
+        <span *ngIf="expandido">Días y Horas</span>
+      </li>
+      
+      <li (click)="navegar('percepciones')" [class.activo]="activo === 'percepciones'">
+        <i class="fas fa-coins"></i>
+        <span *ngIf="expandido">Percepciones</span>
+      </li>
+      
+      <li (click)="navegar('deducciones')" [class.activo]="activo === 'deducciones'">
+        <i class="fas fa-minus-circle"></i>
+        <span *ngIf="expandido">Deducciones</span>
+      </li>
+      
+      <li (click)="navegar('prenomina')" [class.activo]="activo === 'prenomina'">
+        <i class="fas fa-file-alt"></i>
+        <span *ngIf="expandido">Pre-Nómina</span>
+      </li>
+      
+      <li (click)="navegar('nomina')" [class.activo]="activo === 'nomina'">
+        <i class="fas fa-file-invoice-dollar"></i>
+        <span *ngIf="expandido">Nómina</span>
+      </li>
+      
+      <li (click)="navegar('reportes')" [class.activo]="activo === 'reportes'">
+        <i class="fas fa-chart-line"></i>
+        <span *ngIf="expandido">Reportes</span>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Tu contenido principal aquí (tal como ya lo tenías) -->
+  <div class="contenido-principal">
+    <!-- Tu contenido existente -->
+  </div>
+  
+</div>

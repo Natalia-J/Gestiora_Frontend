@@ -3,25 +3,39 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth';
 
-interface CatalogoItem {
+export interface CatalogoItem {
   id: string;
   name: string;
 }
 
-
-interface CatalogosResponse {
-  tipoCodigoEmpleado: CatalogoItem[];
-  zonaSalarioGeneral: CatalogoItem[];
+export interface CatalogosResponse {
+  imssEmpleado: CatalogoItem[];
+  sbcEmpleado: CatalogoItem[];
+  entidadFederativa: CatalogoItem[];
+  estadoCivil: CatalogoItem[];
+  genero: CatalogoItem[];
+  metodoPagoEmpleado: CatalogoItem[];
+  regimenEmpleado: CatalogoItem[];
   regimenEmpresa: CatalogoItem[];
+  sindicatoEmpleado: CatalogoItem[];
+  tipoCodigoEmpleado: CatalogoItem[];
+  tipoContratoEmpleado: CatalogoItem[];
+  tipoPeriodo: CatalogoItem[];
+  tipoPrestacionEmpleado: CatalogoItem[];
+  zonaSalarioGeneral: CatalogoItem[];
+  tipoJornada: CatalogoItem[];
+  baseDePago: CatalogoItem[];
+  baseCotizacion:CatalogoItem[];
+  departamentoEmpleado:CatalogoItem[];
+  puestosEmpleado:CatalogoItem[];
 }
-
 
 @Injectable({
   providedIn: 'root'
 })
 export class CatalogosService {
 
-  private apiUrl = 'http://localhost:8080/api/catalog';
+  private apiUrl = 'http://localhost:8080/api/catalog/catalogos';
 
   constructor(private http: HttpClient, private authService:AuthService) {}
 

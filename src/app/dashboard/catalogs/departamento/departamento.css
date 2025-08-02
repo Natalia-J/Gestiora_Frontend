@@ -1,0 +1,181 @@
+.panel-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2rem;
+  padding: 2rem;
+  width: 1250px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+
+.lista-departamentos {
+  flex: 1;
+  min-width: 100%;
+  max-width: 600px;
+}
+
+.encabezado {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.titulo-departamento {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #1a2a44; /* azul marino elegante */
+  margin: 0;
+  padding-left: 0.5rem; /* un poco a la izquierda */
+  position: relative;
+  padding-bottom: 0.5rem;
+  /* línea decorativa debajo */
+}
+
+.titulo-departamento::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 3px;
+  background-color: #1a2a44;
+  margin: 0.5rem 0 0 0.5rem;
+  border-radius: 2px;
+}
+
+.acciones {
+  display: flex;
+  gap: 1rem;
+}
+
+.btn {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 1rem;
+}
+
+.btn.crear {
+  background-color: #4caf50;
+  color: white;
+}
+
+.btn.eliminar {
+  background-color: transparent;
+  color: #d9534f;
+  font-size: 1.4rem;
+  padding: 0.3rem 0.6rem;
+  border: none;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.btn.eliminar:disabled {
+  color: #aaa;
+  cursor: not-allowed;
+}
+
+.btn.eliminar:hover:not(:disabled) {
+  color: #b52b2b;
+}
+
+.tarjetas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.tarjeta {
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  width: 180px;
+  height: 130px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s ease, border 0.3s ease;
+  border: 2px solid transparent;
+  padding: 1rem;
+}
+
+.tarjeta:hover {
+  transform: scale(1.05);
+}
+
+.tarjeta.seleccionado {
+  border-color: #1a2a44; /* azul marino */
+  background-color: #e0e7f7;
+}
+
+.modo-eliminar.tarjeta {
+  border-color: #d9534f;
+  background-color: #ffe6e6;
+}
+
+.contenido-tarjeta h3 {
+  margin: 0;
+  font-size: 1.3rem;
+  color: #1a2a44;
+}
+
+.contenido-tarjeta p {
+  margin: 0.3rem 0 0 0;
+  font-size: 1rem;
+  color: #555;
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.modal {
+  background: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  width: 400px;
+  max-width: 90%;
+}
+
+.modal-header {
+  margin-bottom: 1rem;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+input {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.3rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+}
+
+.error {
+  color: red;
+  font-size: 0.85rem;
+  margin-top: 0.3rem;
+}

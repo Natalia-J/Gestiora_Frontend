@@ -1,0 +1,30 @@
+<div class="modal-overlay" *ngIf="modalVisible">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>Seleccionar Empresa</h2>
+      <div class="empresa-banner">
+        Empresas a las que el usuario tiene acceso
+      </div>
+    </div>
+
+    <div class="modal-body">
+      <p *ngIf="empresas.length === 0">Cargando empresas...</p>
+      <!--<p *ngIf="empresas.length > 0">Se encontraron {{ empresas.length }} empresas.</p>-->
+
+      <div class="tabla-wrapper">
+        <app-tabla-empresas
+          *ngIf="empresas.length > 0"
+          [empresas]="empresas"
+          (seleccionar)="seleccionarEmpresa($event)">
+        </app-tabla-empresas>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" (click)="cancelar()">Cancelar</button>
+      <button type="button" [disabled]="!empresaSeleccionadaModal" (click)="confirmarSeleccion()">
+        Seleccionar
+      </button>
+    </div>
+  </div>
+</div>

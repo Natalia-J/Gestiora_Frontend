@@ -1,0 +1,35 @@
+<form [formGroup]="formDatosRegistro" (ngSubmit)="onSubmit()">
+
+  <div class="form-group">
+    <label for="regimenEmpresa">Régimen fiscal *</label>
+    <select id="regimenEmpresa" formControlName="regimenEmpresa" required>
+      <option value="" disabled>Selecciona un régimen</option>
+      <option *ngFor="let regimen of regimenEmpresa" [value]="regimen.id">{{ regimen.name }}</option>
+    </select>
+    <div *ngIf="formDatosRegistro.get('regimenEmpresa')?.touched && formDatosRegistro.get('regimenEmpresa')?.invalid" class="error">
+      Selecciona un régimen válido.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="registroPatronalIMSS">Registro patronal del IMSS *</label>
+    <input id="registroPatronalIMSS" type="text" formControlName="registroPatronalIMSS" />
+    <div *ngIf="formDatosRegistro.get('registroPatronalIMSS')?.touched && formDatosRegistro.get('registroPatronalIMSS')?.invalid" class="error">
+      Este campo es obligatorio.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="rfc">RFC *</label>
+    <input id="rfc" type="text" formControlName="rfc" />
+    <div *ngIf="formDatosRegistro.get('rfc')?.touched && formDatosRegistro.get('rfc')?.invalid" class="error">
+      Este campo es obligatorio.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="registroInfonavit">Registro INFONAVIT</label>
+    <input id="registroInfonavit" type="text" formControlName="registroInfonavit" />
+  </div>
+  
+</form>

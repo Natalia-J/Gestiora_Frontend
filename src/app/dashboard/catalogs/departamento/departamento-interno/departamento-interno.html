@@ -1,0 +1,43 @@
+<div class="departamento-detalle">
+
+  <div class="titulo" *ngIf="departamentoSeleccionado">
+    <h2>{{ departamentoSeleccionado.nombreDepartamento }} / Empleados</h2>
+  </div>
+
+  <div class="buscador" *ngIf="departamentoSeleccionado">
+    <input
+      type="text"
+      [(ngModel)]="busqueda"
+      (input)="filtrarEmpleados()"
+      placeholder="Buscar empleado por nombre completo..."
+    />
+  </div>
+
+  <div class="lista-empleados" *ngIf="departamentoSeleccionado && empleadosFiltrados.length > 0">
+    <div class="empleado-renglon" *ngFor="let empleado of empleadosFiltrados">
+      <div class="info">
+        <strong>{{ empleado.nombreEmpleado }} {{ empleado.apellidoPaternoEmpleado }} {{ empleado.apellidoMaternoEmpleado }}</strong>
+        <span class="puesto">{{ empleado.puesto.nombre }}</span>
+      </div>
+
+      <div class="menu">
+        <button (click)="toggleMenu(empleado.id)">⋮</button>
+
+        <ul class="menu-opciones" *ngIf="menuEmpleadoAbiertoId === empleado.id">
+          <li (click)="editarEmpleado(empleado)">Editar</li>
+          <li (click)="cambiarDepartamento(empleado)">Cambiar de departamento</li>
+          <li (click)="eliminarEmpleado(empleado)">Eliminar</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="no-seleccion" *ngIf="departamentoSeleccionado && empleadosFiltrados.length === 0">
+    <p>No hay empleados que coincidan con la búsqueda.</p>
+  </div>
+
+  <div class="no-seleccion" *ngIf="!departamentoSeleccionado">
+    <p>Selecciona un departamento para ver sus empleados.</p>
+  </div>
+
+</div>

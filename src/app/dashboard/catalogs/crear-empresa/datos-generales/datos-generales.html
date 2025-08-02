@@ -1,0 +1,76 @@
+<form [formGroup]="formDatosGenerales">
+
+  <div class="form-group full-width">
+    <label for="nombreEmpresa">Nombre de la empresa *</label>
+    <input id="nombreEmpresa" type="text" formControlName="nombreEmpresa" />
+    <div *ngIf="formDatosGenerales.get('nombreEmpresa')?.touched && formDatosGenerales.get('nombreEmpresa')?.invalid" class="error">
+      <div *ngIf="formDatosGenerales.get('nombreEmpresa')?.errors?.['required']">El nombre es obligatorio.</div>
+      <div *ngIf="formDatosGenerales.get('nombreEmpresa')?.errors?.['minlength']">Mínimo 2 caracteres.</div>
+      <div *ngIf="formDatosGenerales.get('nombreEmpresa')?.errors?.['maxlength']">Máximo 100 caracteres.</div>
+      <div *ngIf="formDatosGenerales.get('nombreEmpresa')?.errors?.['backend']">{{ formDatosGenerales.get('nombreEmpresa')?.errors?.['backend'] }}</div>
+    </div>
+    
+  </div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <label for="mascarillaCodigo">Mascarilla del código de empleado (solo 'X') *</label>
+      <input id="mascarillaCodigo" type="text" maxlength="10" formControlName="mascarillaCodigo" (input)="soloX($event)" />
+      <div *ngIf="formDatosGenerales.get('mascarillaCodigo')?.touched && formDatosGenerales.get('mascarillaCodigo')?.invalid" class="error">
+        Campo obligatorio.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="tipoCodigoEmpleado">Tipo del código de empleado *</label>
+      <select id="tipoCodigoEmpleado" formControlName="tipoCodigoEmpleado" required>
+        <option value="" disabled selected>Selecciona un tipo</option>
+        <option *ngFor="let tipo of tipoCodigoEmpleado" [value]="tipo.id">{{ tipo.name }}</option>
+      </select>
+      <div *ngIf="formDatosGenerales.get('tipoCodigoEmpleado')?.touched && formDatosGenerales.get('tipoCodigoEmpleado')?.invalid" class="error">
+        Selecciona un tipo válido.
+      </div>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <label for="ejercicioVigente">Ejercicio vigente (Año) *</label>
+      <input id="ejercicioVigente" type="number" formControlName="ejercicioVigente" min="1900" max="2100" (keypress)="soloNumeros($event)" />
+      <div *ngIf="formDatosGenerales.get('ejercicioVigente')?.touched && formDatosGenerales.get('ejercicioVigente')?.invalid" class="error">
+        Ingresa un año válido.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="fechaInicioHistorial">Fecha de inicio de historial *</label>
+      <input id="fechaInicioHistorial" type="date" formControlName="fechaInicioHistorial" />
+      <div *ngIf="formDatosGenerales.get('fechaInicioHistorial')?.touched && formDatosGenerales.get('fechaInicioHistorial')?.invalid" class="error">
+        Ingresa una fecha válida.
+      </div>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <label for="zonaSalarioGeneral">Zona salario general *</label>
+      <select id="zonaSalarioGeneral" formControlName="zonaSalarioGeneral" required>
+        <option value="" disabled selected>Selecciona una zona</option>
+        <option *ngFor="let zona of zonaSalarioGeneral" [value]="zona.id">{{ zona.name }}</option>
+      </select>
+      <div *ngIf="formDatosGenerales.get('zonaSalarioGeneral')?.touched && formDatosGenerales.get('zonaSalarioGeneral')?.invalid" class="error">
+        Selecciona una zona válida.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="factorNoDeducible">Factor no deducible por ingresos exentos *</label>
+      <input id="factorNoDeducible" type="number" formControlName="factorNoDeducible" min="0" step="0.01" (keypress)="soloNumerosFactor($event)" />
+      <div *ngIf="formDatosGenerales.get('factorNoDeducible')?.touched && formDatosGenerales.get('factorNoDeducible')?.invalid" class="error">
+        <div *ngIf="formDatosGenerales.get('factorNoDeducible')?.errors?.['required']">El factor es obligatorio.</div>
+        <div *ngIf="formDatosGenerales.get('factorNoDeducible')?.errors?.['min']">El factor debe ser mayor o igual a 0.</div>
+      </div>      
+    </div>
+  </div>
+
+</form>

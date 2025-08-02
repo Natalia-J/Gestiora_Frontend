@@ -1,0 +1,97 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(170, 171, 174, 0.2);display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.modal {
+  background: #fff;
+  border-radius: 10px;
+  width: 1100px;
+  height: 700px;
+  box-shadow: 0 10px 40px 15px rgba(80, 80, 97, 0.3); display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.modal-header {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #2b3d4e;
+  font-family: 'Poppins', sans-serif;
+}
+
+
+.modal-content {
+  flex: 1;
+  padding: 1rem 1.5rem;
+  overflow-y: auto;
+}
+
+.tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.tabs button {
+  flex: 1;
+  padding: 0.6em 1em;
+  background: #f2f2f2;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  color: #333;
+  transition: background 0.3s;
+}
+
+.tabs button.active {
+  background: #262651;
+  color: #fff;
+  border-color: #272752;
+}
+
+.tab-content {
+  margin-bottom: 2rem;
+}
+
+.modal-footer {
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  background-color: #fafafa;
+  border-top: 1px solid #e0e0e0;
+}
+
+.modal-footer button {
+  padding: 0.5em 1.2em;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background 0.3s;
+}
+
+.modal-footer .primary {
+  background: linear-gradient(135deg, #30304b, #383958);
+  color: white;
+  border: none;
+}
+
+.modal-footer button:not(.primary) {
+  background: #fff;
+  border: 1px solid #ccc;
+  color: #444;
+}

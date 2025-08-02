@@ -1,0 +1,104 @@
+<form [formGroup]="formDatosAdicionales">
+
+  <fieldset class="fieldset-group">
+    <legend>Dirección</legend>
+
+    <div class="form-group">
+      <label for="calle">Calle *</label>
+      <input id="calle" type="text" formControlName="calle" />
+      <div *ngIf="formDatosAdicionales.get('calle')?.touched && formDatosAdicionales.get('calle')?.invalid" class="error">
+        La calle es obligatoria.
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="numInterno">Número interno</label>
+        <input id="numInterno" type="text" formControlName="numInterno" />
+      </div>
+
+      <div class="form-group">
+        <label for="numExterno">Número externo *</label>
+        <input id="numExterno" type="text" formControlName="numExterno" />
+        <div *ngIf="formDatosAdicionales.get('numExterno')?.touched && formDatosAdicionales.get('numExterno')?.invalid" class="error">
+          El número externo es obligatorio.
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="colonia">Colonia *</label>
+        <input id="colonia" type="text" formControlName="colonia" />
+        <div *ngIf="formDatosAdicionales.get('colonia')?.touched && formDatosAdicionales.get('colonia')?.invalid" class="error">
+          La colonia es obligatoria.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="codigoPostal">Código Postal *</label>
+        <input id="codigoPostal" type="text" formControlName="codigoPostal" />
+        <div *ngIf="formDatosAdicionales.get('codigoPostal')?.touched && formDatosAdicionales.get('codigoPostal')?.invalid" class="error">
+          El código postal es obligatorio.
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="localidad">Localidad *</label>
+      <input id="localidad" type="text" formControlName="localidad" />
+      <div *ngIf="formDatosAdicionales.get('localidad')?.touched && formDatosAdicionales.get('localidad')?.invalid" class="error">
+        La localidad es obligatoria.
+      </div>
+    </div>
+  </fieldset>
+  
+  <fieldset class="fieldset-group">
+    <legend>Datos del Representante</legend>
+
+    <div class="form-group">
+      <label for="nombreRepresentante">Nombre del representante *</label>
+      <input id="nombreRepresentante" type="text" formControlName="nombreRepresentante" />
+      <div *ngIf="formDatosAdicionales.get('nombreRepresentante')?.touched && formDatosAdicionales.get('nombreRepresentante')?.invalid" class="error">
+        El nombre es obligatorio.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="apellidoPaternoRepresentante">Apellido paterno del representante *</label>
+      <input id="apellidoPaternoRepresentante" type="text" formControlName="apellidoPaternoRepresentante" />
+      <div *ngIf="formDatosAdicionales.get('apellidoPaternoRepresentante')?.touched && formDatosAdicionales.get('apellidoPaternoRepresentante')?.invalid" class="error">
+        El apellido paterno es obligatorio.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="apellidoMaternoRepresentante">Apellido materno del representante *</label>
+      <input id="apellidoMaternoRepresentante" type="text" formControlName="apellidoMaternoRepresentante" />
+      <div *ngIf="formDatosAdicionales.get('apellidoMaternoRepresentante')?.touched && formDatosAdicionales.get('apellidoMaternoRepresentante')?.invalid" class="error">
+        El apellido materno es obligatorio.
+      </div>
+    </div>
+  </fieldset>
+
+  <fieldset class="fieldset-group">
+    <legend>Número de contacto de la empresa</legend>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="telefono1">Teléfono 1 *</label>
+        <input id="telefono1" type="text" formControlName="telefono1" />
+        <div *ngIf="formDatosAdicionales.get('telefono1')?.touched && formDatosAdicionales.get('telefono1')?.invalid" class="error">
+          El teléfono 1 es obligatorio.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="telefono2">Teléfono 2</label>
+        <input id="telefono2" type="text" formControlName="telefono2" />
+      </div>
+    </div>
+
+  </fieldset>
+
+</form>

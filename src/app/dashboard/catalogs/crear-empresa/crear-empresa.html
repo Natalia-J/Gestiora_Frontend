@@ -1,0 +1,57 @@
+<div class="modal-overlay">
+  <div class="modal">
+
+    <div class="modal-header">
+      <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+      <h2>Crear Empresa</h2>
+    </div>
+
+    <div class="modal-content">
+
+      <div class="tabs">
+        <button 
+          type="button" 
+          [class.active]="activeTab === 'generales'"
+          (click)="activeTab = 'generales'">
+          Datos Generales
+        </button>
+        <button 
+          type="button" 
+          [class.active]="activeTab === 'adicionales'"
+          (click)="activeTab = 'adicionales'">
+          Datos Adicionales
+        </button>
+        <button 
+          type="button" 
+          [class.active]="activeTab === 'registros'"
+          (click)="activeTab = 'registros'">
+          Registros
+        </button>
+      </div>
+
+      <div class="tab-content">
+        <app-datos-generales [hidden]="activeTab !== 'generales'"></app-datos-generales>
+        <app-datos-adicionales [hidden]="activeTab !== 'adicionales'"></app-datos-adicionales>
+        <app-registros [hidden]="activeTab !== 'registros'"></app-registros>
+      </div>
+
+      <div class="modal-footer">
+        <button 
+          type="button" 
+          class="primary"
+          (click)="guardar()"
+          [disabled]="!formulariosValidos()">
+          Crear empresa
+        </button>
+
+        <button 
+          type="button" 
+          (click)="cerrar()">
+          Cancelar
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+</div>

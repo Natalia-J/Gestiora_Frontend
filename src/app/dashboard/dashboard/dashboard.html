@@ -1,22 +1,9 @@
-<p>dashboard works!</p>
+<app-header-component (crearElemento)="manejarCrear($event)"></app-header-component>
 
 <div class="dashboard-container">
-  <div class="dashboard-content">
-    <h1 class="dashboard-title">Dashboard</h1>
+  <app-sidebar-component (cambiarVista)="mostrarVista($event)"></app-sidebar-component>
 
-    <div class="buttons-container">
-      <button 
-        class="dashboard-btn crear-btn"
-        (click)="crearEmpresa()">
-        <span>Crear Empresa</span>
-      </button>
-
-      <button 
-        class="dashboard-btn seleccionar-btn"
-        (click)="seleccionarEmpresa()">
-        <span>Seleccionar Empresa</span>
-      </button>
-    </div>
-
+  <div class="contenido-principal">
+    <app-content-component [vistaActiva]="vistaActiva"></app-content-component>
   </div>
 </div>

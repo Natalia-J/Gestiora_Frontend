@@ -1,0 +1,39 @@
+<div class="modal-overlay">
+  <div class="modal">
+    <h2>Crear nuevo turno</h2>
+    <button class="btn-cerrar" (click)="cerrarModal()" aria-label="Cerrar modal">&times;</button>
+
+    <div class="contenido-modal">
+      <form [formGroup]="turnoForm" (ngSubmit)="enviar()" class="formulario">
+        <label>
+          Nombre del Turno:
+          <input formControlName="nombreTurno" />
+        </label>
+
+        <label>
+          Hora de Entrada:
+          <input type="time" formControlName="horaEntrada" />
+        </label>
+
+        <label>
+          Hora de Salida:
+          <input type="time" formControlName="horaSalida" />
+        </label>
+
+        <label>
+          Tipo de Jornada:
+          <select formControlName="tipoJornada">
+            <option value="" disabled selected>Seleccione...</option>
+            <option *ngFor="let jornada of tipoJornadas" [value]="jornada.id">
+              {{ transformarTipoJornada(jornada.name) }}
+            </option>
+          </select>
+        </label>
+
+        <div class="boton-container">
+          <button type="submit" [disabled]="turnoForm.invalid">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

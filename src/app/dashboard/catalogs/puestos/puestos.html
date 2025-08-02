@@ -1,0 +1,31 @@
+<div class="modal-overlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>Crear Puesto</h2>
+      <button class="btn-cerrar" (click)="cerrarModal()" aria-label="Cerrar modal">&times;</button>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="guardar()">
+      <div class="modal-body">
+        <label for="nombre">Nombre *</label>
+        <input id="nombre" type="text" formControlName="nombre" />
+        <div class="error" *ngIf="form.get('nombre')?.touched && form.get('nombre')?.invalid">
+          El nombre es obligatorio.
+        </div>
+
+        <label for="descripcion">Descripción *</label>
+        <input id="descripcion" type="text" formControlName="descripcion" />
+        <div class="error" *ngIf="form.get('descripcion')?.touched && form.get('descripcion')?.invalid">
+          La descripción es obligatoria.
+        </div>
+
+        <div *ngIf="error" class="error">{{ error }}</div>
+        <div *ngIf="exito" class="success">Puesto creado exitosamente.</div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="submit" [disabled]="form.invalid">Crear Puesto</button>
+      </div>
+    </form>
+  </div>
+</div>

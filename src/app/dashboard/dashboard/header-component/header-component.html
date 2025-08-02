@@ -1,0 +1,15 @@
+<header class="header">
+    <div class="right-section">
+      <div class="crear-dropdown" (click)="toggleDropdown()" tabindex="0" (blur)="cerrarDropdown()">
+        <button class="crear-btn">
+          Crear <i class="fas fa-plus"></i>
+        </button>
+        <ul class="dropdown-menu" *ngIf="dropdownAbierto">
+            <li (click)="enviarElemento('departamento')">Departamento</li>
+            <li (click)="enviarElemento('puesto')">Puesto</li>
+            <li (click)="enviarElemento('turno')">Turno</li>            
+        </ul>
+      </div>
+    </div>
+  </header>
+  

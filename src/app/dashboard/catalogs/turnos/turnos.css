@@ -1,0 +1,115 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(170, 171, 174, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+.modal {
+  position: relative; /* para que el botón se posicione respecto al modal */
+  /* resto de estilos */
+}
+
+.btn-cerrar {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: transparent;
+  border: none;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #555;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.btn-cerrar:hover {
+  color: #262651;
+}
+
+
+.modal {
+  background: #fff;
+  border-radius: 10px;
+  width: 600px; /* más pequeño que el otro para que no sea tan grande */
+  height: auto; /* auto para ajustar según contenido */
+  box-shadow: 0 10px 40px 15px rgba(80, 80, 97, 0.3);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.modal h2 {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #2b3d4e;
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+}
+
+.boton-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+
+.contenido-modal {
+  flex: 1;
+  padding: 1rem 1.5rem;
+  overflow-y: auto;
+}
+
+
+form.formulario label {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  color: #2b3d4e;
+  font-family: 'Poppins', sans-serif;
+}
+
+form.formulario input,
+form.formulario select {
+  padding: 0.5em;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-family: inherit;
+  margin-top: 0.3rem;
+  transition: border-color 0.3s;
+}
+
+form.formulario input:focus,
+form.formulario select:focus {
+  border-color: #262651;
+  outline: none;
+}
+
+form.formulario button {
+  margin-top: 1rem;
+  padding: 0.6em 1.2em;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 1rem;
+  background: linear-gradient(135deg, #30304b, #383958);
+  color: white;
+  border: none;
+  transition: background 0.3s;
+}
+
+form.formulario button:disabled {
+  background: #999;
+  cursor: not-allowed;
+}
