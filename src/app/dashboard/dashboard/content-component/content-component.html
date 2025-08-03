@@ -1,12 +1,13 @@
 <div class="contenido-principal">
-  <app-departamento 
-    *ngIf="vistaActiva === 'departamentos'" 
-    (verDetalle)="mostrarVista('departamento-detalle', $event)">
-  </app-departamento>
+<app-departamento 
+  *ngIf="vistaActiva === 'departamentos'" 
+  (departamentoSeleccionado)="mostrarVista('departamento-detalle', $event)">
+</app-departamento>
+
 
   <app-departamento-interno 
     *ngIf="vistaActiva === 'departamento-detalle'" 
-    [departamento]="departamentoSeleccionadoParaDetalle">
+    [departamento]="departamentoSeleccionadoInterno">
   </app-departamento-interno>
 
   <app-dias-horas *ngIf="vistaActiva === 'dias-horas'"></app-dias-horas>

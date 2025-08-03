@@ -28,16 +28,20 @@ export class Register {
     });
   }
 
-  onSubmit(): void {
-    if (this.registerForm.valid) {
-      this.authService.register(this.registerForm.value).subscribe({
-        next: () => this.router.navigate(['/login']),
-        error: err => {
-          console.error("Error al registrar:", err)
-          this.errorMessage = err.error?.mensage || "ocurrio un error al registrar";
-        }
-      });
-    }
-  }
+  
+onSubmit(): void {
+  if (this.registerForm.valid) {
+    const formValue = this.registerForm.value;
 
+    this.authService.register(formValue).subscribe({
+      next: (response) => {
+        this.router.navigate(['/dashboard']);
+      },
+      error: err => {
+        console.error('Error al registrar:', err);
+        this.errorMessage = err.error?.message || 'Ocurrió un error al registrar';
+      }
+    });
+  }
+}
 }

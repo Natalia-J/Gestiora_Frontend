@@ -16,12 +16,19 @@ export class Login {
   loginForm!:FormGroup
   submitted=false
 
+  errorMessage: string | null = null;
+  isLoading = false;
+
   constructor(private authService: AuthService, private fb: FormBuilder, private router:Router){}
 
   ngOnInit(){
     this.loginForm = this.fb.group({
       email:['', [Validators.required, Validators.email]],
       password:['', Validators.required],
+    });
+
+    this.loginForm.valueChanges.subscribe(() => {
+      this.errorMessage = null;
     });
 
   }
@@ -44,15 +51,20 @@ export class Login {
   }
 
   loggearse(data: LoginRequest) {
-    this.authService.login(data).subscribe({
-      next: () => {
-        console.log('Login exitoso');
-        this.router.navigate(['/dashboard']);
-      },
-      error: (err) => {
-        console.error('Error al iniciar sesión', err);
-      }
-    });
-  }
-  
+  this.isLoading = true;
+
+  this.authService.login(data).subscribe({
+    next: () => {
+      console.log('Login exitoso');
+      this.router.navigate(['/dashboard']);
+    },
+    error: (err) => {
+      console.error('Error al iniciar sesión', err);
+      this.isLoading = false;
+    },
+    complete: () => {
+      this.isLoading = false;
+    }
+  });
+}
 }

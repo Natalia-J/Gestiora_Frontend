@@ -3,6 +3,9 @@
     <div class="login-header">
       <h1 class="login-title">Iniciar Sesión</h1>
       <p class="login-subtitle">Accede a tu cuenta</p>
+      <div *ngIf="errorMessage" class="alert-error">
+        {{ errorMessage }}
+      </div>
     </div>
     
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
@@ -33,7 +36,14 @@
         </div>
       </div>
       
-      <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+      <button type="submit" class="btn btn-primary" [disabled]="isLoading">
+        <span *ngIf="!isLoading">Iniciar sesión</span>
+        <span *ngIf="isLoading" class="spinner"></span>
+      </button>
+      <div class="register-text">
+        ¿Aún no tienes una cuenta?
+          <a [routerLink]="['/register']" class="register-link">Regístrate</a>
+      </div>
     </form>
   </div>
 </div>

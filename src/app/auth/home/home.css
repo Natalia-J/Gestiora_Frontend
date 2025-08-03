@@ -1,0 +1,213 @@
+/* home.component.css */
+:root {
+  --blue-dark: #0b1a2f;
+  --blue-medium: #133c63;
+  --gray-light: #e5e5e5;
+  --white: #ffffff;
+  --black: #000000;
+}
+
+.hero-container {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+background: linear-gradient(to right, rgba(11, 26, 47, 0.7), rgba(19, 60, 99, 0.7)),
+            url('/assets/fondo_home.jpg') center/cover no-repeat;
+
+  color: var(--white);
+  color: var(--white);
+  color: var(--white);
+  font-family: 'Segoe UI', sans-serif;
+  overflow: hidden;
+}
+.blur-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  backdrop-filter: blur(8px);
+  background-color: rgba(255, 255, 255, 0.05);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Asegura que los paneles estén por encima del desenfoque */
+.left-panel,
+.right-panel {
+  position: relative;
+  z-index: 2;
+}
+
+
+.left-panel {
+  width: 50%;
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  animation: slideInLeft 1s ease-out;
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--gray-light);
+}
+
+.content {
+  margin-top: 5rem;
+}
+
+.subtitle {
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+  color: var(--gray-light);
+  animation: fadeIn 1s ease-out 0.5s forwards;
+  opacity: 0;
+}
+
+.main-title {
+  font-size: 3.5rem;
+  margin: 0.5rem 0;
+  animation: fadeIn 1s ease-out 0.8s forwards;
+  opacity: 0;
+}
+
+.highlight {
+  color: var(--gray-light);
+}
+
+.description {
+  font-size: 1rem;
+  max-width: 400px;
+  line-height: 1.5;
+  color: var(--gray-light);
+  margin-bottom: 2rem;
+  animation: fadeIn 1s ease-out 1s forwards;
+  opacity: 0;
+}
+
+.learn-btn {
+  background: var(--gray-light);
+  color: var(--blue-dark);
+  border: none;
+  padding: 0.8rem 1.5rem;
+  font-weight: bold;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background 0.3s;
+  animation: fadeIn 1s ease-out 1.2s forwards;
+  opacity: 0;
+}
+
+.learn-btn:hover {
+  background: var(--white);
+}
+
+.right-panel {
+  width: 50%;
+  position: relative;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  animation: slideInRight 1s ease-out;
+}
+
+.navigation {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1.5rem;
+}
+
+.nav-link {
+  color: var(--gray-light);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.nav-link:hover {
+  color: var(--white);
+}
+
+.features-box {
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 2rem;
+  border-radius: 20px;
+  max-width: 400px;
+  align-self: flex-end;
+  animation: fadeInUp 1s ease-out 1s forwards;
+  opacity: 0;
+}
+
+.features-box h2 {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.features-box ul {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 1rem;
+}
+
+.features-box li {
+  margin-bottom: 0.5rem;
+}
+
+.start-btn {
+  background: var(--white);
+  color: var(--blue-dark);
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 25px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.start-btn:hover {
+  background: var(--gray-light);
+}
+
+/* Animaciones */
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
