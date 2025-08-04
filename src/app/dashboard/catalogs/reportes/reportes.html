@@ -1,1 +1,133 @@
-<p>reportes works!</p>
+<div class="reportes">
+  
+  <!-- Header Section -->
+  <div class="reportes__header">
+    <div class="reportes__title-section">
+      <h1 class="reportes__title">
+        <i class="fas fa-chart-bar reportes__title-icon"></i>
+        Reportes de Empleados
+      </h1>
+      <p class="reportes__subtitle">Consulta y analiza los registros de asistencia del personal</p>
+    </div>
+  </div>
+
+  <!-- Tabs Section -->
+  <div class="reportes__tabs">
+    <div 
+      *ngFor="let periodo of periodos; trackBy: trackByPeriodoId" 
+      class="reportes__tab"
+      [class.reportes__tab--active]="periodoSelected === periodo.id"
+      (click)="selectTab(periodo.id)">
+      {{ periodo.name }}
+    </div>
+  </div>
+
+  <!-- Filters Section -->
+  <div class="reportes__filters">
+    <div class="filter-group">
+      <label class="filter-group__label">Período de Consulta</label>
+      <div class="select-wrapper">
+        <select 
+          class="select-wrapper__select"
+          [value]="periodoRangoSelected || ''"
+          (change)="onDropdownChange($event)">
+          <option value="" disabled>Selecciona un período</option>
+          <option 
+            *ngFor="let periodo of rangoPeriodos; trackBy: trackByRangoPeriodoId" 
+            [value]="periodo.id">
+            {{ periodo.rangoFechas }}
+          </option>
+        </select>
+        <i class="fas fa-chevron-down select-wrapper__icon"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table Section -->
+  <div class="reportes__table-container" *ngIf="registroEmpleado.length > 0">
+    <div class="table-wrapper">
+      <table class="data-table">
+        <thead class="data-table__head">
+          <tr class="data-table__row data-table__row--header">
+            <th class="data-table__cell data-table__cell--header">Código Empleado</th>
+            <th class="data-table__cell data-table__cell--header">Nombre del Empleado</th>
+            <th class="data-table__cell data-table__cell--header">Horas Extras</th>
+            <th class="data-table__cell data-table__cell--header">Días Trabajados</th>
+            <th class="data-table__cell data-table__cell--header">Días Descanso Trabajados</th>
+            <th class="data-table__cell data-table__cell--header">Faltas</th>
+            <th class="data-table__cell data-table__cell--header">Retardos</th>
+            <th class="data-table__cell data-table__cell--header">Salidas Temprano</th>
+          </tr>
+        </thead>
+        <tbody class="data-table__body">
+          <tr 
+            *ngFor="let empleado of registroEmpleado; trackBy: trackByEmpleadoId" 
+            class="data-table__row">
+            <td class="data-table__cell">
+              <span class="code-badge">{{ empleado.codigoEmpleado }}</span>
+            </td>
+            <td class="data-table__cell">
+              <span class="name-text">{{ empleado.nombreEmpleado }}</span>
+            </td>
+            <td class="data-table__cell">
+              <span class="hours-badge">{{ empleado.horasExtras || 0 }}h</span>
+            </td>
+            <td class="data-table__cell">
+              <span class="days-badge">{{ empleado.diasTrabajados || 0 }}</span>
+            </td>
+            <td class="data-table__cell">
+              <span class="rest-days-badge">{{ empleado.diasDescansoTrabajados || 0 }}</span>
+            </td>
+            <td class="data-table__cell">
+              <span 
+                class="status-badge"
+                [class.status-badge--warning]="(empleado.faltas || 0) > 0"
+                [class.status-badge--success]="(empleado.faltas || 0) === 0">
+                {{ empleado.faltas || 0 }}
+              </span>
+            </td>
+            <td class="data-table__cell">
+              <span 
+                class="status-badge"
+                [class.status-badge--warning]="(empleado.retardos || 0) > 0"
+                [class.status-badge--success]="(empleado.retardos || 0) === 0">
+                {{ empleado.retardos || 0 }}
+              </span>
+            </td>
+            <td class="data-table__cell">
+              <span 
+                class="status-badge"
+                [class.status-badge--warning]="(empleado.salidatemprana || 0) > 0"
+                [class.status-badge--success]="(empleado.salidatemprana || 0) === 0">
+                {{ empleado.salidatemprana || 0 }}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div class="reportes__empty-state" *ngIf="registroEmpleado.length === 0 && periodoRangoSelected">
+    <div class="empty-state">
+      <i class="fas fa-chart-line empty-state__icon"></i>
+      <h3 class="empty-state__title">No hay registros disponibles</h3>
+      <p class="empty-state__message">
+        No se encontraron datos para el período seleccionado. Intenta con otro rango de fechas.
+      </p>
+    </div>
+  </div>
+
+  <!-- Initial Empty State -->
+  <div class="reportes__empty-state" *ngIf="!periodoRangoSelected">
+    <div class="empty-state">
+      <i class="fas fa-filter empty-state__icon"></i>
+      <h3 class="empty-state__title">Selecciona los filtros</h3>
+      <p class="empty-state__message">
+        Elige un tipo de período y un rango específico para generar el reporte de empleados.
+      </p>
+    </div>
+  </div>
+
+</div>

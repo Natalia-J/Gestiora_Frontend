@@ -1,1 +1,272 @@
-<p>dias-horas works!</p>
+<div class="dias-horas">
+  <!-- Header Section -->
+  <div class="dias-horas__header">
+    <div class="dias-horas__title-section">
+      <h1 class="dias-horas__title">
+        <i class="fas fa-calendar-alt dias-horas__title-icon"></i>
+        Días y Horas
+      </h1>
+      <p class="dias-horas__subtitle">Gestiona los horarios y asistencias del personal</p>
+    </div>
+    
+    <div class="dias-horas__search">
+      <div class="search-field">
+        <i class="fas fa-search search-field__icon" style="z-index: 9999;"></i>
+        <input 
+          type="text" 
+          class="search-field__input" 
+          placeholder="Buscar por código de empleado..."
+          [(ngModel)]="codigoBusqueda"
+        >
+      </div>
+    </div>
+  </div>
+
+  <!-- Filters Section -->
+  <div class="dias-horas__filters">
+    <div class="filter-group">
+      <label class="filter-group__label">Departamento</label>
+      <div class="select-wrapper">
+        <select 
+          class="select-wrapper__select"
+          [(ngModel)]="departamentoSelected"
+          (change)="onDepartamentoChange()"
+        >
+          <option value="">Seleccionar departamento</option>
+          <option 
+            *ngFor="let dept of departamentos" 
+            [value]="dept.id"
+          >
+            {{dept.nombreDepartamento}}
+          </option>
+        </select>
+        <i class="fas fa-chevron-down select-wrapper__icon"></i>
+      </div>
+    </div>
+
+    <div class="filter-group">
+      <label class="filter-group__label">Empleado</label>
+      <div class="select-wrapper">
+        <select 
+          class="select-wrapper__select"
+          [(ngModel)]="empleadoSelected"
+          (change)="onEmpleadoChange()"
+          [disabled]="!departamentoSelected"
+        >
+          <option value="">Seleccionar empleado</option>
+          <option 
+            *ngFor="let emp of empleados" 
+            [value]="emp.id"
+          >
+            {{emp.nombreCompleto}}
+          </option>
+        </select>
+        <i class="fas fa-chevron-down select-wrapper__icon"></i>
+      </div>
+    </div>
+
+    <div class="filter-group">
+      <label class="filter-group__label">Período</label>
+      <div class="select-wrapper">
+        <select 
+          class="select-wrapper__select"
+          [(ngModel)]="periodoSelected"
+          (change)="showDataInTable()"
+        >
+          <option value="">Seleccionar período</option>
+          <option 
+            *ngFor="let periodo of periodosEmpleado" 
+            [value]="periodo.id"
+          >
+            {{periodo.rangoFechas}}
+          </option>
+        </select>
+        <i class="fas fa-chevron-down select-wrapper__icon"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- Info Card -->
+  <div class="dias-horas__info-card" *ngIf="turnoInfo">
+    <div class="info-card">
+      <div class="info-card__header">
+        <i class="fas fa-info-circle info-card__icon"></i>
+        <span class="info-card__title">Información del Turno</span>
+      </div>
+      <div class="info-card__content">
+        <div class="info-item">
+          <span class="info-item__label">Turno:</span>
+          <span class="info-item__value info-item__value--highlight">{{turnoInfo.turno}}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-item__label">Días de descanso:</span>
+          <span class="info-item__value">{{turnoInfo.diasDescanso}}</span>
+        </div>
+          <div class="info-item">
+          <span class="info-item__label">Hora de entrada:</span>
+          <span class="info-item__value">{{turnoInfo.horaEntrada}}</span>
+        </div>
+             <div class="info-item">
+          <span class="info-item__label">Hora de salida:</span>
+          <span class="info-item__value">{{turnoInfo.horaSalida}}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-item__label">Tipo de jornada:</span>
+          <span class="info-item__value">{{turnoInfo.tipoJornada}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table Section -->
+<!-- Table Section Completa -->
+<div class="dias-horas__table-container" *ngIf="mostrarTabla">
+  <div class="table-wrapper">
+    <table class="data-table">
+      <thead class="data-table__head">
+        <tr class="data-table__row data-table__row--header">
+          <th class="data-table__cell data-table__cell--header">Fecha</th>
+          <th class="data-table__cell data-table__cell--header">Hora de Entrada</th>
+          <th class="data-table__cell data-table__cell--header">Hora de Salida</th>
+          <th class="data-table__cell data-table__cell--header">Horas Trabajadas</th>
+          <th class="data-table__cell data-table__cell--header">Día de Descanso</th>
+          <th class="data-table__cell data-table__cell--header">Inconsistencias</th>
+          <th class="data-table__cell data-table__cell--header">Comentario</th>
+          <th class="data-table__cell data-table__cell--header">Acciones</th>
+        </tr>
+      </thead>
+      <tbody class="data-table__body">
+        <tr 
+          class="data-table__row" 
+          *ngFor="let registro of registros; trackBy: trackByFn"
+        >
+          <td class="data-table__cell">
+            <span class="date-badge">{{registro.fecha | date:'dd/MM/yyyy'}}</span>
+          </td>
+          
+          <!-- <td class="data-table__cell">
+            <div class="editable-field">
+              <input 
+                type="time" 
+                class="editable-field__input"
+                [(ngModel)]="registro.horaEntrada"
+                (ngModelChange)="onFieldChange(registro)"
+              >
+            </div>
+          </td> -->
+
+          <!-- <td class="data-table__cell"> -->
+
+<!-- Sección de la tabla con correcciones -->
+<td class="data-table__cell">
+  <div class="editable-field">
+    <input 
+      type="time" 
+      class="editable-field__input"
+      [(ngModel)]="registro.horaEntrada"
+      (ngModelChange)="onHoraEntradaChange(registro, $event)"
+      step="1"
+    >
+  </div>
+</td>
+          
+          <!-- <td class="data-table__cell">
+            <div class="editable-field">
+              <input 
+                type="time" 
+                class="editable-field__input"
+                [(ngModel)]="registro.horaSalida"
+                (ngModelChange)="onFieldChange(registro)"
+              >
+            </div>
+          </td> -->
+
+<td class="data-table__cell">
+  <div class="editable-field">
+  <input 
+  type="time" 
+  class="editable-field__input"
+  [(ngModel)]="registro.horaSalida"
+  (input)="onHoraSalidaChange(registro, $event)"
+  (change)="onHoraSalidaChange(registro, $event)"
+  step="1"
+>
+
+  </div>
+</td>
+          
+          <td class="data-table__cell">
+            <span class="hours-badge">{{registro.horasTrabajadas}}h</span>
+          </td>
+          
+          <td class="data-table__cell">
+            <span 
+              class="status-badge"
+              [class.status-badge--rest]="registro.esDiaDescanso"
+              [class.status-badge--work]="!registro.esDiaDescanso"
+            >
+              {{registro.esDiaDescanso ? 'Sí' : 'No'}}
+            </span>
+          </td>
+          
+  
+<td class="data-table__cell">
+  <div class="select-wrapper select-wrapper--small">
+    <select 
+      class="select-wrapper__select"
+      [(ngModel)]="registro.inconsistencia"
+      (ngModelChange)="onFieldChange(registro)"
+    >
+      <option value="">Sin inconsistencias</option>
+      <option 
+        *ngFor="let inc of inconsistencias" 
+        [value]="inc.id"
+      >
+        {{inc.name}}
+      </option>
+    </select>
+    <i class="fas fa-chevron-down select-wrapper__icon"></i>
+  </div>
+</td>
+
+
+          <td class="data-table__cell">
+            <div class="editable-field">
+              <input 
+              disabled="true"
+                type="text" 
+                class="editable-field__input"
+                [(ngModel)]="registro.comentario"
+                (ngModelChange)="onFieldChange(registro)"
+
+              >
+            </div>
+          </td>
+          
+          <td class="data-table__cell">
+            <button 
+              class="action-btn action-btn--save"
+              (click)="update(registro)"
+              [disabled]="!registro.hasChanges || saving"
+            >
+              <i class="fas fa-save"></i>
+              <span>{{ saving ? 'Guardando...' : 'Guardar' }}</span>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+  <!-- Empty State -->
+  <div class="dias-horas__empty-state" *ngIf="!mostrarTabla">
+    <div class="empty-state">
+      <i class="fas fa-calendar-times empty-state__icon"></i>
+      <h3 class="empty-state__title">No hay datos disponibles</h3>
+      <p class="empty-state__message">
+        Selecciona un departamento, empleado y período para ver los registros de días y horas.
+      </p>
+    </div>
+  </div>
+</div>

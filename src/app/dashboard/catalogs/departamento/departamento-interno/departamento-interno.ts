@@ -65,6 +65,7 @@ export class DepartamentoInterno implements OnChanges {
       a.nombreEmpleado.localeCompare(b.nombreEmpleado)
     );
     this.busqueda = '';
+    console.log('empleados:', this.empleadosFiltrados)
   }
 
   filtrarEmpleados(): void {

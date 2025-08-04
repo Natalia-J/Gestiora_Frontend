@@ -1,67 +1,80 @@
-<div class="panel-container">
+<div class="departamento">
 
-  <div class="lista-departamentos">
-    <div class="encabezado">
-      <h3 class="titulo-departamento">Departamentos existentes</h3>
-      <div class="acciones">
-        <button class="btn crear" (click)="abrirModal()">+ Crear</button>
-        <button
-          class="btn eliminar"
-          (click)="activarModoEliminar()"
-          [disabled]="departamentos.length === 0"
-          title="Eliminar departamentos"
-        >
-          🗑️
-        </button>
-      </div>
+  <!-- Header -->
+  <div class="departamento__header">
+    <div class="departamento__title-section">
+      <h1 class="departamento__title">
+        <i class="fas fa-building departamento__title-icon"></i>
+        Departamentos existentes
+      </h1>
+      <p class="departamento__subtitle">Gestiona y administra los departamentos registrados</p>
     </div>
-
-    <div *ngIf="cargando">Cargando...</div>
-    <div *ngIf="departamentos.length === 0 && !cargando">No hay departamentos registrados.</div>
-
-    <div class="tarjetas">
-      <div
-        class="tarjeta"
-        *ngFor="let depto of departamentos"
-        [class.modo-eliminar]="modoEliminar"
-        [class.seleccionado]="depto.id === departamentoSeleccionadoId"
-        (click)="modoEliminar ? eliminarDepartamento(depto) : seleccionar(depto)"
+    <div class="departamento__actions">
+      <button class="departamento__btn departamento__btn--crear" (click)="abrirModal()">+ Crear</button>
+      <button 
+        class="departamento__btn departamento__btn--eliminar"
+        (click)="activarModoEliminar()"
+        [disabled]="departamentos.length === 0"
+        title="Eliminar departamentos"
       >
-        <div class="contenido-tarjeta">
-          <h3>{{ depto.codigo }}</h3>
-          <p>{{ depto.nombreDepartamento }}</p>
-        </div>
+        <i class="fas fa-trash-alt"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Loading & Empty Messages -->
+  <div *ngIf="cargando" class="departamento__mensaje">Cargando...</div>
+  <div *ngIf="!cargando && departamentos.length === 0" class="departamento__mensaje">
+    No hay departamentos registrados.
+  </div>
+
+  <!-- Departamentos Cards -->
+  <div class="departamento__cards" *ngIf="departamentos.length > 0">
+    <div 
+      class="departamento__card"
+      *ngFor="let depto of departamentos"
+      [class.departamento__card--delete-mode]="modoEliminar"
+      [class.departamento__card--selected]="depto.id === departamentoSeleccionadoId"
+      (click)="modoEliminar ? eliminarDepartamento(depto) : seleccionar(depto)"
+      tabindex="0"
+      role="button"
+      [attr.aria-pressed]="depto.id === departamentoSeleccionadoId"
+    >
+      <div class="departamento__card-content">
+        <h3 class="departamento__card-code">{{ depto.codigo }}</h3>
+        <p class="departamento__card-name">{{ depto.nombreDepartamento }}</p>
       </div>
     </div>
   </div>
 
+  <!-- Modal Overlay -->
+  <div class="departamento__modal-overlay" *ngIf="mostrarModal">
+    <div class="departamento__modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <header class="departamento__modal-header">
+        <h2 id="modal-title">Crear Departamento</h2>
+      </header>
 
-  <div class="modal-overlay" *ngIf="mostrarModal">
-    <div class="modal">
-      <div class="modal-header">
-        <h2>Crear Departamento</h2>
-      </div>
-      <form [formGroup]="form" (ngSubmit)="guardar()">
-        <div class="modal-body">
-          <label for="codigo">Código *</label>
-          <input id="codigo" type="text" formControlName="codigo" />
-          <div class="error" *ngIf="form.get('codigo')?.touched && form.get('codigo')?.invalid">
+      <form [formGroup]="form" (ngSubmit)="guardar()" class="departamento__modal-form" novalidate>
+        <div class="departamento__modal-body">
+          <label for="codigo" class="departamento__modal-label">Código *</label>
+          <input id="codigo" type="text" formControlName="codigo" class="departamento__modal-input" />
+          <div class="departamento__error" *ngIf="form.get('codigo')?.touched && form.get('codigo')?.invalid">
             Código requerido
           </div>
 
-          <label for="nombreDepartamento">Nombre *</label>
-          <input id="nombreDepartamento" type="text" formControlName="nombreDepartamento" />
-          <div class="error" *ngIf="form.get('nombreDepartamento')?.touched && form.get('nombreDepartamento')?.invalid">
+          <label for="nombreDepartamento" class="departamento__modal-label">Nombre *</label>
+          <input id="nombreDepartamento" type="text" formControlName="nombreDepartamento" class="departamento__modal-input" />
+          <div class="departamento__error" *ngIf="form.get('nombreDepartamento')?.touched && form.get('nombreDepartamento')?.invalid">
             Nombre requerido
           </div>
 
-          <div *ngIf="error" class="error">{{ error }}</div>
+          <div *ngIf="error" class="departamento__error">{{ error }}</div>
         </div>
 
-        <div class="modal-footer">
-          <button type="button" (click)="cancelar()">Cancelar</button>
-          <button type="submit" [disabled]="!form.valid">Crear</button>
-        </div>
+        <footer class="departamento__modal-footer">
+          <button type="button" class="departamento__btn departamento__btn--cancel" (click)="cancelar()">Cancelar</button>
+          <button type="submit" class="departamento__btn departamento__btn--submit" [disabled]="!form.valid">Crear</button>
+        </footer>
       </form>
     </div>
   </div>

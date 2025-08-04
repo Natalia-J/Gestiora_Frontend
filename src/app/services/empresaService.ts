@@ -7,19 +7,24 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class EmpresaService {
-  private apiUrl = 'http://localhost:8080/api/empresa/crear';
+  private apiUrl = 'http://localhost:8080/api/empresa';
 
   constructor(private http: HttpClient) {}
 
   getCatalogos(): Observable<any> {
-    return this.http.get<any>(this.apiUrl);
+    return this.http.get<any>(this.apiUrl+"/crear");
+  }
+
+
+  getEmpresas(){
+    return this.http.get<any>(this.apiUrl + '/obtener')
   }
 
   guardarEmpresa(datos: any): Observable<any> {
     const datosPreparados = this.prepararDatosEmpresa(datos);
     console.log("datos preparados:", datosPreparados);
     console.log("datos;", datos);
-    return this.http.post(this.apiUrl, datosPreparados)
+    return this.http.post(this.apiUrl+"/crear", datosPreparados)
       .pipe(catchError(this.manejarError));
   }
 

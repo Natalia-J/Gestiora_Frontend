@@ -28,6 +28,7 @@ export interface CatalogosResponse {
   baseCotizacion:CatalogoItem[];
   departamentoEmpleado:CatalogoItem[];
   puestosEmpleado:CatalogoItem[];
+  inconsistencias:CatalogoItem[];
 }
 
 @Injectable({
@@ -41,5 +42,14 @@ export class CatalogosService {
 
   getCatalogos(): Observable<CatalogosResponse> {
     return this.http.get<CatalogosResponse>(this.apiUrl);
+  }
+
+
+    getInconsistencias(): Observable<any> {
+    return this.http.get<any>('http://localhost:8080/api/catalog/inconsistencias');
+  }
+
+      getPeriodos(): Observable<any> {
+    return this.http.get<any>('http://localhost:8080/api/catalog/periodo');// se ocupa este
   }
 }

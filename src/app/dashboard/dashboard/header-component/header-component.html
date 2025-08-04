@@ -1,15 +1,45 @@
 <header class="header">
-    <div class="right-section">
-      <div class="crear-dropdown" (click)="toggleDropdown()" tabindex="0" (blur)="cerrarDropdown()">
-        <button class="crear-btn">
-          Crear <i class="fas fa-plus"></i>
+  <div class="header__left">
+    <button class="header__menu-btn" (click)="goSelector()">
+      <i class="fas fa-home"></i>
+    </button>
+    <h1 class="header__title">Dashboard</h1>
+  </div>
+  
+  <div class="header__right">
+    <div class="header__company">
+      <span class="header__company-label">Empresa:</span>
+      <span class="header__company-name">{{getCompanyName()}}</span>
+    </div>
+    
+    <div class="header__actions">
+      <div 
+        class="dropdown" 
+        [class.dropdown--active]="dropdownAbierto"
+        (click)="toggleDropdown()" 
+        tabindex="0" 
+        (blur)="cerrarDropdown()"
+      >
+        <button class="dropdown__trigger">
+          <span class="dropdown__text">Crear</span>
+          <i class="dropdown__icon fas fa-plus"></i>
         </button>
-        <ul class="dropdown-menu" *ngIf="dropdownAbierto">
-            <li (click)="enviarElemento('departamento')">Departamento</li>
-            <li (click)="enviarElemento('puesto')">Puesto</li>
-            <li (click)="enviarElemento('turno')">Turno</li>            
+        
+        <ul class="dropdown__menu" *ngIf="dropdownAbierto">
+          <li class="dropdown__item" (click)="enviarElemento('departamento')">
+            <i class="dropdown__item-icon fas fa-building"></i>
+            <span class="dropdown__item-text">Departamento</span>
+          </li>
+          <li class="dropdown__item" (click)="enviarElemento('puesto')">
+            <i class="dropdown__item-icon fas fa-user-tie"></i>
+            <span class="dropdown__item-text">Puesto</span>
+          </li>
+          <li class="dropdown__item" (click)="enviarElemento('turno')">
+            <i class="dropdown__item-icon fas fa-clock"></i>
+            <span class="dropdown__item-text">Turno</span>
+          </li>
         </ul>
       </div>
     </div>
-  </header>
-  
+  </div>
+</header>

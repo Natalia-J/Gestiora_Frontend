@@ -1,5 +1,17 @@
 <div class="departamento-detalle">
 
+  <!-- Estado inicial visual cuando no hay departamento seleccionado -->
+  <div class="reportes__empty-state" *ngIf="!departamentoSeleccionado">
+    <div class="empty-state">
+      <i class="fas fa-building empty-state__icon"></i>
+      <h3 class="empty-state__title">Selecciona un departamento</h3>
+      <p class="empty-state__message">
+        Elige un departamento de la lista para ver sus empleados y gestionarlos.
+      </p>
+    </div>
+  </div>
+
+  <!-- Cuando hay un departamento seleccionado -->
   <div class="titulo" *ngIf="departamentoSeleccionado">
     <h2>{{ departamentoSeleccionado.nombreDepartamento }} / Empleados</h2>
   </div>
@@ -16,8 +28,8 @@
   <div class="lista-empleados" *ngIf="departamentoSeleccionado && empleadosFiltrados.length > 0">
     <div class="empleado-renglon" *ngFor="let empleado of empleadosFiltrados">
       <div class="info">
+        <span class="puesto">{{ empleado.puesto?.nombre || 'Sin puesto asignado' }}</span>
         <strong>{{ empleado.nombreEmpleado }} {{ empleado.apellidoPaternoEmpleado }} {{ empleado.apellidoMaternoEmpleado }}</strong>
-        <span class="puesto">{{ empleado.puesto.nombre }}</span>
       </div>
 
       <div class="menu">
@@ -34,10 +46,6 @@
 
   <div class="no-seleccion" *ngIf="departamentoSeleccionado && empleadosFiltrados.length === 0">
     <p>No hay empleados que coincidan con la búsqueda.</p>
-  </div>
-
-  <div class="no-seleccion" *ngIf="!departamentoSeleccionado">
-    <p>Selecciona un departamento para ver sus empleados.</p>
   </div>
 
 </div>

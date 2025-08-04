@@ -1,1 +1,94 @@
-<p>prenomina works!</p>
+<!--<div class="reportes">
+  
+  <div class="reportes__header">
+    <div class="reportes__title-section">
+      <h1 class="reportes__title">
+        <i class="fas fa-chart-bar reportes__title-icon"></i>
+        Pre-nomina de Empleados
+      </h1>
+      <p class="reportes__subtitle">Revisa el estado general del periodo previo al cálculo de la nómina.</p>
+    </div>
+  </div>
+
+  <div class="reportes__tabs">
+    <div 
+      *ngFor="let periodo of periodos; trackBy: trackByPeriodoId" 
+      class="reportes__tab"
+      [class.reportes__tab--active]="periodoSelected === periodo.id"
+      (click)="selectTab(periodo.id)">
+      {{ periodo.name }}
+    </div>
+  </div>
+
+
+
+  <div class="reportes__table-container" *ngIf="registroEmpleado.length > 0">
+    <div class="table-wrapper">
+      <table class="data-table">
+        <thead class="data-table__head">
+          <tr class="data-table__row data-table__row--header">
+            <th class="data-table__cell data-table__cell--header">Código Empleado</th>
+            <th class="data-table__cell data-table__cell--header">Nombre del Empleado</th>
+            <th class="data-table__cell data-table__cell--header">Sueldo Base</th>
+            <th class="data-table__cell data-table__cell--header">horas Extras</th>
+            <th class="data-table__cell data-table__cell--header">Bono</th>
+            <th class="data-table__cell data-table__cell--header">Comisiones</th>
+            <th class="data-table__cell data-table__cell--header">Gratificaciones</th>
+            <th class="data-table__cell data-table__cell--header">Aquinaldo Proporcional</th>
+            <th class="data-table__cell data-table__cell--header">Prima Vacacional</th>
+            <th class="data-table__cell data-table__cell--header">IMSS</th>
+            <th class="data-table__cell data-table__cell--header">INFONAVIT</th>
+            <th class="data-table__cell data-table__cell--header">Otras deducciones</th>
+            <th class="data-table__cell data-table__cell--header">ISR</th>
+            <th class="data-table__cell data-table__cell--header">Total Neto</th>
+          </tr>
+        </thead>
+        <tbody class="data-table__body">
+          <tr 
+            *ngFor="let empleado of registroEmpleado; trackBy: trackByEmpleadoId" class="data-table__row">
+            <td class="data-table__cell">
+                <span class="code-badge">{{ empleado.codigoEmpleado }}</span>
+            </td>
+            <td class="data-table__cell">
+                <span class="name-text">{{ empleado.nombreEmpleado }}</span>
+            </td>
+            <td class="data-table__cell">
+                <input type="number" [(ngModel)]="empleado.sueldoBase" class="input-editable" />
+            </td>
+            <td class="data-table__cell">
+                <input type="number" [(ngModel)]="empleado.horasExtras" class="input-editable" />
+            </td>
+            <td class="data-table__cell">
+                <input type="number" [(ngModel)]="empleado.bono" class="input-editable" />
+            </td>
+            <td class="data-table__cell">
+                <input type="number" [(ngModel)]="empleado.comisiones" class="input-editable" />
+            </td>
+            <td class="data-table__cell">
+                <input type="number" [(ngModel)]="empleado.gratificaciones" class="input-editable" />
+            </td>
+            <td class="data-table__cell">
+                <input type="number" [(ngModel)]="empleado.aguinaldoProporcional" class="input-editable" />
+            </td>
+            <td class="data-table__cell">
+                <input type="number" [(ngModel)]="empleado.primaVacacional" class="input-editable" />
+            </td>
+            <td class="data-table__cell">
+                <input type="number" [(ngModel)]="empleado.imss" class="input-editable" />
+            </td>
+            <td class="data-table__cell">
+                <input type="number" [(ngModel)]="empleado.infonavit" class="input-editable" />
+            </td>åç
+            <td class="data-table__cell">
+                <input type="number" [(ngModel)]="empleado.otrasDeducciones" class="input-editable" />
+            </td>
+            <td class="data-table__cell">
+                <input type="number" [(ngModel)]="empleado.isr" class="input-editable" />
+            </td>
+            <td class="data-table__cell">
+                <span class="neto-value">{{ empleado.totalNeto }}</span> 
+            </td>
+            </tr>
+
+
+</div>-->

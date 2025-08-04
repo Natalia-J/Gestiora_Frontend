@@ -52,11 +52,10 @@ export class Login {
 
   loggearse(data: LoginRequest) {
   this.isLoading = true;
-
   this.authService.login(data).subscribe({
     next: () => {
       console.log('Login exitoso');
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/select']);
     },
     error: (err) => {
       console.error('Error al iniciar sesión', err);

@@ -1,0 +1,460 @@
+/* dias-horas.css */
+
+/* Block: dias-horas */
+.dias-horas {
+  background: #f8fafc;
+  /* min-height: 100vh; */
+  padding: 1.5rem;
+  font-family: 'Poppins', sans-serif;
+  min-height: 100vh !important;
+}
+
+/* Element: Header */
+.dias-horas__header {
+  background: linear-gradient(135deg, #262651 0%, #2d2b5e 100%);
+  border-radius: 16px;
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 8px 32px rgba(38, 38, 81, 0.15);
+}
+
+.dias-horas__title-section {
+  flex: 1;
+}
+
+.dias-horas__title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.dias-horas__title-icon {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.5rem;
+  border-radius: 10px;
+  font-size: 1.5rem;
+}
+
+.dias-horas__subtitle {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1rem;
+  margin: 0;
+  font-weight: 400;
+}
+
+.dias-horas__search {
+  flex-shrink: 0;
+  margin-left: 2rem;
+}
+
+/* Element: Search Field */
+.search-field {
+  position: relative;
+  width: 300px;
+}
+
+.search-field__icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1rem;
+}
+
+.search-field__input {
+  /* width: 100%; */
+  padding: 0.875rem 1rem 0.875rem 3rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 500;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.search-field__input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.search-field__input:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+}
+
+/* Element: Filters */
+.dias-horas__filters {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.filter-group__label {
+  font-weight: 600;
+  color: #262651;
+  font-size: 0.9rem;
+  letter-spacing: 0.3px;
+}
+
+/* Element: Select Wrapper */
+.select-wrapper {
+  position: relative;
+}
+
+.select-wrapper__select {
+  width: 100%;
+  padding: 0.875rem 3rem 0.875rem 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  background: white;
+  color: #262651;
+  font-size: 0.9rem;
+  font-weight: 500;
+  appearance: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.select-wrapper__select:focus {
+  outline: none;
+  border-color: #262651;
+  box-shadow: 0 0 0 3px rgba(38, 38, 81, 0.1);
+}
+
+.select-wrapper__select:disabled {
+  background: #f1f5f9;
+  color: #94a3b8;
+  cursor: not-allowed;
+}
+
+.select-wrapper__icon {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #262651;
+  font-size: 0.8rem;
+  pointer-events: none;
+  transition: transform 0.3s ease;
+}
+
+.select-wrapper:hover .select-wrapper__icon {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+/* Modifier: Small select */
+.select-wrapper--small .select-wrapper__select {
+  padding: 0.5rem 2.5rem 0.5rem 0.75rem;
+  font-size: 0.8rem;
+}
+
+.select-wrapper--small .select-wrapper__icon {
+  right: 0.75rem;
+  font-size: 0.7rem;
+}
+
+/* Element: Info Card */
+.dias-horas__info-card {
+  margin-bottom: 1.5rem;
+}
+
+.info-card {
+  background: white;
+  border-radius: 16px;
+  border-left: 4px solid #262651;
+  box-shadow: 0 4px 20px rgba(38, 38, 81, 0.08);
+  overflow: hidden;
+}
+
+.info-card__header {
+  background: linear-gradient(90deg, rgba(38, 38, 81, 0.05) 0%, rgba(38, 38, 81, 0.02) 100%);
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.info-card__icon {
+  color: #262651;
+  font-size: 1.1rem;
+}
+
+.info-card__title {
+  font-weight: 600;
+  color: #262651;
+  font-size: 1rem;
+}
+
+.info-card__content {
+  padding: 1.5rem;
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.info-item__label {
+  font-size: 0.8rem;
+  color: #64748b;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.info-item__value {
+  font-size: 1rem;
+  color: #262651;
+  font-weight: 600;
+}
+
+.info-item__value--highlight {
+  color: #262651;
+  background: rgba(38, 38, 81, 0.1);
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  display: inline-block;
+}
+
+/* Element: Table Container */
+.dias-horas__table-container {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(38, 38, 81, 0.08);
+  overflow: hidden;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+/* Block: Data Table */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.data-table__head {
+  background: linear-gradient(135deg, #262651 0%, #2d2b5e 100%);
+}
+
+.data-table__row--header {
+  color: white;
+}
+
+.data-table__cell {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+  vertical-align: middle;
+}
+
+.data-table__cell--header {
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: none;
+}
+
+.data-table__row:hover {
+  background: rgba(38, 38, 81, 0.02);
+}
+
+/* Element: Editable Field */
+.editable-field__input {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  color: #262651;
+  transition: all 0.2s ease;
+}
+
+.editable-field__input:focus {
+  outline: none;
+  border-color: #262651;
+  box-shadow: 0 0 0 2px rgba(38, 38, 81, 0.1);
+}
+
+/* Element: Badges */
+.date-badge {
+  background: rgba(38, 38, 81, 0.1);
+  color: #262651;
+  padding: 0.375rem 0.75rem;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+
+.hours-badge {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  padding: 0.375rem 0.75rem;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+
+.status-badge {
+  padding: 0.375rem 0.75rem;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+
+.status-badge--rest {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: white;
+}
+
+.status-badge--work {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+}
+
+/* Element: Action Button */
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.action-btn--save {
+  background: linear-gradient(135deg, #262651 0%, #2d2b5e 100%);
+  color: white;
+}
+
+.action-btn--save:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(38, 38, 81, 0.3);
+}
+
+.action-btn:disabled {
+  background: #e2e8f0;
+  color: #94a3b8;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Element: Empty State */
+.dias-horas__empty-state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+}
+
+.empty-state {
+  text-align: center;
+  max-width: 400px;
+}
+
+.empty-state__icon {
+  font-size: 4rem;
+  color: #cbd5e1;
+  margin-bottom: 1rem;
+}
+
+.empty-state__title {
+  font-size: 1.5rem;
+  color: #262651;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.empty-state__message {
+  color: #64748b;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .dias-horas__header {
+    flex-direction: column;
+    gap: 1.5rem;
+    text-align: center;
+  }
+  
+  .dias-horas__search {
+    margin-left: 0;
+  }
+  
+  .search-field {
+    width: 100%;
+    max-width: 400px;
+  }
+}
+
+@media (max-width: 768px) {
+  .dias-horas {
+    padding: 1rem;
+  }
+  
+  .dias-horas__header {
+    padding: 1.5rem;
+  }
+  
+  .dias-horas__title {
+    font-size: 1.5rem;
+  }
+  
+  .dias-horas__filters {
+    grid-template-columns: 1fr;
+  }
+  
+  .info-card__content {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .data-table__cell {
+    padding: 0.75rem 0.5rem;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .action-btn span {
+    display: none;
+  }
+  
+  .data-table__cell--header {
+    font-size: 0.7rem;
+  }
+}

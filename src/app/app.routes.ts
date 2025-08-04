@@ -5,13 +5,16 @@ import { Home } from './auth/home/home';
 import { Dashboard } from './dashboard/dashboard/dashboard';
 import { authGuard } from './guards/auth-guard';
 import { NgModule } from '@angular/core';
+import { CompanySelector } from './dashboard/dashboard/company-selector/company-selector';
 
 export const routes: Routes = [
+  {path: 'select', component: CompanySelector},
     {path: 'login', component:Login},
     {path:'register', component:Register},
     {path: '', component:Home},
     {path: 'dashboard', component:Dashboard, canActivate:[authGuard]},
-    {path: '**', redirectTo:'', pathMatch: 'full'}
+    {path: '**', redirectTo:'', pathMatch: 'full'},
+    
 ];
 
 @NgModule({

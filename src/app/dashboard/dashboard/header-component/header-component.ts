@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header-component',
@@ -11,11 +12,25 @@ export class HeaderComponent {
   @Output() toggleSidebar = new EventEmitter<void>();
   @Output() crearElemento = new EventEmitter<string>();
 
+  router = inject(Router);
+
   dropdownAbierto = false;
 
   toggleDropdown() {
     this.dropdownAbierto = !this.dropdownAbierto;
   }
+
+  goSelector(){
+    this.router.navigate(['/select'])
+  }
+
+getCompanyName(){
+  let companyName = localStorage.getItem('companyName')
+  if(companyName){
+    return companyName;
+  }
+  return "Dashboard de tu empresa"
+}
 
   enviarElemento(tipo: string) {
     this.crearElemento.emit(tipo);

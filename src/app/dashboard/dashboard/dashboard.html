@@ -3,7 +3,7 @@
 <div class="dashboard-container">
   <app-sidebar-component (cambiarVista)="mostrarVista($event)"></app-sidebar-component>
 
-  <div class="contenido-principal">
+  <div class="" *ngIf="vistaActiva">
     <app-content-component [vistaActiva]="vistaActiva"></app-content-component>
   </div>
 </div>
