@@ -1,169 +1,420 @@
-/* ===== DEPARTAMENTO DETALLE - ESTILO TIPO REPORTES ===== */
-
-.departamento-detalle {
-  background: #f8fafc;
-  padding: 1.5rem;
-  font-family: 'Poppins', sans-serif;
-  max-width: 900px;
-  margin: 0 auto 3rem auto;
+.department-detail {
+  background: #ffffff;
+  max-width: 1400px;
+  margin: 2rem auto;
+  padding: 5rem;
   border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(38, 38, 81, 0.08);
+  box-shadow: 0 4px 20px rgba(45, 43, 94, 0.08);
+  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  color: #1e293b;
+  min-height: 600px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Título */
-.titulo h2 {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: #262651;
-  margin-bottom: 1rem;
-  border-bottom: 3px solid #2d2b5e;
-  padding-bottom: 0.5rem;
-}
-
-/* Buscador */
-.buscador {
-  margin-bottom: 1.5rem;
-}
-
-.buscador input {
-  width: 100%;
-  padding: 0.75rem 1rem;
-  border: 2px solid #e2e8f0;
-  border-radius: 12px;
-  font-size: 1rem;
-  color: #262651;
-  transition: border-color 0.3s ease;
-}
-
-.buscador input:focus {
-  border-color: #262651;
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(38, 38, 81, 0.1);
-}
-
-/* Lista empleados */
-.lista-empleados {
-  max-height: 400px;
-  overflow-y: auto;
-  border-radius: 16px;
-  background: white;
-  box-shadow: 0 4px 20px rgba(38, 38, 81, 0.08);
-  padding: 0;
-  margin: 0;
-}
-
-/* Scrollbar personalizado */
-.lista-empleados::-webkit-scrollbar {
-  width: 8px;
-}
-.lista-empleados::-webkit-scrollbar-thumb {
-  background-color: #262651;
-  border-radius: 16px;
-}
-
-/* Renglón empleado */
-.empleado-renglon {
+.department-detail__empty-state {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  padding: 0.75rem 1rem;
-  border-bottom: 1px solid #e2e8f0;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.empleado-renglon:hover {
-  background-color: rgba(38, 38, 81, 0.05);
-}
-
-/* Info empleado con puesto arriba y línea de separación */
-.info {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.puesto {
-  font-size: 0.85rem;
+  min-height: 500px;
   color: #64748b;
-  font-style: italic;
-  border-bottom: 1px solid #e2e8f0;
-  padding-bottom: 0.25rem;
-  margin-bottom: 0.3rem; /* espacio extra para separar del nombre */
 }
 
-.nombre-empleado {
+.empty-state__icon {
+  font-size: 4rem;
+  opacity: 0.6;
+  margin-right: 1rem;
+  color: #64748b;
+}
+
+.empty-state__title {
+  font-size: 1.8rem;
   font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.empty-state__message {
   font-size: 1rem;
-  color: #262651;
-  margin: 0; /* para evitar márgenes extra */
+  max-width: 400px;
+  line-height: 1.5;
 }
 
-/* Menú botón ⋮ */
-.menu {
-  position: relative;
+.department-detail__content {
+  animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.menu button {
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: #262651;
-  padding: 0;
-  user-select: none;
-  transition: color 0.3s ease;
+.department-detail__header {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 2rem;
+  align-items: start;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 1.5rem;
+  margin-bottom: 2.5rem;
 }
 
-.menu button:hover {
-  color: #10b981;
-}
-
-/* Opciones desplegables del menú */
-.menu-opciones {
-  position: absolute;
-  right: 0;
-  top: 1.8rem;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(38, 38, 81, 0.15);
-  list-style: none;
-  margin: 0;
-  padding: 0.5rem 0;
-  min-width: 180px;
-  z-index: 10;
-}
-
-.menu-opciones li {
-  padding: 0.75rem 1rem;
-  font-size: 0.9rem;
-  color: #262651;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.menu-opciones li:hover {
-  background-color: #10b981;
-  color: white;
-  border-radius: 12px;
-}
-
-/* Mensajes sin resultados o sin selección */
-.no-seleccion p {
-  text-align: center;
-  color: #64748b;
-  padding: 2rem 0;
-  font-size: 1rem;
-  font-weight: 500;
-}
-
-/* Animación */
-@media (prefers-reduced-motion: no-preference) {
-  .lista-empleados {
-    animation: fadeInUp 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+@media (max-width: 768px) {
+  .department-detail__header {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
 }
 
+.department-detail__title-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.department-detail__title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2d2b5e;
+  margin: 0 0 0.5rem 0;
+  position: relative;
+}
+
+.department-detail__title::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, #2d2b5e 0%, #4c4a8b 100%);
+  border-radius: 2px;
+}
+
+.department-detail__subtitle {
+  font-size: 1rem;
+  color: #64748b;
+  max-width: 500px;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.department-detail__search {
+  width: 100%;
+}
+
+.search-box {
+  position: relative;
+}
+
+.search-box__icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #64748b;
+  font-size: 0.9rem;
+  z-index: 1;
+}
+
+.search-box__input {
+  width: 100%;
+  padding: 0.9rem 1rem 0.9rem 2.5rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  color: #1e293b;
+  background: #ffffff;
+  transition: all 0.3s ease;
+}
+
+.search-box__input::placeholder {
+  color: #64748b;
+}
+
+.search-box__input:focus {
+  border-color: #2d2b5e;
+  box-shadow: 0 0 0 3px rgba(45, 43, 94, 0.1);
+  outline: none;
+}
+
+.department-detail__employees {
+  max-height: 70vh;
+  /*overflow-y: auto;*/
+  padding-right: 8px;
+}
+
+/* Custom scrollbar */
+.department-detail__employees::-webkit-scrollbar {
+  width: 6px;
+}
+
+.department-detail__employees::-webkit-scrollbar-track {
+  background: #e2e8f0;
+  border-radius: 3px;
+}
+
+.department-detail__employees::-webkit-scrollbar-thumb {
+  background: #2d2b5e;
+  border-radius: 3px;
+}
+
+.department-detail__employees::-webkit-scrollbar-thumb:hover {
+  background: #221f4a;
+}
+
+.department-detail__no-results {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  color: #64748b;
+}
+
+.no-results__icon {
+  font-size: 4rem;
+  opacity: 0.6;
+  margin-bottom: 1rem;
+}
+
+.no-results__title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  color: #1e293b;
+}
+
+.no-results__message {
+  font-size: 1rem;
+  line-height: 1.6;
+  max-width: 400px;
+  text-align: center;
+}
+
+/* Grupos de empleados */
+.employee-group {
+  margin-bottom: 2rem;
+}
+
+.employee-group__letter {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2d2b5e;
+  margin-bottom: 1rem;
+  padding-left: 0.5rem;
+  position: relative;
+}
+
+.employee-group__letter::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 24px;
+  background: #2d2b5e;
+  border-radius: 2px;
+}
+
+/* Cards de empleados */
+.employee-cards {
+  display: grid;
+  gap: 1rem;
+}
+
+.employee-card {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(45, 43, 94, 0.08);
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid transparent;
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.employee-card:hover {
+  /*transform: translateY(-2px); - queda pendiente*/
+  box-shadow: 0 8px 30px rgba(45, 43, 94, 0.12);
+  border-color: rgba(45, 43, 94, 0.1);
+}
+
+.employee-card__info {
+  flex: 1;
+}
+
+.employee-card__header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.employee-card__name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.employee-card__position {
+  font-size: 0.9rem;
+  color: #64748b;
+  padding: 0.25rem 0.75rem;
+  background: rgba(45, 43, 94, 0.05);
+  border-radius: 20px;
+  border: 1px solid rgba(45, 43, 94, 0.1);
+  align-self: flex-start;
+}
+
+.employee-card__actions {
+  position: relative;
+  margin-left: 1rem;
+}
+
+.employee-card__menu-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+  transition: all 0.3s ease;
+}
+
+.employee-card__menu-btn:hover {
+  background: rgba(45, 43, 94, 0.1);
+  color: #2d2b5e;
+}
+
+.employee-card__menu-btn[aria-expanded="true"] {
+  background: #2d2b5e;
+  color: #ffffff;
+}
+
+.employee-card__menu-btn i {
+  font-size: 0.9rem;
+}
+
+.employee-card__menu { /*animacion*/
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 12px 40px rgba(45, 43, 94, 0.16);
+  min-width: 200px;
+  z-index: 1000000; /* Aumentado aquí */
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-10px) scale(0.95);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+}
+
+
+.employee-card__menu--active {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateY(0) scale(1);
+}
+
+.employee-card__menu-item {
+  background: none;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  width: 100%;
+  padding: 0.875rem 1.25rem;
+  text-align: left;
+  font-size: 0.9rem;
+  color: #1e293b;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  transition: background-color 0.2s ease;
+}
+
+.employee-card__menu-item:hover {
+  background: rgba(45, 43, 94, 0.05);
+}
+
+.employee-card__menu-item--danger {
+  color: #ef4444;
+}
+
+.employee-card__menu-item--danger:hover {
+  background: rgba(239, 68, 68, 0.05);
+}
+
+.employee-card__menu-item i {
+  font-size: 0.8rem;
+  width: 16px;
+}
+
+/* boton crear*/
+.department-detail__header {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 1rem;
+  align-items: center;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.department-detail__add-employee {
+  /* Este div contendrá el botón, lo alineamos a la derecha */
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-add-employee {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #2d2b5e;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  white-space: nowrap;
+}
+
+.btn-add-employee i {
+  font-size: 1rem;
+}
+
+.btn-add-employee:hover {
+  background-color: #4c4a8b;
+}
+
+/* Responsive para pantallas pequeñas */
+@media (max-width: 768px) {
+  .department-detail__header {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .department-detail__add-employee {
+    justify-content: flex-start;
+  }
+
+  .btn-add-employee {
+    font-size: 0.9rem;
+    padding: 0.4rem 0.8rem;
+  }
+}
+
+
+/* Animaciones */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -172,5 +423,41 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .department-detail {
+    padding: 1.5rem;
+  }
+
+  .department-detail__header {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .department-detail__title {
+    font-size: 1.5rem;
+  }
+
+  .department-detail__search {
+    min-width: auto;
+  }
+
+  .employee-card {
+    padding: 1.25rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .employee-card__actions {
+    margin-left: 0;
+    align-self: flex-end;
+  }
+
+  .search-box__input {
+    font-size: 1rem;
   }
 }

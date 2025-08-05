@@ -61,25 +61,83 @@ export class DepartamentoInterno implements OnChanges {
 
   seleccionarDepartamento(departamento: DepartamentoConEmpleados): void {
     this.departamentoSeleccionado = departamento;
-    this.empleadosFiltrados = departamento.empleados.sort((a, b) =>
+    const empleadosOrdenados = departamento.empleados.sort((a, b) =>
       a.nombreEmpleado.localeCompare(b.nombreEmpleado)
     );
+    this.empleadosFiltrados = empleadosOrdenados;
+    this.agruparEmpleadosPorLetra(empleadosOrdenados);
+
     this.busqueda = '';
     console.log('empleados:', this.empleadosFiltrados)
   }
+  
 
   filtrarEmpleados(): void {
-    const criterio = this.busqueda.toLowerCase();
-    if (this.departamentoSeleccionado) {
-      this.empleadosFiltrados = this.departamentoSeleccionado.empleados.filter(emp =>
-        `${emp.nombreEmpleado} ${emp.apellidoPaternoEmpleado} ${emp.apellidoMaternoEmpleado}`.toLowerCase().includes(criterio)
-      ); 
+    if (!this.departamentoSeleccionado?.empleados) {
+      return;
     }
+
+    const terminoBusqueda = this.busqueda.toLowerCase().trim();
+    
+    if (!terminoBusqueda) {
+      this.empleadosFiltrados = [...this.departamentoSeleccionado.empleados];
+    } else {
+      this.empleadosFiltrados = this.departamentoSeleccionado.empleados.filter(empleado => {
+        const nombreCompleto = `${empleado.nombreEmpleado} ${empleado.apellidoPaternoEmpleado} ${empleado.apellidoMaternoEmpleado}`.toLowerCase();
+        const puesto = empleado.puesto?.nombre?.toLowerCase() || '';
+        
+        return nombreCompleto.includes(terminoBusqueda) || puesto.includes(terminoBusqueda);
+      });
+    }
+    
+    this.agruparEmpleados();
+    
+    this.menuEmpleadoAbiertoId = null;
   }
+
+    private agruparEmpleados(): void {
+    this.empleadosAgrupados = {};
+    
+    this.empleadosFiltrados.forEach(empleado => {
+      const primeraLetra = empleado.nombreEmpleado.charAt(0).toUpperCase();
+      
+      if (!this.empleadosAgrupados[primeraLetra]) {
+        this.empleadosAgrupados[primeraLetra] = [];
+      }
+      
+      this.empleadosAgrupados[primeraLetra].push(empleado);
+    });
+
+    Object.keys(this.empleadosAgrupados).forEach(letra => {
+      this.empleadosAgrupados[letra].sort((a, b) => 
+        a.nombreEmpleado.localeCompare(b.nombreEmpleado)
+      );
+    });
+  }
+
+  empleadosAgrupados: { [letra: string]: any[] } = {};
+
+  agruparEmpleadosPorLetra(empleados: any[]) {
+    this.empleadosAgrupados = {};
+
+    empleados.forEach(empleado => {
+      const letra = empleado.nombreEmpleado.charAt(0).toUpperCase();
+      if (!this.empleadosAgrupados[letra]) {
+        this.empleadosAgrupados[letra] = [];
+      }
+      this.empleadosAgrupados[letra].push(empleado);
+    });
+  }
+
+  sortByKey = (a: { key: string }, b: { key: string }) => a.key.localeCompare(b.key);
+
+
 
   toggleMenu(empleadoId: number): void {
     this.menuEmpleadoAbiertoId = this.menuEmpleadoAbiertoId === empleadoId ? null : empleadoId;
   }
+
+  abrirModalAgregarEmpleado(){}
 
   editarEmpleado(empleado: EmpleadoSimple): void {
     console.log('Editar:', empleado);

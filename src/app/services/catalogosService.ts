@@ -50,6 +50,6 @@ export class CatalogosService {
   }
 
       getPeriodos(): Observable<any> {
-    return this.http.get<any>('http://localhost:8080/api/catalog/periodo');// se ocupa este
+    return this.http.get<any>('http://localhost:8080/api/catalog/periodo');// se ocupa este parea los periodos de los tabs
   }
 }

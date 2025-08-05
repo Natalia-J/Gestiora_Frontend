@@ -42,7 +42,7 @@ export interface Empresa {
   direccionCompany: Direccion;
   tipoCodigoEmpleado: TipoCodigoEmpleado;
   regimenFiscalCompany: RegimenFiscal;
-  tipoPeriodo: any; // Puedes definirlo mejor si sabes su estructura
+  tipoPeriodo: any; 
 }
 
 export interface TipoContrato {

@@ -177,103 +177,244 @@
 }
 
 /* ===== MODAL ===== */
+/* ===== MODAL OVERLAY ===== */
 .departamento__modal-overlay {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background: rgba(45, 43, 94, 0.65);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 10000;
+  padding: 1rem;
+  overflow-y: auto;
 }
 
+/* ===== MODAL CONTAINER (ventanilla) ===== */
 .departamento__modal {
-  background: white;
+  background: #ffffff;
   border-radius: 16px;
   padding: 2rem 2.5rem;
   width: 100%;
-  max-width: 480px;
-  box-shadow: 0 12px 36px rgba(45, 43, 94, 0.25);
+  max-width: 520px;
+  box-shadow: 0 12px 36px rgba(45, 43, 94, 0.2);
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  box-sizing: border-box;
+  max-height: 90vh;
+  overflow-y: auto;
+  border: 1px solid #e2e8f0;
+}
+
+/* ===== MODAL HEADER ===== */
+.departamento__modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #f1f5f9;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
 }
 
 .departamento__modal-header h2 {
-  margin: 0;
-  color: #2d2b5e;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.5rem;
   font-weight: 700;
-  font-size: 1.75rem;
+  color: #2d2b5e;
+  margin: 0;
 }
 
+.departamento__modal-header h2::before {
+  content: none; /* Emoji eliminado para estilo más limpio */
+}
+
+/* Botón cerrar */
+.departamento__modal-cerrar {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #64748b;
+  cursor: pointer;
+  padding: 0.25rem;
+  transition: color 0.2s ease;
+}
+
+.departamento__modal-cerrar:hover {
+  color: #232244;
+}
+
+/* ===== MODAL FORM ===== */
 .departamento__modal-form {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
+.departamento__modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.departamento__modal-form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===== FORM LABELS ===== */
 .departamento__modal-label {
+  font-family: 'Poppins', sans-serif;
   font-weight: 600;
   font-size: 0.95rem;
   color: #2d2b5e;
+  margin-bottom: 0.5rem;
 }
 
+/* ===== FORM INPUTS ===== */
 .departamento__modal-input {
-  padding: 0.5rem 0.75rem;
-  font-size: 1rem;
-  border: 2px solid #cbd5e1;
+  width: 100%;
+  padding: 0.875rem 1rem;
+  border: 2px solid #e2e8f0;
   border-radius: 12px;
-  transition: border-color 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  background: #ffffff;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
 }
 
 .departamento__modal-input:focus {
   outline: none;
   border-color: #2d2b5e;
-  box-shadow: 0 0 6px #2d2b5e;
-  transform: translateY(-1px);
+  box-shadow: 0 0 0 3px rgba(45, 43, 94, 0.1);
+  background: #f8fafc;
 }
 
+.departamento__modal-input::placeholder {
+  color: #94a3b8;
+  font-weight: 400;
+}
+
+/* ===== ERROR MESSAGES ===== */
 .departamento__error {
   color: #dc2626;
-  font-weight: 600;
-  font-size: 0.85rem;
-  margin-top: -0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-top: 0.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-/* Modal Buttons */
+.departamento__error::before {
+  content: "⚠️";
+  font-size: 0.8rem;
+}
+
+/* ===== MODAL FOOTER ===== */
 .departamento__modal-footer {
   display: flex;
   justify-content: flex-end;
   gap: 1rem;
   margin-top: 1rem;
+  padding-top: 1.5rem;
+  border-top: 2px solid #f1f5f9;
 }
 
+/* ===== BUTTONS ===== */
 .departamento__btn--cancel {
-  background: #64748b;
-  color: white;
-  padding: 0.6rem 1.25rem;
+  background: #f8fafc;
+  color: #64748b;
+  border: 2px solid #e2e8f0;
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 100px;
 }
 
-.departamento__btn--cancel:hover {
-  background: #475569;
-  transform: translateY(-2px);
+.departamento__btn--cancel:hover:not(:disabled) {
+  background: #e2e8f0;
+  color: #475569;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(45, 43, 94, 0.1);
 }
 
 .departamento__btn--submit {
-  background: #10b981;
+  background: linear-gradient(135deg, #262651 0%, #2d2b5e 100%);
   color: white;
-  padding: 0.6rem 1.5rem;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 120px;
+  box-shadow: 0 4px 15px rgba(45, 43, 94, 0.2);
 }
 
 .departamento__btn--submit:hover:not(:disabled) {
-  background: #059669;
+  background: linear-gradient(135deg, #1e1e3f 0%, #252350 100%);
   transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(45, 43, 94, 0.3);
 }
 
 .departamento__btn--submit:disabled {
-  opacity: 0.6;
+  background: #94a3b8;
   cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 480px) {
+  .departamento__modal {
+    padding: 1.5rem !important;
+    margin: 1rem !important;
+  }
+
+  .departamento__modal-header h2 {
+    font-size: 1.4rem;
+  }
+
+  .departamento__modal-footer {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .departamento__btn--cancel,
+  .departamento__btn--submit {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+
+.departamento__modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(45, 43, 94, 0.65);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  padding: 1rem;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 480px) {
 .departamento__header {

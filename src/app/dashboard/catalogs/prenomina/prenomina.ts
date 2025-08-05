@@ -1,8 +1,10 @@
 import { Component, inject } from '@angular/core';
+import { PeriodoRequest, RegistroEmpleado } from '../../../schemas/reporte-empleado.schema';
 import { CatalogosService } from '../../../services/catalogosService';
 import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 import { PrenominaService } from '../../../services/prenomina-service';
+import { TipoPeriodos } from '../../../services/tipo-periodos';
 import { PrenominaRequest, RegistroPrenomina } from '../../../schemas/prenomina-Empleados.schemas';
 
 @Component({
@@ -12,77 +14,211 @@ import { PrenominaRequest, RegistroPrenomina } from '../../../schemas/prenomina-
   styleUrl: './prenomina.css'
 })
 export class Prenomina {
-/* periodos: any[] = [];
-  periodoSelected: number | null = null;
+periodos: any[] = [];
   registroEmpleado: RegistroPrenomina[] = [];
+  periodoSelected: number | null = null;
+  isLoading = false;
+  isGeneratingPayroll = false;
+  isSaving: { [key: string]: boolean } = {};
 
-  catalogosService = inject(CatalogosService);
-  prenominaService = inject(PrenominaService);
-  toastService = inject(ToastrService);
+  // Servicios inyectados
+  private readonly catalogsService = inject(CatalogosService);
+  private readonly prenominaService = inject(PrenominaService);
+  private readonly toastService = inject(ToastrService);
+  private readonly tipoPeriodosService = inject(TipoPeriodos);
+
+  // Mapeo de nombres de períodos
+  readonly periodoNames: { [key: number]: string } = {
+    1: 'Semanal',
+    2: 'Quincenal',
+    3: 'Mensual'
+  };
 
   ngOnInit(): void {
-    this.cargarPeriodos();
+    this.loadPeriodos();
   }
 
-  cargarPeriodos(): void {
-    this.catalogosService.getPeriodos().subscribe({
+  private loadPeriodos(): void {
+    this.isLoading = true;
+    this.catalogsService.getPeriodos().subscribe({
       next: (response) => {
-        this.periodos = response;
+        this.periodos = response.map((periodo: any) => ({
+          ...periodo,
+          name: this.periodoNames[periodo.id] || `Periodo ${periodo.id}`
+        }));
+        
         if (this.periodos.length > 0) {
-          this.selectPeriodo(this.periodos[0].id);
+          this.selectTab(this.periodos[0].id);
+        }
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('Error al cargar períodos:', error);
+        this.toastService.error('Error al cargar los períodos', 'Error');
+        this.isLoading = false;
+      }
+    });
+  }
+
+  selectTab(periodoId: number): void {
+    if (this.periodoSelected === periodoId) return;
+    
+    this.periodoSelected = periodoId;
+    this.registroEmpleado = [];
+    this.isLoading = true;
+
+    this.prenominaService.getPrenominaPorTipoPeriodo(periodoId).subscribe({
+      next: (empleados) => {
+        this.registroEmpleado = empleados;
+        this.isLoading = false;
+        
+        if (empleados.length === 0) {
+          this.toastService.info('No se encontraron empleados para este período', 'Información');
         }
       },
-      error: () => {
-        this.toastService.error('Error al cargar los períodos');
+      error: (error) => {
+        console.error('Error al cargar empleados:', error);
+        this.toastService.error('Error al cargar empleados para el período seleccionado', 'Error');
+        this.isLoading = false;
       }
     });
   }
 
-  selectPeriodo(periodoId: number): void {
-    this.periodoSelected = periodoId;
-    this.cargarEmpleadosPorPeriodo(periodoId);
-  }
+  guardarPrenomina(empleado: RegistroPrenomina): void {
+    const empleadoKey = empleado.codigoEmpleado;
+    
+    if (this.isSaving[empleadoKey] || !this.periodoSelected) return;
 
-  cargarEmpleadosPorPeriodo(tipoPeriodoId: number): void {
-    this.prenominaService.getEmpleadosPorTipoPeriodo(tipoPeriodoId).subscribe({
-      next: (response) => {
-        this.registroEmpleado = response;
-      },
-      error: () => {
-        this.toastService.error('Error al cargar empleados para el período');
-      }
-    });
-  }
+    this.isSaving[empleadoKey] = true;
 
-  guardarCambios(empleado: RegistroPrenomina): void {
-    if (!this.periodoSelected) {
-      this.toastService.warning('Debe seleccionar un periodo');
-      return;
-    }
- 
     const prenominaRequest: PrenominaRequest = {
-      bono: empleado.Bonos,
-      comisiones: empleado.comisiones,
-      gratificaciones: empleado.gratificaciones,
-      aguinaldoProporcional: empleado.aguinaldoProporcional,
-      primaVacacional: empleado.primaVacacional,
-      imss: empleado.imss,
-      infonavit: empleado.infonavit,
-      otrasDeducciones: empleado.otrasDeducciones
+      bono: empleado.Bonos || 0,
+      comisiones: empleado.comisiones || 0,
+      gratificaciones: empleado.gratificaciones || 0,
+      aguinaldoProporcional: empleado.aguinaldoProporcional || 0,
+      primaVacacional: empleado.primaVacacional || 0,
+      imss: empleado.imss || 0,
+      infonavit: empleado.infonavit || 0,
+      otrasDeducciones: empleado.otrasDeducciones || 0
     };
 
-    this.prenominaService.guardarPrenomina(empleado.codigoEmpleado as unknown as number, this.periodoSelected, prenominaRequest).subscribe({
+    // Necesitamos el ID numérico del empleado para la API
+    const empleadoId = this.extractEmpleadoId(empleado.codigoEmpleado);
+    
+    this.prenominaService.guardarPrenomina(empleadoId, this.periodoSelected, prenominaRequest).subscribe({
       next: () => {
-        this.toastService.success(`Datos guardados para ${empleado.nombreEmpleado}`);
+        this.toastService.success(
+          `Prenómina guardada correctamente para ${empleado.nombreEmpleado}`, 
+          'Éxito'
+        );
+        this.isSaving[empleadoKey] = false;
+        
+        // Recargar datos para mostrar los valores actualizados
+        this.selectTab(this.periodoSelected!);
       },
-      error: () => {
-        this.toastService.error(`Error al guardar datos de ${empleado.nombreEmpleado}`);
+      error: (error) => {
+        console.error('Error al guardar prenómina:', error);
+        this.toastService.error(
+          `Error al guardar la prenómina de ${empleado.nombreEmpleado}`, 
+          'Error'
+        );
+        this.isSaving[empleadoKey] = false;
       }
     });
   }
 
-  trackByEmpleadoId(index: number, item: RegistroPrenomina): string {
+  private extractEmpleadoId(codigoEmpleado: string): number {
+    // Asumiendo que el código del empleado contiene o es un ID numérico
+    // Ajusta esta lógica según tu formato de código de empleado
+    const match = codigoEmpleado.match(/\d+/);
+    return match ? parseInt(match[0], 10) : 0;
+  }
+
+  calculateTotalNeto(empleado: RegistroPrenomina): number {
+    const ingresos = (empleado.sueldoBase || 0) + 
+                    (empleado.horasExtras || 0) + 
+                    (empleado.Bonos || 0) + 
+                    (empleado.comisiones || 0) + 
+                    (empleado.gratificaciones || 0) + 
+                    (empleado.aguinaldoProporcional || 0) + 
+                    (empleado.primaVacacional || 0);
+
+    const deducciones = (empleado.imss || 0) + 
+                       (empleado.infonavit || 0) + 
+                       (empleado.otrasDeducciones || 0) + 
+                       (empleado.isr || 0);
+
+    return ingresos - deducciones;
+  }
+
+  trackByEmpleadoId = (index: number, item: RegistroPrenomina): string => {
     return item.codigoEmpleado;
-  }*/
+  };
+
+  trackByPeriodoId = (index: number, item: any): number => {
+    return item.id;
+  };
+
+  isFieldEditable(fieldName: string): boolean {
+    const nonEditableFields = ['sueldoBase', 'totalNeto', 'isr', 'nombreEmpleado', 'codigoEmpleado'];
+    return !nonEditableFields.includes(fieldName);
+  }
+
+  formatCurrency(value: number): string {
+    return new Intl.NumberFormat('es-MX', {
+      style: 'currency',
+      currency: 'MXN',
+      minimumFractionDigits: 2
+    }).format(value || 0);
+  }
+
+  onInputChange(empleado: RegistroPrenomina, field: string, event: any): void {
+    const value = parseFloat(event.target.value) || 0;
+    (empleado as any)[field] = value;
+    
+    // Recalcular total neto si es necesario
+    empleado.totalNeto = this.calculateTotalNeto(empleado);
+  }
+
+  getTotalNomina(): number {
+    return this.registroEmpleado.reduce((total, empleado) => {
+      return total + this.calculateTotalNeto(empleado);
+    }, 0);
+  }
+
+  generarNomina(): void {
+    if (this.isGeneratingPayroll || !this.periodoSelected) return;
+
+    this.isGeneratingPayroll = true;
+
+    // Simular llamada a API para generar nómina
+    // Aquí deberías llamar a tu servicio real
+    setTimeout(() => {
+      this.toastService.success(
+        `Nómina generada exitosamente para el período ${this.periodoNames[this.periodoSelected!]}`, 
+        'Éxito'
+      );
+      this.isGeneratingPayroll = false;
+      
+      // Opcional: Redirigir a la vista de nóminas generadas
+      // this.router.navigate(['/nominas']);
+    }, 2000);
+
+    // Ejemplo de implementación real:
+    /*
+    this.nominaService.generarNomina(this.periodoSelected, this.registroEmpleado).subscribe({
+      next: (response) => {
+        this.toastService.success('Nómina generada exitosamente', 'Éxito');
+        this.isGeneratingPayroll = false;
+        // Opcional: navegar a la vista de nóminas
+      },
+      error: (error) => {
+        console.error('Error al generar nómina:', error);
+        this.toastService.error('Error al generar la nómina', 'Error');
+        this.isGeneratingPayroll = false;
+      }
+    });
+    */
+  }
 
 }

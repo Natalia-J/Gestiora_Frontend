@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { PeriodoRequest, RegistroEmpleado } from '../schemas/reporte-empleado.schema';
 import { Observable } from 'rxjs';
-import { PrenominaRequest } from '../schemas/prenomina-Empleados.schemas';
+import { PrenominaRequest, RegistroPrenomina } from '../schemas/prenomina-Empleados.schemas';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +14,12 @@ export class PrenominaService {
 
   guardarPrenomina(empleadoId: number, tipoPeriodoId: number, prenominaRequest: PrenominaRequest): Observable<void> {
     const url = `${this.API_URL}/guardar/${empleadoId}?tipoPeriodoId=${tipoPeriodoId}`;
-    return this.http.post<void>(url, prenominaRequest);
-  }
+    return this.http.post<void>(url, prenominaRequest);// este sirve para guardar los datos en la base de datos
+  }// este es el service, este es un ejemplo de como hacepta la url: http://localhost:8080/api/empleado/prenomina/guardar/2?tipoPeriodoId=1
+
+    getPrenominaPorTipoPeriodo(tipoPeriodoId: number): Observable<RegistroPrenomina[]> {
+    return this.http.get<RegistroPrenomina[]>(`${this.API_URL}/por-tipo-periodo/${tipoPeriodoId}`);
+  } // este esd para traer el tipo de prenomina por tipo, ejemplo de la ruta: http://localhost:8080/api/prenomina/por-tipo-periodo/1
+
+
 }

@@ -1,94 +1,266 @@
-<!--<div class="reportes">
-  
-  <div class="reportes__header">
-    <div class="reportes__title-section">
-      <h1 class="reportes__title">
-        <i class="fas fa-chart-bar reportes__title-icon"></i>
-        Pre-nomina de Empleados
+<div class="prenomina">
+  <!-- Header Section -->
+  <div class="prenomina__header">
+    <div class="prenomina__title-section">
+      <h1 class="prenomina__title">
+        <i class="fas fa-chart-bar prenomina__title-icon"></i>
+        Pre-nómina de Empleados
       </h1>
-      <p class="reportes__subtitle">Revisa el estado general del periodo previo al cálculo de la nómina.</p>
+      <p class="prenomina__subtitle">
+        Revisa y edita el estado general del período previo al cálculo de la nómina.
+      </p>
     </div>
   </div>
 
-  <div class="reportes__tabs">
+  <!-- Tabs Section -->
+  <div class="prenomina__tabs" *ngIf="!isLoading">
     <div 
       *ngFor="let periodo of periodos; trackBy: trackByPeriodoId" 
-      class="reportes__tab"
-      [class.reportes__tab--active]="periodoSelected === periodo.id"
+      class="prenomina__tab"
+      [class.prenomina__tab--active]="periodoSelected === periodo.id"
       (click)="selectTab(periodo.id)">
-      {{ periodo.name }}
+      <span class="prenomina__tab-text">{{ periodo.name }}</span>
     </div>
   </div>
 
+  <!-- Loading State -->
+  <div class="prenomina__loading" *ngIf="isLoading">
+    <div class="prenomina__loading-spinner"></div>
+    <p class="prenomina__loading-text">Cargando información...</p>
+  </div>
 
-
-  <div class="reportes__table-container" *ngIf="registroEmpleado.length > 0">
-    <div class="table-wrapper">
-      <table class="data-table">
-        <thead class="data-table__head">
-          <tr class="data-table__row data-table__row--header">
-            <th class="data-table__cell data-table__cell--header">Código Empleado</th>
-            <th class="data-table__cell data-table__cell--header">Nombre del Empleado</th>
-            <th class="data-table__cell data-table__cell--header">Sueldo Base</th>
-            <th class="data-table__cell data-table__cell--header">horas Extras</th>
-            <th class="data-table__cell data-table__cell--header">Bono</th>
-            <th class="data-table__cell data-table__cell--header">Comisiones</th>
-            <th class="data-table__cell data-table__cell--header">Gratificaciones</th>
-            <th class="data-table__cell data-table__cell--header">Aquinaldo Proporcional</th>
-            <th class="data-table__cell data-table__cell--header">Prima Vacacional</th>
-            <th class="data-table__cell data-table__cell--header">IMSS</th>
-            <th class="data-table__cell data-table__cell--header">INFONAVIT</th>
-            <th class="data-table__cell data-table__cell--header">Otras deducciones</th>
-            <th class="data-table__cell data-table__cell--header">ISR</th>
-            <th class="data-table__cell data-table__cell--header">Total Neto</th>
+  <!-- Table Section -->
+  <div class="prenomina__table-container" *ngIf="!isLoading && registroEmpleado.length > 0">
+    <div class="prenomina__table-wrapper">
+      <table class="prenomina__table">
+        <thead class="prenomina__table-head">
+          <tr class="prenomina__table-row prenomina__table-row--header">
+            <th class="prenomina__table-cell prenomina__table-cell--header prenomina__table-cell--sticky">
+              Código Empleado
+            </th>
+            <th class="prenomina__table-cell prenomina__table-cell--header prenomina__table-cell--sticky">
+              Nombre del Empleado
+            </th>
+            <th class="prenomina__table-cell prenomina__table-cell--header">Sueldo Base</th>
+            <th class="prenomina__table-cell prenomina__table-cell--header">Horas Extras</th>
+            <th class="prenomina__table-cell prenomina__table-cell--header">Bonos</th>
+            <th class="prenomina__table-cell prenomina__table-cell--header">Comisiones</th>
+            <th class="prenomina__table-cell prenomina__table-cell--header">Gratificaciones</th>
+            <th class="prenomina__table-cell prenomina__table-cell--header">Aguinaldo Proporcional</th>
+            <th class="prenomina__table-cell prenomina__table-cell--header">Prima Vacacional</th>
+            <th class="prenomina__table-cell prenomina__table-cell--header">IMSS</th>
+            <th class="prenomina__table-cell prenomina__table-cell--header">INFONAVIT</th>
+            <th class="prenomina__table-cell prenomina__table-cell--header">Otras Deducciones</th>
+            <th class="prenomina__table-cell prenomina__table-cell--header">ISR</th>
+            <th class="prenomina__table-cell prenomina__table-cell--header">Total Neto</th>
+            <th class="prenomina__table-cell prenomina__table-cell--header prenomina__table-cell--actions">
+              Acciones
+            </th>
           </tr>
         </thead>
-        <tbody class="data-table__body">
+        <tbody class="prenomina__table-body">
           <tr 
-            *ngFor="let empleado of registroEmpleado; trackBy: trackByEmpleadoId" class="data-table__row">
-            <td class="data-table__cell">
-                <span class="code-badge">{{ empleado.codigoEmpleado }}</span>
+            *ngFor="let empleado of registroEmpleado; trackBy: trackByEmpleadoId; let i = index" 
+            class="prenomina__table-row"
+            [class.prenomina__table-row--even]="i % 2 === 0">
+            
+            <!-- Código Empleado -->
+            <td class="prenomina__table-cell prenomina__table-cell--sticky">
+              <span class="prenomina__code-badge">{{ empleado.codigoEmpleado }}</span>
             </td>
-            <td class="data-table__cell">
-                <span class="name-text">{{ empleado.nombreEmpleado }}</span>
+            
+            <!-- Nombre Empleado -->
+            <td class="prenomina__table-cell prenomina__table-cell--sticky">
+              <span class="prenomina__name-text">{{ empleado.nombreEmpleado }}</span>
             </td>
-            <td class="data-table__cell">
-                <input type="number" [(ngModel)]="empleado.sueldoBase" class="input-editable" />
+            
+            <!-- Sueldo Base (no editable) -->
+            <td class="prenomina__table-cell">
+              <span class="prenomina__readonly-value">
+                {{ formatCurrency(empleado.sueldoBase) }}
+              </span>
             </td>
-            <td class="data-table__cell">
-                <input type="number" [(ngModel)]="empleado.horasExtras" class="input-editable" />
+            
+            <!-- Horas Extras -->
+            <td class="prenomina__table-cell">
+              <input 
+                type="number" 
+                [value]="empleado.horasExtras || 0"
+                (input)="onInputChange(empleado, 'horasExtras', $event)"
+                class="prenomina__input" 
+                min="0"
+                step="0.01"
+                placeholder="0.00" />
             </td>
-            <td class="data-table__cell">
-                <input type="number" [(ngModel)]="empleado.bono" class="input-editable" />
+            
+            <!-- Bonos -->
+            <td class="prenomina__table-cell">
+              <input 
+                type="number" 
+                [value]="empleado.Bonos || 0"
+                (input)="onInputChange(empleado, 'Bonos', $event)"
+                class="prenomina__input" 
+                min="0"
+                step="0.01"
+                placeholder="0.00" />
             </td>
-            <td class="data-table__cell">
-                <input type="number" [(ngModel)]="empleado.comisiones" class="input-editable" />
+            
+            <!-- Comisiones -->
+            <td class="prenomina__table-cell">
+              <input 
+                type="number" 
+                [value]="empleado.comisiones || 0"
+                (input)="onInputChange(empleado, 'comisiones', $event)"
+                class="prenomina__input" 
+                min="0"
+                step="0.01"
+                placeholder="0.00" />
             </td>
-            <td class="data-table__cell">
-                <input type="number" [(ngModel)]="empleado.gratificaciones" class="input-editable" />
+            
+            <!-- Gratificaciones -->
+            <td class="prenomina__table-cell">
+              <input 
+                type="number" 
+                [value]="empleado.gratificaciones || 0"
+                (input)="onInputChange(empleado, 'gratificaciones', $event)"
+                class="prenomina__input" 
+                min="0"
+                step="0.01"
+                placeholder="0.00" />
             </td>
-            <td class="data-table__cell">
-                <input type="number" [(ngModel)]="empleado.aguinaldoProporcional" class="input-editable" />
+            
+            <!-- Aguinaldo Proporcional -->
+            <td class="prenomina__table-cell">
+              <input 
+                type="number" 
+                [value]="empleado.aguinaldoProporcional || 0"
+                (input)="onInputChange(empleado, 'aguinaldoProporcional', $event)"
+                class="prenomina__input" 
+                min="0"
+                step="0.01"
+                placeholder="0.00" />
             </td>
-            <td class="data-table__cell">
-                <input type="number" [(ngModel)]="empleado.primaVacacional" class="input-editable" />
+            
+            <!-- Prima Vacacional -->
+            <td class="prenomina__table-cell">
+              <input 
+                type="number" 
+                [value]="empleado.primaVacacional || 0"
+                (input)="onInputChange(empleado, 'primaVacacional', $event)"
+                class="prenomina__input" 
+                min="0"
+                step="0.01"
+                placeholder="0.00" />
             </td>
-            <td class="data-table__cell">
-                <input type="number" [(ngModel)]="empleado.imss" class="input-editable" />
+            
+            <!-- IMSS -->
+            <td class="prenomina__table-cell">
+              <input 
+                type="number" 
+                [value]="empleado.imss || 0"
+                (input)="onInputChange(empleado, 'imss', $event)"
+                class="prenomina__input" 
+                min="0"
+                step="0.01"
+                placeholder="0.00" />
             </td>
-            <td class="data-table__cell">
-                <input type="number" [(ngModel)]="empleado.infonavit" class="input-editable" />
-            </td>åç
-            <td class="data-table__cell">
-                <input type="number" [(ngModel)]="empleado.otrasDeducciones" class="input-editable" />
+            
+            <!-- INFONAVIT -->
+            <td class="prenomina__table-cell">
+              <input 
+                type="number" 
+                [value]="empleado.infonavit || 0"
+                (input)="onInputChange(empleado, 'infonavit', $event)"
+                class="prenomina__input" 
+                min="0"
+                step="0.01"
+                placeholder="0.00" />
             </td>
-            <td class="data-table__cell">
-                <input type="number" [(ngModel)]="empleado.isr" class="input-editable" />
+            
+            <!-- Otras Deducciones -->
+            <td class="prenomina__table-cell">
+              <input 
+                type="number" 
+                [value]="empleado.otrasDeducciones || 0"
+                (input)="onInputChange(empleado, 'otrasDeducciones', $event)"
+                class="prenomina__input" 
+                min="0"
+                step="0.01"
+                placeholder="0.00" />
             </td>
-            <td class="data-table__cell">
-                <span class="neto-value">{{ empleado.totalNeto }}</span> 
+            
+            <!-- ISR (no editable) -->
+            <td class="prenomina__table-cell">
+              <span class="prenomina__readonly-value">
+                {{ formatCurrency(empleado.isr) }}
+              </span>
             </td>
-            </tr>
+            
+            <!-- Total Neto (calculado) -->
+            <td class="prenomina__table-cell">
+              <span class="prenomina__total-value">
+                {{ formatCurrency(calculateTotalNeto(empleado)) }}
+              </span>
+            </td>
+            
+            <!-- Acciones -->
+            <td class="prenomina__table-cell prenomina__table-cell--actions">
+              <button 
+                type="button"
+                class="prenomina__save-btn"
+                [class.prenomina__save-btn--loading]="isSaving[empleado.codigoEmpleado]"
+                [disabled]="isSaving[empleado.codigoEmpleado]"
+                (click)="guardarPrenomina(empleado)">
+                <i class="fas fa-save" *ngIf="!isSaving[empleado.codigoEmpleado]"></i>
+                <i class="fas fa-spinner fa-spin" *ngIf="isSaving[empleado.codigoEmpleado]"></i>
+                <span class="prenomina__save-btn-text">
+                  {{ isSaving[empleado.codigoEmpleado] ? 'Guardando...' : 'Guardar' }}
+                </span>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
+  <!-- Table Footer with Generate Payroll Button -->
+  <div class="prenomina__table-footer" *ngIf="!isLoading && registroEmpleado.length > 0">
+    <div class="prenomina__footer-content">
+      <div class="prenomina__summary">
+        <div class="prenomina__summary-item">
+          <span class="prenomina__summary-label">Total de empleados:</span>
+          <span class="prenomina__summary-value">{{ registroEmpleado.length }}</span>
+        </div>
+        <div class="prenomina__summary-item">
+          <span class="prenomina__summary-label">Total nómina:</span>
+          <span class="prenomina__summary-value prenomina__summary-value--amount">
+            {{ formatCurrency(getTotalNomina()) }}
+          </span>
+        </div>
+      </div>
+      <button 
+        type="button"
+        class="prenomina__generate-btn"
+        [disabled]="isGeneratingPayroll"
+        (click)="generarNomina()">
+        <i class="fas fa-calculator" *ngIf="!isGeneratingPayroll"></i>
+        <i class="fas fa-spinner fa-spin" *ngIf="isGeneratingPayroll"></i>
+        <span class="prenomina__generate-btn-text">
+          {{ isGeneratingPayroll ? 'Generando...' : 'Generar Nómina' }}
+        </span>
+      </button>
+    </div>
+  </div>
 
-</div>-->
+  <!-- Empty State -->
+  <div class="prenomina__empty-state" *ngIf="!isLoading && registroEmpleado.length === 0 && periodoSelected">
+    <div class="prenomina__empty-icon">
+      <i class="fas fa-users-slash"></i>
+    </div>
+    <h3 class="prenomina__empty-title">No hay empleados registrados</h3>
+    <p class="prenomina__empty-description">
+      No se encontraron empleados para el período seleccionado.
+    </p>
+  </div>
+</div>

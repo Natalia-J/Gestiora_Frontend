@@ -47,36 +47,36 @@
     </div>
   </div>
 
-  <!-- Modal Overlay -->
-  <div class="departamento__modal-overlay" *ngIf="mostrarModal">
-    <div class="departamento__modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-      <header class="departamento__modal-header">
-        <h2 id="modal-title">Crear Departamento</h2>
-      </header>
+</div>
 
-      <form [formGroup]="form" (ngSubmit)="guardar()" class="departamento__modal-form" novalidate>
-        <div class="departamento__modal-body">
-          <label for="codigo" class="departamento__modal-label">Código *</label>
-          <input id="codigo" type="text" formControlName="codigo" class="departamento__modal-input" />
-          <div class="departamento__error" *ngIf="form.get('codigo')?.touched && form.get('codigo')?.invalid">
-            Código requerido
-          </div>
+<!-- Modal Overlay FUERA del contenedor .departamento -->
+<div class="departamento__modal-overlay" *ngIf="mostrarModal">
+  <div class="departamento__modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <header class="departamento__modal-header">
+      <h2 id="modal-title">Crear Departamento</h2>
+    </header>
 
-          <label for="nombreDepartamento" class="departamento__modal-label">Nombre *</label>
-          <input id="nombreDepartamento" type="text" formControlName="nombreDepartamento" class="departamento__modal-input" />
-          <div class="departamento__error" *ngIf="form.get('nombreDepartamento')?.touched && form.get('nombreDepartamento')?.invalid">
-            Nombre requerido
-          </div>
-
-          <div *ngIf="error" class="departamento__error">{{ error }}</div>
+    <form [formGroup]="form" (ngSubmit)="guardar()" class="departamento__modal-form" novalidate>
+      <div class="departamento__modal-body">
+        <label for="codigo" class="departamento__modal-label">Código *</label>
+        <input id="codigo" type="text" formControlName="codigo" class="departamento__modal-input" />
+        <div class="departamento__error" *ngIf="form.get('codigo')?.touched && form.get('codigo')?.invalid">
+          Código requerido
         </div>
 
-        <footer class="departamento__modal-footer">
-          <button type="button" class="departamento__btn departamento__btn--cancel" (click)="cancelar()">Cancelar</button>
-          <button type="submit" class="departamento__btn departamento__btn--submit" [disabled]="!form.valid">Crear</button>
-        </footer>
-      </form>
-    </div>
-  </div>
+        <label for="nombreDepartamento" class="departamento__modal-label">Nombre *</label>
+        <input id="nombreDepartamento" type="text" formControlName="nombreDepartamento" class="departamento__modal-input" />
+        <div class="departamento__error" *ngIf="form.get('nombreDepartamento')?.touched && form.get('nombreDepartamento')?.invalid">
+          Nombre requerido
+        </div>
 
+        <div *ngIf="error" class="departamento__error">{{ error }}</div>
+      </div>
+
+      <footer class="departamento__modal-footer">
+        <button type="button" class="departamento__btn departamento__btn--cancel" (click)="cancelar()">Cancelar</button>
+        <button type="submit" class="departamento__btn departamento__btn--submit" [disabled]="!form.valid">Crear</button>
+      </footer>
+    </form>
+  </div>
 </div>

@@ -1,7 +1,6 @@
-<div class="departamento-detalle">
-
-  <!-- Estado inicial visual cuando no hay departamento seleccionado -->
-  <div class="reportes__empty-state" *ngIf="!departamentoSeleccionado">
+<div class="department-detail">
+  <!-- Estado inicial cuando no hay departamento seleccionado -->
+  <div class="department-detail__empty-state" *ngIf="!departamentoSeleccionado">
     <div class="empty-state">
       <i class="fas fa-building empty-state__icon"></i>
       <h3 class="empty-state__title">Selecciona un departamento</h3>
@@ -11,41 +10,117 @@
     </div>
   </div>
 
-  <!-- Cuando hay un departamento seleccionado -->
-  <div class="titulo" *ngIf="departamentoSeleccionado">
-    <h2>{{ departamentoSeleccionado.nombreDepartamento }} / Empleados</h2>
-  </div>
-
-  <div class="buscador" *ngIf="departamentoSeleccionado">
-    <input
-      type="text"
-      [(ngModel)]="busqueda"
-      (input)="filtrarEmpleados()"
-      placeholder="Buscar empleado por nombre completo..."
-    />
-  </div>
-
-  <div class="lista-empleados" *ngIf="departamentoSeleccionado && empleadosFiltrados.length > 0">
-    <div class="empleado-renglon" *ngFor="let empleado of empleadosFiltrados">
-      <div class="info">
-        <span class="puesto">{{ empleado.puesto?.nombre || 'Sin puesto asignado' }}</span>
-        <strong>{{ empleado.nombreEmpleado }} {{ empleado.apellidoPaternoEmpleado }} {{ empleado.apellidoMaternoEmpleado }}</strong>
+  <!-- Contenido principal cuando hay departamento seleccionado -->
+  <div class="department-detail__content" *ngIf="departamentoSeleccionado">
+    <!-- Header con título, buscador y botón agregar -->
+    <header class="department-detail__header">
+      <div class="department-detail__title-section">
+        <h2 class="department-detail__title">
+          {{ departamentoSeleccionado.nombreDepartamento }} / Empleados
+        </h2>
+        <p class="department-detail__subtitle">
+          Visualiza y gestiona los empleados de este departamento.
+        </p>
       </div>
 
-      <div class="menu">
-        <button (click)="toggleMenu(empleado.id)">⋮</button>
+      <div class="department-detail__search">
+        <div class="search-box">
+          <i class="fas fa-search search-box__icon"></i>
+          <input
+            type="text"
+            class="search-box__input"
+            [(ngModel)]="busqueda"
+            (input)="filtrarEmpleados()"
+            placeholder="Buscar empleado por nombre..."
+          />
+        </div>
+      </div>
 
-        <ul class="menu-opciones" *ngIf="menuEmpleadoAbiertoId === empleado.id">
-          <li (click)="editarEmpleado(empleado)">Editar</li>
-          <li (click)="cambiarDepartamento(empleado)">Cambiar de departamento</li>
-          <li (click)="eliminarEmpleado(empleado)">Eliminar</li>
-        </ul>
+      <!-- Botón para agregar empleado -->
+      <div class="department-detail__add-employee">
+        <button
+          type="button"
+          class="btn-add-employee"
+          (click)="abrirModalAgregarEmpleado()"
+          aria-label="Agregar empleado"
+        >
+          <i class="fas fa-plus"></i> Crear
+        </button>
+      </div>
+    </header>
+
+    <!-- Lista de empleados agrupados -->
+    <div class="department-detail__employees" *ngIf="empleadosFiltrados.length > 0">
+      <ng-container *ngFor="let grupo of empleadosAgrupados | keyvalue: sortByKey">
+        <div class="employee-group">
+          <h3 class="employee-group__letter">{{ grupo.key }}</h3>
+
+          <div class="employee-cards">
+            <div class="employee-card" *ngFor="let empleado of grupo.value">
+              <div class="employee-card__info">
+                <div class="employee-card__header">
+                  <h4 class="employee-card__name">
+                    {{ empleado.nombreEmpleado }} {{ empleado.apellidoPaternoEmpleado }} {{ empleado.apellidoMaternoEmpleado }}
+                  </h4>
+                  <span class="employee-card__position">
+                    {{ empleado.puesto.nombre || 'Sin puesto asignado' }}
+                  </span>
+                </div>
+              </div>
+
+              <div class="employee-card__actions">
+                <button 
+                  class="employee-card__menu-btn"
+                  (click)="toggleMenu(empleado.id)"
+                  [attr.aria-expanded]="menuEmpleadoAbiertoId === empleado.id"
+                  aria-label="Opciones del empleado"
+                >
+                  <i class="fas fa-ellipsis-v"></i>
+                </button>
+
+                <div 
+                  class="employee-card__menu" 
+                  *ngIf="menuEmpleadoAbiertoId === empleado.id"
+                  [class.employee-card__menu--active]="menuEmpleadoAbiertoId === empleado.id"
+                >
+                  <button 
+                    class="employee-card__menu-item"
+                    (click)="editarEmpleado(empleado)"
+                  >
+                    <i class="fas fa-edit"></i>
+                    Editar
+                  </button>
+                  <button 
+                    class="employee-card__menu-item"
+                    (click)="cambiarDepartamento(empleado)"
+                  >
+                    <i class="fas fa-exchange-alt"></i>
+                    Cambiar departamento
+                  </button>
+                  <button 
+                    class="employee-card__menu-item employee-card__menu-item--danger"
+                    (click)="eliminarEmpleado(empleado)"
+                  >
+                    <i class="fas fa-trash"></i>
+                    Eliminar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+
+    <!-- Estado sin resultados -->
+    <div class="department-detail__no-results" *ngIf="departamentoSeleccionado && empleadosFiltrados.length === 0">
+      <div class="no-results">
+        <i class="fas fa-search no-results__icon"></i>
+        <h3 class="no-results__title">No se encontraron empleados</h3>
+        <p class="no-results__message">
+          No hay empleados que coincidan con tu búsqueda. Intenta con otros términos.
+        </p>
       </div>
     </div>
   </div>
-
-  <div class="no-seleccion" *ngIf="departamentoSeleccionado && empleadosFiltrados.length === 0">
-    <p>No hay empleados que coincidan con la búsqueda.</p>
-  </div>
-
 </div>

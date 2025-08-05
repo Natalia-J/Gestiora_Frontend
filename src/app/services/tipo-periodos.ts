@@ -12,6 +12,6 @@ export class TipoPeriodos {
   constructor(private http: HttpClient) { }
 
     getEmpleadosPorTipoPeriodo(tipoPeriodo: number): Observable<EmpleadoResponse[]> {
-    return this.http.get<EmpleadoResponse[]>(`${this.API_URL}/${tipoPeriodo}`);
+    return this.http.get<EmpleadoResponse[]>(`${this.API_URL}/${tipoPeriodo}`); //
   }
 }

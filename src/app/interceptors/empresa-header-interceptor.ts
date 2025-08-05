@@ -3,6 +3,7 @@ import { HttpInterceptorFn } from '@angular/common/http';
 export const empresaHeaderInterceptor: HttpInterceptorFn = (req, next) => {
  const empresaId = localStorage.getItem('empresaId');
   if (empresaId) {
+    alert(empresaId)
     const modifiedReq = req.clone({
       setHeaders: {
         'X-Empresa-Id': empresaId
