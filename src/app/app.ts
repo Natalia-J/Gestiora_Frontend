@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { FullLoader } from "./shared/components/full-loader/full-loader";
 import { LoaderService } from './services/loader-service';
@@ -15,16 +15,18 @@ import { ToastContainerDirective } from 'ngx-toastr';
   styleUrl: './app.css'
 })
 export class App {
- protected title = 'GestioraFront';
   loaderVisible = false;
-  loaderService = inject(LoaderService);
   private loadingSubscription!: Subscription;
+  private cd = inject(ChangeDetectorRef);
+  loaderService = inject(LoaderService);
 
   ngOnInit(): void {
-    // Suscribirse al observable del servicio
     this.loadingSubscription = this.loaderService.loading$.subscribe(
       (isLoading: boolean) => {
-        this.loaderVisible = isLoading;
+        setTimeout(() => {
+          this.loaderVisible = isLoading;
+          this.cd.detectChanges();
+        });
       }
     );
   }
@@ -35,7 +37,6 @@ export class App {
     }
   }
 
-  // Método de ejemplo para mostrar el loader manualmente
   showLoader(): void {
     this.loaderService.show();
   }

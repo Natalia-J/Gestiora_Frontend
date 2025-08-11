@@ -11,8 +11,8 @@ export interface TipoJornada {
 }
 
 export interface Turno {
-  id?: number;
-  nombre: string;
+  turnoid?: number;
+  nombreTurno: string;
   horaEntrada: string;
   horaSalida: string;
   horasTurno: number;

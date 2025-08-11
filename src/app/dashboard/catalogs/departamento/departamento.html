@@ -1,6 +1,5 @@
 <div class="departamento">
 
-  <!-- Header -->
   <div class="departamento__header">
     <div class="departamento__title-section">
       <h1 class="departamento__title">
@@ -22,13 +21,11 @@
     </div>
   </div>
 
-  <!-- Loading & Empty Messages -->
   <div *ngIf="cargando" class="departamento__mensaje">Cargando...</div>
   <div *ngIf="!cargando && departamentos.length === 0" class="departamento__mensaje">
     No hay departamentos registrados.
   </div>
 
-  <!-- Departamentos Cards -->
   <div class="departamento__cards" *ngIf="departamentos.length > 0">
     <div 
       class="departamento__card"
@@ -49,7 +46,6 @@
 
 </div>
 
-<!-- Modal Overlay FUERA del contenedor .departamento -->
 <div class="departamento__modal-overlay" *ngIf="mostrarModal">
   <div class="departamento__modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
     <header class="departamento__modal-header">

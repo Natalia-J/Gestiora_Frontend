@@ -26,9 +26,8 @@ export interface CatalogosResponse {
   tipoJornada: CatalogoItem[];
   baseDePago: CatalogoItem[];
   baseCotizacion:CatalogoItem[];
-  departamentoEmpleado:CatalogoItem[];
-  puestosEmpleado:CatalogoItem[];
   inconsistencias:CatalogoItem[];
+
 }
 
 @Injectable({

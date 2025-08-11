@@ -472,7 +472,6 @@ private ensureFullTimeFormat(timeString: string): string {
     );
   }
 
-  // Método para limpiar la búsqueda por código
   clearCodeSearch(): void {
     this.codigoBusqueda = '';
     this.mostrarTabla = false;

@@ -1,255 +1,651 @@
-<div class="empleado-container">
-    <h2>Registrar Empleado</h2>
-    <form [formGroup]="empleadoForm" (ngSubmit)="onSubmit()">
+<div class="modal" 
+     (click)="onBackdropClick($event)" 
+     (keydown)="onEscapeKey($event)" 
+     tabindex="0">
   
-      <div class="form-row">
-        <label>Código de Empleado</label>
-        <input formControlName="codigoEmpleado" type="text" />
-      </div>
-  
-      <div class="form-row">
-        <label>Nombre</label>
-        <input formControlName="nombre" type="text" />
-      </div>
-  
-      <div class="form-row">
-        <label>Apellido Paterno</label>
-        <input formControlName="apellidoPaterno" type="text" />
-      </div>
-  
-      <div class="form-row">
-        <label>Apellido Materno</label>
-        <input formControlName="apellidoMaterno" type="text" />
-      </div>
-  
-      <div class="form-row">
-        <label>Fecha de Alta</label>
-        <input formControlName="fechaAlta" type="date" />
-      </div>
-  
-      <div class="form-row">
-        <label>Tipo de Contrato</label>
-        <select formControlName="tipoContrato">
-          <option [ngValue]="null" disabled>Seleccione</option>
-          <option *ngFor="let item of catalogos?.tipoContratoEmpleado" [value]="item.id">{{ item.name }}</option>
-        </select>
-      </div>
-  
-      <div class="form-row">
-        <label>Tipo de Periodo</label>
-        <select formControlName="tipoPeriodo">
-          <option [ngValue]="null" disabled>Seleccione</option>
-          <option *ngFor="let item of catalogos?.tipoPeriodo" [value]="item.id">{{ item.name }}</option>
-        </select>
-      </div>
-  
-      <div class="form-row">
-        <label>Salario Diario</label>
-        <input formControlName="salarioDiario" type="number" step="0.01" />
-      </div>
-  
-      <div class="form-row">
-        <label>Base de Cotización</label>
-        <select formControlName="baseCotizacion">
-          <option [ngValue]="null" disabled>Seleccione</option>
-          <option *ngFor="let item of catalogos?.baseCotizacion" [value]="item.id">{{ item.name }}</option>
-        </select>
-      </div>
-  
-      <div class="form-row">
-        <label>SBC Parte Fija</label>
-        <input formControlName="sbcParteFija" type="number" step="0.01" />
-      </div>
-  
-      <div class="form-row">
-        <label>SBC Parte Variable</label>
-        <input formControlName="sbcParteVariable" type="number" step="0.01" />
-      </div>
-  
-      <div class="form-row">
-        <label>Tipado UMAS</label>
-        <input formControlName="tipadoUmas" type="number" step="0.01" />
-      </div>
-  
-      <div class="form-row">
-        <label>Departamento</label>
-        <select formControlName="departamento">
-          <option [ngValue]="null" disabled>Seleccione</option>
-          <option *ngFor="let item of catalogos?.departamentoEmpleado" [value]="item.id">{{ item.name }}</option>
-        </select>
-      </div>
-  
-      <div class="form-row">
-        <label>Puesto</label>
-        <select formControlName="puesto">
-          <option [ngValue]="null" disabled>Seleccione</option>
-          <option *ngFor="let item of catalogos?.puestosEmpleado" [value]="item.id">{{ item.name }}</option>
-        </select>
-      </div>
-  
-      <div class="form-row">
-        <label>Sindicato</label>
-        <select formControlName="sindicato">
-          <option [ngValue]="null" disabled>Seleccione</option>
-          <option *ngFor="let item of catalogos?.sindicatoEmpleado" [value]="item.id">{{ item.name }}</option>
-        </select>
-      </div>
-  
-      <div class="form-row">
-        <label>Tipo de Prestación</label>
-        <select formControlName="tipoPrestacion">
-          <option [ngValue]="null" disabled>Seleccione</option>
-          <option *ngFor="let item of catalogos?.tipoPrestacionEmpleado" [value]="item.id">{{ item.name }}</option>
-        </select>
-      </div>
-  
-      <div class="form-row">
-        <label>Base de Pago</label>
-        <select formControlName="baseDePago">
-          <option [ngValue]="null" disabled>Seleccione</option>
-          <option *ngFor="let item of catalogos?.baseDePago" [value]="item.id">{{ item.name }}</option>
-        </select>
-      </div>
-  
-      <div class="form-row">
-        <label>Método de Pago</label>
-        <select formControlName="metodoPago">
-          <option [ngValue]="null" disabled>Seleccione</option>
-          <option *ngFor="let item of catalogos?.metodoPagoEmpleado" [value]="item.id">{{ item.name }}</option>
-        </select>
-      </div>
-  
-      <div class="form-row">
-        <label>Turno de Trabajo</label>
-        <select formControlName="turnoTrabajo">
-          <option [ngValue]="null" disabled>Seleccione</option>
-          <option *ngFor="let item of catalogos?.tipoJornada" [value]="item.id">{{ item.name }}</option>
-        </select>
-      </div>
-  
-      <div class="form-row">
-        <label>Zona Salarial</label>
-        <select formControlName="zonaSalario">
-          <option [ngValue]="null" disabled>Seleccione</option>
-          <option *ngFor="let item of catalogos?.zonaSalarioGeneral" [value]="item.id">{{ item.name }}</option>
-        </select>
-      </div>
-  
-      <div class="form-row">
-        <label>Tipo de Régimen</label>
-        <select formControlName="tipoRegimen">
-          <option [ngValue]="null" disabled>Seleccione</option>
-          <option *ngFor="let item of catalogos?.regimenEmpleado" [value]="item.id">{{ item.name }}</option>
-        </select>
-      </div>
-  
-      <div class="form-row">
-        <label>Afore</label>
-        <input formControlName="afore" type="text" />
-      </div>
-  
-      <div class="form-row">
-        <label>Correo</label>
-        <input formControlName="correo" type="email" />
-      </div>
-  
-      <div class="form-row">
-        <label>Teléfono</label>
-        <input formControlName="numTelefono" type="text" />
-      </div>
-  
-      <div class="form-row">
-        <label>NSS</label>
-        <input formControlName="numSeguridadSocial" type="text" />
-      </div>
-  
-      <div class="form-row">
-        <label>Registro Patronal IMSS</label>
-        <input formControlName="registroPatronalImss" type="text" />
-      </div>
-  
-      <div class="form-row">
-        <label>Estado Civil</label>
-        <select formControlName="estadoCivil">
-          <option [ngValue]="null" disabled>Seleccione</option>
-          <option *ngFor="let item of catalogos?.estadoCivil" [value]="item.id">{{ item.name }}</option>
-        </select>
-      </div>
-  
-      <div class="form-row">
-        <label>Género</label>
-        <select formControlName="genero">
-          <option [ngValue]="null" disabled>Seleccione</option>
-          <option *ngFor="let item of catalogos?.genero" [value]="item.id">{{ item.name }}</option>
-        </select>
-      </div>
-  
-      <div class="form-row">
-        <label>Fecha de Nacimiento</label>
-        <input formControlName="fechaNacimiento" type="date" />
-      </div>
-  
-      <div class="form-row">
-        <label>Entidad Federativa</label>
-        <select formControlName="entidadFederativa">
-          <option [ngValue]="null" disabled>Seleccione</option>
-          <option *ngFor="let item of catalogos?.entidadFederativa" [value]="item.id">{{ item.name }}</option>
-        </select>
-      </div>
-  
-      <div class="form-row">
-        <label>Ciudad</label>
-        <input formControlName="ciudad" type="text" />
-      </div>
-  
-      <div formGroupName="direccion" class="direccion-group">
-        <h3>Dirección</h3>
-  
-        <div class="form-row">
-          <label>Calle</label>
-          <input formControlName="calle" type="text" />
+  <div class="modal__dialog">
+    <header class="modal__header">
+      <h2 class="modal__title">{{ modalTitle }}</h2>
+      <button type="button" 
+              class="modal__close-btn" 
+              (click)="cerrar()"
+              [disabled]="isSubmitting"
+              aria-label="Cerrar modal">
+        <svg class="modal__close-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </header>
+    <nav class="modal__nav">
+      <button type="button" 
+              class="modal__tab" 
+              [class.modal__tab--active]="activeTab === 'obligatorios'"
+              [class.modal__tab--completed]="isObligatoriosTabValid"
+              (click)="cambiarTab('obligatorios')">
+        <span class="modal__tab-indicator">1</span>
+        <span class="modal__tab-text">Datos Obligatorios</span>
+      </button>
+      <button type="button" 
+              class="modal__tab" 
+              [class.modal__tab--active]="activeTab === 'generales'"
+              [class.modal__tab--completed]="isGeneralesTabValid"
+              (click)="cambiarTab('generales')">
+        <span class="modal__tab-indicator">2</span>
+        <span class="modal__tab-text">Datos Generales</span>
+      </button>
+      <button type="button" 
+              class="modal__tab" 
+              [class.modal__tab--active]="activeTab === 'afiliatorios'"
+              [class.modal__tab--completed]="isAfiliatoriosTabValid"
+              (click)="cambiarTab('afiliatorios')">
+        <span class="modal__tab-indicator">3</span>
+        <span class="modal__tab-text">Datos Afiliatorios</span>
+      </button>
+    </nav>
+    <form [formGroup]="empleadoForm" (ngSubmit)="onSubmit()" class="modal__form">
+      <div class="modal__content">
+                <div *ngIf="isLoading" class="modal__loader">
+          <div class="loader">
+            <div class="loader__spinner"></div>
+            <p class="loader__text">Cargando información...</p>
+          </div>
         </div>
-  
-        <div class="form-row">
-          <label>No. Externo</label>
-          <input formControlName="numExterno" type="text" />
-        </div>
-  
-        <div class="form-row">
-          <label>No. Interno</label>
-          <input formControlName="numInterno" type="text" />
-        </div>
-  
-        <div class="form-row">
-          <label>Colonia</label>
-          <input formControlName="colonia" type="text" />
-        </div>
-  
-        <div class="form-row">
-          <label>Código Postal</label>
-          <input formControlName="codigoPostal" type="text" />
-        </div>
-  
-        <div class="form-row">
-          <label>Localidad</label>
-          <input formControlName="localidad" type="text" />
+        <div *ngIf="!isLoading" class="modal__tabs-content">
+          <div class="tab-content" [class.tab-content--active]="activeTab === 'obligatorios'">
+            <div class="form-grid">
+              <div class="form-field">
+                <label class="form-field__label" for="codigoEmpleado">
+                  Código de Empleado <span class="form-field__required">*</span>
+                </label>
+                <input id="codigoEmpleado"
+                       type="text" 
+                       formControlName="codigoEmpleado"
+                       class="form-field__input"
+                       [class.form-field__input--error]="isFieldInvalid('codigoEmpleado')"
+                       placeholder="Ej: EMP001">
+                <div *ngIf="isFieldInvalid('codigoEmpleado')" class="form-field__error">
+                  {{ getFieldError('codigoEmpleado') }}
+                </div>
+              </div>
+              <div class="form-field">
+                <label class="form-field__label" for="nombre">
+                  Nombre <span class="form-field__required">*</span>
+                </label>
+                <input id="nombre"
+                       type="text" 
+                       formControlName="nombre"
+                       class="form-field__input"
+                       [class.form-field__input--error]="isFieldInvalid('nombre')"
+                       placeholder="Nombre del empleado">
+                <div *ngIf="isFieldInvalid('nombre')" class="form-field__error">
+                  {{ getFieldError('nombre') }}
+                </div>
+              </div>
+              <div class="form-field">
+                <label class="form-field__label" for="apellidoPaterno">
+                  Apellido Paterno <span class="form-field__required">*</span>
+                </label>
+                <input id="apellidoPaterno"
+                       type="text" 
+                       formControlName="apellidoPaterno"
+                       class="form-field__input"
+                       [class.form-field__input--error]="isFieldInvalid('apellidoPaterno')"
+                       placeholder="Apellido paterno">
+                <div *ngIf="isFieldInvalid('apellidoPaterno')" class="form-field__error">
+                  {{ getFieldError('apellidoPaterno') }}
+                </div>
+              </div>
+              <div class="form-field">
+                <label class="form-field__label" for="apellidoMaterno">
+                  Apellido Materno <span class="form-field__required">*</span>
+                </label>
+                <input id="apellidoMaterno"
+                       type="text" 
+                       formControlName="apellidoMaterno"
+                       class="form-field__input"
+                       [class.form-field__input--error]="isFieldInvalid('apellidoMaterno')"
+                       placeholder="Apellido materno">
+                <div *ngIf="isFieldInvalid('apellidoMaterno')" class="form-field__error">
+                  {{ getFieldError('apellidoMaterno') }}
+                </div>
+              </div>
+              <div class="form-field">
+                <label class="form-field__label" for="fechaAlta">
+                  Fecha de Alta <span class="form-field__required">*</span>
+                </label>
+                <input id="fechaAlta"
+                       type="date" 
+                       formControlName="fechaAlta"
+                       class="form-field__input"
+                       [class.form-field__input--error]="isFieldInvalid('fechaAlta')">
+                <div *ngIf="isFieldInvalid('fechaAlta')" class="form-field__error">
+                  {{ getFieldError('fechaAlta') }}
+                </div>
+              </div>
+              <div class="form-field">
+                <label class="form-field__label" for="tipoContrato">
+                  Tipo de Contrato <span class="form-field__required">*</span>
+                </label>
+                <select id="tipoContrato"
+                        formControlName="tipoContrato"
+                        class="form-field__select"
+                        [class.form-field__select--error]="isFieldInvalid('tipoContrato')">
+                  <option value="">Seleccione un tipo</option>
+                  <option *ngFor="let tipo of catalogos?.tipoContratoEmpleado" [value]="tipo.id">
+                    {{ tipo.name }}
+                  </option>
+                </select>
+                <div *ngIf="isFieldInvalid('tipoContrato')" class="form-field__error">
+                  {{ getFieldError('tipoContrato') }}
+                </div>
+              </div>
+              <div class="form-field">
+                <label class="form-field__label" for="tipoPeriodo">
+                  Tipo de Periodo <span class="form-field__required">*</span>
+                </label>
+                <select id="tipoPeriodo"
+                        formControlName="tipoPeriodo"
+                        class="form-field__select"
+                        [class.form-field__select--error]="isFieldInvalid('tipoPeriodo')">
+                  <option value="">Seleccione un periodo</option>
+                  <option *ngFor="let periodo of catalogos?.tipoPeriodo" [value]="periodo.id">
+                    {{ periodo.name }}
+                  </option>
+                </select>
+                <div *ngIf="isFieldInvalid('tipoPeriodo')" class="form-field__error">
+                  {{ getFieldError('tipoPeriodo') }}
+                </div>
+              </div>
+              <div class="form-field">
+                <label class="form-field__label" for="salarioDiario">
+                  Salario Diario <span class="form-field__required">*</span>
+                </label>
+                <div class="form-field__input-group">
+                  <span class="form-field__prefix">$</span>
+                  <input id="salarioDiario"
+                         type="number" 
+                         step="0.01"
+                         min="0"
+                         formControlName="salarioDiario"
+                         class="form-field__input form-field__input--with-prefix"
+                         [class.form-field__input--error]="isFieldInvalid('salarioDiario')"
+                         placeholder="0.00">
+                </div>
+                <div *ngIf="isFieldInvalid('salarioDiario')" class="form-field__error">
+                  {{ getFieldError('salarioDiario') }}
+                </div>
+              </div>
+              <div class="form-field">
+                <label class="form-field__label" for="baseCotizacion">
+                  Base de Cotización <span class="form-field__required">*</span>
+                </label>
+                <select id="baseCotizacion"
+                        formControlName="baseCotizacion"
+                        class="form-field__select"
+                        [class.form-field__select--error]="isFieldInvalid('baseCotizacion')">
+                  <option value="">Seleccione una base de cotización</option>
+                  <option *ngFor="let base of catalogos?.baseCotizacion" [value]="base.id">
+                    {{ base.name }}
+                  </option>
+                </select>
+                <div *ngIf="isFieldInvalid('baseCotizacion')" class="form-field__error">
+                  {{ getFieldError('baseCotizacion') }}
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="tab-content" [class.tab-content--active]="activeTab === 'generales'">
+            <div class="form-grid">
+              <div class="form-field">
+                <label class="form-field__label" for="departamento">
+                  Departamento <span class="form-field__required">*</span>
+                </label>
+                <select id="departamento"
+                        formControlName="departamento"
+                        class="form-field__select"
+                        [class.form-field__select--error]="isFieldInvalid('departamento')">
+                  <option value="">Seleccione un departamento</option>
+                  <option *ngFor="let dept of departamentos" [value]="dept.id">
+                    {{ dept.nombreDepartamento }}
+                  </option>
+                </select>
+                <div *ngIf="isFieldInvalid('departamento')" class="form-field__error">
+                  {{ getFieldError('departamento') }}
+                </div>
+              </div>
+              <div class="form-field">
+                <label class="form-field__label" for="puesto">
+                  Puesto <span class="form-field__required">*</span>
+                </label>
+                <select id="puesto"
+                        formControlName="puesto"
+                        class="form-field__select"
+                        [class.form-field__select--error]="isFieldInvalid('puesto')">
+                  <option value="">Seleccione un puesto</option>
+                  <option *ngFor="let puesto of puestos" [value]="puesto.puestoId">
+                    {{ puesto.nombrePuesto }}
+                  </option>
+                </select>
+                <div *ngIf="isFieldInvalid('puesto')" class="form-field__error">
+                  {{ getFieldError('puesto') }}
+                </div>
+              </div>
+              <div class="form-field">
+                <label class="form-field__label" for="sindicato">
+                  Sindicato <span class="form-field__required">*</span>
+                </label>
+                <select id="sindicato"
+                        formControlName="sindicato"
+                        class="form-field__select"
+                        [class.form-field__select--error]="isFieldInvalid('sindicato')">
+                  <option value="">Seleccione un sindicato</option>
+                  <option *ngFor="let sindicato of catalogos?.sindicatoEmpleado" [value]="sindicato.id">
+                    {{ sindicato.name }}
+                  </option>
+                </select>
+                <div *ngIf="isFieldInvalid('sindicato')" class="form-field__error">
+                  {{ getFieldError('sindicato') }}
+                </div>
+              </div>
+              <div class="form-field">
+                <label class="form-field__label" for="tipoPrestacion">
+                  Tipo de Prestación <span class="form-field__required">*</span>
+                </label>
+                <select id="tipoPrestacion"
+                        formControlName="tipoPrestacion"
+                        class="form-field__select"
+                        [class.form-field__select--error]="isFieldInvalid('tipoPrestacion')">
+                  <option value="">Seleccione un tipo</option>
+                  <option *ngFor="let prestacion of catalogos?.tipoPrestacionEmpleado" [value]="prestacion.id">
+                    {{ prestacion.name }}
+                  </option>
+                </select>
+                <div *ngIf="isFieldInvalid('tipoPrestacion')" class="form-field__error">
+                  {{ getFieldError('tipoPrestacion') }}
+                </div>
+              </div>
+              <div class="form-field">
+                <label class="form-field__label" for="baseDePago">
+                  Base de Pago <span class="form-field__required">*</span>
+                </label>
+                <select id="baseDePago"
+                        formControlName="baseDePago"
+                        class="form-field__select"
+                        [class.form-field__select--error]="isFieldInvalid('baseDePago')">
+                  <option value="">Seleccione una base</option>
+                  <option *ngFor="let base of catalogos?.baseDePago" [value]="base.id">
+                    {{ base.name }}
+                  </option>
+                </select>
+                <div *ngIf="isFieldInvalid('baseDePago')" class="form-field__error">
+                  {{ getFieldError('baseDePago') }}
+                </div>
+              </div>
+              <div class="form-field">
+                <label class="form-field__label" for="metodoPago">
+                  Método de Pago <span class="form-field__required">*</span>
+                </label>
+                <select id="metodoPago"
+                        formControlName="metodoPago"
+                        class="form-field__select"
+                        [class.form-field__select--error]="isFieldInvalid('metodoPago')">
+                  <option value="">Seleccione un método</option>
+                  <option *ngFor="let metodo of catalogos?.metodoPagoEmpleado" [value]="metodo.id">
+                    {{ metodo.name }}
+                  </option>
+                </select>
+                <div *ngIf="isFieldInvalid('metodoPago')" class="form-field__error">
+                  {{ getFieldError('metodoPago') }}
+                </div>
+              </div>
+
+              <div class="form-field">
+                <label class="form-field__label" for="turnoTrabajo">
+                  Turno de Trabajo <span class="form-field__required">*</span>
+                </label>
+                <select id="turnoTrabajo"
+                        formControlName="turnoTrabajo"
+                        class="form-field__select"
+                        [class.form-field__select--error]="isFieldInvalid('turnoTrabajo')">
+                  <option value="">Seleccione un turno</option>
+                  <option *ngFor="let turno of turnos" [value]="turno.turnoid">
+                    {{ turno.nombreTurno }}
+                  </option>
+                </select>
+                <div *ngIf="isFieldInvalid('turnoTrabajo')" class="form-field__error">
+                  {{ getFieldError('turnoTrabajo') }}
+                </div>
+              </div>
+              <div class="form-field">
+                <label class="form-field__label" for="zonaSalario">
+                  Zona de Salario <span class="form-field__required">*</span>
+                </label>
+                <select id="zonaSalario"
+                        formControlName="zonaSalario"
+                        class="form-field__select"
+                        [class.form-field__select--error]="isFieldInvalid('zonaSalario')">
+                  <option value="">Seleccione una zona</option>
+                  <option *ngFor="let zona of catalogos?.zonaSalarioGeneral" [value]="zona.id">
+                    {{ zona.name }}
+                  </option>
+                </select>
+                <div *ngIf="isFieldInvalid('zonaSalario')" class="form-field__error">
+                  {{ getFieldError('zonaSalario') }}
+                </div>
+              </div>
+              <div class="form-field">
+                <label class="form-field__label" for="tipoRegimen">
+                  Tipo de Régimen <span class="form-field__required">*</span>
+                </label>
+                <select id="tipoRegimen"
+                        formControlName="tipoRegimen"
+                        class="form-field__select"
+                        [class.form-field__select--error]="isFieldInvalid('tipoRegimen')">
+                  <option value="">Seleccione un régimen</option>
+                  <option *ngFor="let regimen of catalogos?.regimenEmpleado" [value]="regimen.id">
+                    {{ regimen.name }}
+                  </option>
+                </select>
+                <div *ngIf="isFieldInvalid('tipoRegimen')" class="form-field__error">
+                  {{ getFieldError('tipoRegimen') }}
+                </div>
+              </div>
+              <div class="form-field">
+                <label class="form-field__label" for="afore">
+                  AFORE <span class="form-field__required">*</span>
+                </label>
+                <input id="afore"
+                       type="text" 
+                       formControlName="afore"
+                       class="form-field__input"
+                       [class.form-field__input--error]="isFieldInvalid('afore')"
+                       placeholder="Nombre del AFORE">
+                <div *ngIf="isFieldInvalid('afore')" class="form-field__error">
+                  {{ getFieldError('afore') }}
+                </div>
+              </div>
+              <div class="form-field">
+                <label class="form-field__label" for="correo">
+                  Correo Electrónico <span class="form-field__required">*</span>
+                </label>
+                <input id="correo"
+                       type="email" 
+                       formControlName="correo"
+                       class="form-field__input"
+                       [class.form-field__input--error]="isFieldInvalid('correo')"
+                       placeholder="empleado@empresa.com">
+                <div *ngIf="isFieldInvalid('correo')" class="form-field__error">
+                  {{ getFieldError('correo') }}
+                </div>
+              </div>
+              <div class="form-field">
+                <label class="form-field__label" for="numTelefono">
+                  Teléfono <span class="form-field__required">*</span>
+                </label>
+                <input id="numTelefono"
+                       type="tel" 
+                       formControlName="numTelefono"
+                       class="form-field__input"
+                       [class.form-field__input--error]="isFieldInvalid('numTelefono')"
+                       placeholder="5551234567"
+                       maxlength="10">
+                <div *ngIf="isFieldInvalid('numTelefono')" class="form-field__error">
+                  {{ getFieldError('numTelefono') }}
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="tab-content" [class.tab-content--active]="activeTab === 'afiliatorios'">
+            <div class="form-grid">
+              <div class="form-field">
+                <label class="form-field__label" for="numSeguridadSocial">
+                  Número de Seguridad Social <span class="form-field__required">*</span>
+                </label>
+                <input id="numSeguridadSocial"
+                       type="text" 
+                       formControlName="numSeguridadSocial"
+                       class="form-field__input"
+                       [class.form-field__input--error]="isFieldInvalid('numSeguridadSocial')"
+                       placeholder="12345678901"
+                       maxlength="11">
+                <div *ngIf="isFieldInvalid('numSeguridadSocial')" class="form-field__error">
+                  {{ getFieldError('numSeguridadSocial') }}
+                </div>
+              </div>
+              <div class="form-field">
+                <label class="form-field__label" for="registroPatronalImss">
+                  Registro Patronal IMSS <span class="form-field__required">*</span>
+                </label>
+                <input id="registroPatronalImss"
+                       type="text" 
+                       formControlName="registroPatronalImss"
+                       class="form-field__input"
+                       [class.form-field__input--error]="isFieldInvalid('registroPatronalImss')"
+                       placeholder="Registro patronal">
+                <div *ngIf="isFieldInvalid('registroPatronalImss')" class="form-field__error">
+                  {{ getFieldError('registroPatronalImss') }}
+                </div>
+              </div>
+              <div class="form-field">
+                <label class="form-field__label" for="estadoCivil">
+                  Estado Civil <span class="form-field__required">*</span>
+                </label>
+                <select id="estadoCivil"
+                        formControlName="estadoCivil"
+                        class="form-field__select"
+                        [class.form-field__select--error]="isFieldInvalid('estadoCivil')">
+                  <option value="">Seleccione estado civil</option>
+                  <option *ngFor="let estado of catalogos?.estadoCivil" [value]="estado.id">
+                    {{ estado.name }}
+                  </option>
+                </select>
+                <div *ngIf="isFieldInvalid('estadoCivil')" class="form-field__error">
+                  {{ getFieldError('estadoCivil') }}
+                </div>
+              </div>
+              <div class="form-field">
+                <label class="form-field__label" for="genero">
+                  Género <span class="form-field__required">*</span>
+                </label>
+                <select id="genero"
+                        formControlName="genero"
+                        class="form-field__select"
+                        [class.form-field__select--error]="isFieldInvalid('genero')">
+                  <option value="">Seleccione género</option>
+                  <option *ngFor="let genero of catalogos?.genero" [value]="genero.id">
+                    {{ genero.name }}
+                  </option>
+                </select>
+                <div *ngIf="isFieldInvalid('genero')" class="form-field__error">
+                  {{ getFieldError('genero') }}
+                </div>
+              </div>
+              <div class="form-field">
+                <label class="form-field__label" for="fechaNacimiento">
+                  Fecha de Nacimiento <span class="form-field__required">*</span>
+                </label>
+                <input id="fechaNacimiento"
+                       type="date" 
+                       formControlName="fechaNacimiento"
+                       class="form-field__input"
+                       [class.form-field__input--error]="isFieldInvalid('fechaNacimiento')">
+                <div *ngIf="isFieldInvalid('fechaNacimiento')" class="form-field__error">
+                  {{ getFieldError('fechaNacimiento') }}
+                </div>
+              </div>
+              <div class="form-field">
+                <label class="form-field__label" for="entidadFederativa">
+                  Entidad Federativa <span class="form-field__required">*</span>
+                </label>
+                <select id="entidadFederativa"
+                        formControlName="entidadFederativa"
+                        class="form-field__select"
+                        [class.form-field__select--error]="isFieldInvalid('entidadFederativa')">
+                  <option value="">Seleccione entidad</option>
+                  <option *ngFor="let entidad of catalogos?.entidadFederativa" [value]="entidad.id">
+                    {{ entidad.name }}
+                  </option>
+                </select>
+                <div *ngIf="isFieldInvalid('entidadFederativa')" class="form-field__error">
+                  {{ getFieldError('entidadFederativa') }}
+                </div>
+              </div>
+              <div class="form-field">
+                <label class="form-field__label" for="ciudad">
+                  Ciudad <span class="form-field__required">*</span>
+                </label>
+                <input id="ciudad"
+                       type="text" 
+                       formControlName="ciudad"
+                       class="form-field__input"
+                       [class.form-field__input--error]="isFieldInvalid('ciudad')"
+                       placeholder="Ciudad">
+                <div *ngIf="isFieldInvalid('ciudad')" class="form-field__error">
+                  {{ getFieldError('ciudad') }}
+                </div>
+              </div>
+              <div class="form-field">
+                <label class="form-field__label" for="curp">
+                  CURP <span class="form-field__required">*</span>
+                </label>
+                <input id="curp"
+                       type="text" 
+                       formControlName="curp"
+                       class="form-field__input"
+                       [class.form-field__input--error]="isFieldInvalid('curp')"
+                       placeholder="ABCD123456HDFRRL09"
+                       maxlength="18"
+                       style="text-transform: uppercase;">
+                <div *ngIf="isFieldInvalid('curp')" class="form-field__error">
+                  {{ getFieldError('curp') }}
+                </div>
+              </div>
+              <div class="form-field">
+                <label class="form-field__label" for="rfc">
+                  RFC <span class="form-field__required">*</span>
+                </label>
+                <input id="rfc"
+                       type="text" 
+                       formControlName="rfc"
+                       class="form-field__input"
+                       [class.form-field__input--error]="isFieldInvalid('rfc')"
+                       placeholder="ABCD123456AB1"
+                       maxlength="13"
+                       style="text-transform: uppercase;">
+                <div *ngIf="isFieldInvalid('rfc')" class="form-field__error">
+                  {{ getFieldError('rfc') }}
+                </div>
+              </div>
+              <div class="form-section">
+                <h3 class="form-section__title">Domicilio Actual</h3>
+                <div formGroupName="direccion" class="form-grid form-grid--nested">
+                  <div class="form-field">
+                    <label class="form-field__label" for="calle">
+                      Calle <span class="form-field__required">*</span>
+                    </label>
+                    <input id="calle"
+                           type="text" 
+                           formControlName="calle"
+                           class="form-field__input"
+                           placeholder="Nombre de la calle">
+                  </div>
+                  <div class="form-field">
+                    <label class="form-field__label" for="numExterno">
+                      Número Exterior <span class="form-field__required">*</span>
+                    </label>
+                    <input id="numExterno"
+                           type="text" 
+                           formControlName="numExterno"
+                           class="form-field__input"
+                           placeholder="123">
+                  </div>
+                  <div class="form-field">
+                    <label class="form-field__label" for="numInterno">
+                      Número Interior
+                    </label>
+                    <input id="numInterno"
+                           type="text" 
+                           formControlName="numInterno"
+                           class="form-field__input"
+                           placeholder="A, B, 1, 2...">
+                  </div>
+                  <div class="form-field">
+                    <label class="form-field__label" for="colonia">
+                      Colonia <span class="form-field__required">*</span>
+                    </label>
+                    <input id="colonia"
+                           type="text" 
+                           formControlName="colonia"
+                           class="form-field__input"
+                           placeholder="Nombre de la colonia">
+                  </div>
+                  <div class="form-field">
+                    <label class="form-field__label" for="codigoPostal">
+                      Código Postal <span class="form-field__required">*</span>
+                    </label>
+                    <input id="codigoPostal"
+                           type="text" 
+                           formControlName="codigoPostal"
+                           class="form-field__input"
+                           placeholder="12345"
+                           maxlength="5">
+                  </div>
+                  <div class="form-field">
+                    <label class="form-field__label" for="localidad">
+                      Localidad <span class="form-field__required">*</span>
+                    </label>
+                    <input id="localidad"
+                           type="text" 
+                           formControlName="localidad"
+                           class="form-field__input"
+                           placeholder="Ciudad o localidad">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
-  
-      <div class="form-row">
-        <label>CURP</label>
-        <input formControlName="curp" type="text" />
-      </div>
-  
-      <div class="form-row">
-        <label>RFC</label>
-        <input formControlName="rfc" type="text" />
-      </div>
-  
-      <div class="button-group">
-        <button type="submit" [disabled]="empleadoForm.invalid">Registrar</button>
-        <button type="button" (click)="cerrar()">Cancelar</button>
-      </div>
+      <footer class="modal__footer">
+        <div class="modal__actions">
+          <button type="button" 
+                  class="btn btn--secondary"
+                  (click)="cerrar()"
+                  [disabled]="isSubmitting">
+            Cancelar
+          </button>
+          <button type="submit" 
+                  class="btn btn--primary"
+                  [disabled]="empleadoForm.invalid || isSubmitting">
+            <span *ngIf="!isSubmitting" class="btn__text">
+              <svg class="btn__icon" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke="currentColor" stroke-width="2"/>
+              </svg>
+              {{ submitButtonText }}
+            </span>
+            <span *ngIf="isSubmitting" class="btn__text btn__text--loading">
+              <svg class="btn__spinner" width="16" height="16" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2" opacity="0.3"/>
+                <path d="M12 2a10 10 0 0 1 10 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+              {{ submitButtonLoadingText }}
+            </span>
+          </button>
+        </div>
+        <div class="modal__progress">
+          <div class="progress-bar">
+            <div class="progress-bar__fill" 
+                 [style.width.%]="activeTab === 'obligatorios' ? 33 : activeTab === 'generales' ? 66 : 100">
+            </div>
+          </div>
+          <span class="progress-text">
+            {{ activeTab === 'obligatorios' ? 'Paso 1 de 3' : activeTab === 'generales' ? 'Paso 2 de 3' : 'Paso 3 de 3' }}
+          </span>
+        </div>
+      </footer>
     </form>
   </div>
-  
+</div>

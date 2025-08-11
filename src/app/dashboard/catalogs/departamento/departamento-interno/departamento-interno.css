@@ -185,7 +185,375 @@
   text-align: center;
 }
 
-/* Grupos de empleados */
+/* Modal de eliminación con estructura consistente */
+.modal-container--danger {
+  max-width: 500px;
+}
+
+.modal-header--danger {
+  background: linear-gradient(135deg, #1b162a, #1f1e3b);
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 24px;
+  border-radius: 12px 12px 0 0;
+}
+
+.modal-header-icon {
+  width: 48px;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.modal-header--danger .modal-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  flex: 1;
+}
+
+.modal-header--danger .modal-close-btn {
+  color: white;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.modal-header--danger .modal-close-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.modal-header--danger .modal-close-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.modal-message {
+  text-align: center;
+  padding: 32px 24px 24px;
+}
+
+.modal-message-text {
+  font-size: 18px;
+  font-weight: 500;
+  color: #343a40;
+  margin: 0 0 24px 0;
+}
+
+.modal-employee-info {
+  margin: 24px 0;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  border-left: 4px solid #161222;
+}
+
+.employee-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  text-align: left;
+}
+
+.employee-info-avatar {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #6c757d, #495057);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.employee-info-details {
+  flex: 1;
+}
+
+.employee-info-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #212529;
+  margin: 0 0 4px 0;
+}
+
+.employee-info-code {
+  font-size: 14px;
+  color: #6c757d;
+  margin: 0 0 2px 0;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+}
+
+.employee-info-position {
+  font-size: 14px;
+  color: #495057;
+  margin: 0;
+}
+
+.modal-warning {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 24px;
+  padding: 12px;
+  background: #fff3cd;
+  border: 1px solid #ffeaa7;
+  border-radius: 8px;
+  color: #856404;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.modal-warning i {
+  font-size: 16px;
+}
+
+.btn--danger {
+  background: linear-gradient(135dc, #1d1f47, #171930);
+  color: white;
+  border: 2px solid #1b1a2e;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+}
+
+.btn--danger:hover:not(:disabled) {
+  background: linear-gradient(135deg, #1f1f2f, #141427);
+  border-color: #221e37;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(23, 24, 56, 0.3);
+}
+
+.btn--danger:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.fa-spin {
+  animation: fa-spin 1s infinite linear;
+}
+
+@keyframes fa-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/*=====================================*/
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(2px);
+}
+
+.modal-container {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: modalFadeIn 0.3s ease-out;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.modal-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #d1d7df;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.modal-title i {
+  color: #112442;
+}
+
+.modal-close-btn {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.modal-close-btn:hover {
+  background-color: #f3f4f6;
+  color: #374151;
+}
+
+.modal-body {
+  padding: 24px;
+}
+
+.employee-info {
+  margin-bottom: 24px;
+}
+
+.employee-info h4 {
+  margin: 0 0 12px 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.employee-card--selected {
+  border: 2px solid #182e51;
+  background-color: #eff6ff;
+}
+
+.department-selection {
+  margin-top: 20px;
+}
+
+.form-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #374151;
+  font-size: 0.9rem;
+}
+
+.form-label i {
+  color: #162a4a;
+}
+
+.form-select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 1rem;
+  background-color: white;
+  transition: border-color 0.2s ease;
+}
+
+.form-select:focus {
+  outline: none;
+  border-color: #132747;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 24px 24px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn--secondary {
+  background-color: #f3f4f6;
+  color: #374151;
+}
+
+.btn--secondary:hover:not(:disabled) {
+  background-color: #e5e7eb;
+}
+
+.btn--primary {
+  background-color: #0f2343;
+  color: white;
+}
+
+.btn--primary:hover:not(:disabled) {
+  background-color: #0e1f42;
+}
+
+.btn--primary:disabled {
+  background-color: #9ca3af;
+}
+
+.fa-spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+
+
 .employee-group {
   margin-bottom: 2rem;
 }
@@ -211,7 +579,6 @@
   border-radius: 2px;
 }
 
-/* Cards de empleados */
 .employee-cards {
   display: grid;
   gap: 1rem;
@@ -298,7 +665,7 @@
   font-size: 0.9rem;
 }
 
-.employee-card__menu { /*animacion*/
+.employee-card__menu { 
   position: absolute;
   top: calc(100% + 8px);
   right: 0;
@@ -306,7 +673,7 @@
   border-radius: 12px;
   box-shadow: 0 12px 40px rgba(45, 43, 94, 0.16);
   min-width: 200px;
-  z-index: 1000000; /* Aumentado aquí */
+  z-index: 1000000;
   opacity: 0;
   pointer-events: none;
   transform: translateY(-10px) scale(0.95);
@@ -355,11 +722,10 @@
   width: 16px;
 }
 
-/* boton crear*/
 .department-detail__header {
   display: grid;
   grid-template-columns: 1fr auto auto;
-  gap: 1rem;
+  gap: 6rem;
   align-items: center;
   border-bottom: 2px solid #e2e8f0;
   padding-bottom: 1.5rem;
@@ -367,7 +733,6 @@
 }
 
 .department-detail__add-employee {
-  /* Este div contendrá el botón, lo alineamos a la derecha */
   display: flex;
   justify-content: flex-end;
 }
@@ -393,10 +758,9 @@
 }
 
 .btn-add-employee:hover {
-  background-color: #4c4a8b;
+  background-color: #44427c;
 }
 
-/* Responsive para pantallas pequeñas */
 @media (max-width: 768px) {
   .department-detail__header {
     grid-template-columns: 1fr 1fr;
@@ -414,7 +778,6 @@
 }
 
 
-/* Animaciones */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -426,7 +789,6 @@
   }
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .department-detail {
     padding: 1.5rem;
@@ -442,7 +804,8 @@
   }
 
   .department-detail__search {
-    min-width: auto;
+    min-width: 0.2rem;
+    margin-top: 6rem;
   }
 
   .employee-card {
@@ -460,4 +823,6 @@
   .search-box__input {
     font-size: 1rem;
   }
+
+  
 }

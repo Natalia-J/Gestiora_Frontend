@@ -1,5 +1,4 @@
 <div class="department-detail">
-  <!-- Estado inicial cuando no hay departamento seleccionado -->
   <div class="department-detail__empty-state" *ngIf="!departamentoSeleccionado">
     <div class="empty-state">
       <i class="fas fa-building empty-state__icon"></i>
@@ -10,9 +9,7 @@
     </div>
   </div>
 
-  <!-- Contenido principal cuando hay departamento seleccionado -->
   <div class="department-detail__content" *ngIf="departamentoSeleccionado">
-    <!-- Header con título, buscador y botón agregar -->
     <header class="department-detail__header">
       <div class="department-detail__title-section">
         <h2 class="department-detail__title">
@@ -36,7 +33,6 @@
         </div>
       </div>
 
-      <!-- Botón para agregar empleado -->
       <div class="department-detail__add-employee">
         <button
           type="button"
@@ -49,7 +45,6 @@
       </div>
     </header>
 
-    <!-- Lista de empleados agrupados -->
     <div class="department-detail__employees" *ngIf="empleadosFiltrados.length > 0">
       <ng-container *ngFor="let grupo of empleadosAgrupados | keyvalue: sortByKey">
         <div class="employee-group">
@@ -63,7 +58,7 @@
                     {{ empleado.nombreEmpleado }} {{ empleado.apellidoPaternoEmpleado }} {{ empleado.apellidoMaternoEmpleado }}
                   </h4>
                   <span class="employee-card__position">
-                    {{ empleado.puesto.nombre || 'Sin puesto asignado' }}
+                    {{ empleado.puesto?.nombre || 'Sin puesto asignado' }}
                   </span>
                 </div>
               </div>
@@ -112,7 +107,6 @@
       </ng-container>
     </div>
 
-    <!-- Estado sin resultados -->
     <div class="department-detail__no-results" *ngIf="departamentoSeleccionado && empleadosFiltrados.length === 0">
       <div class="no-results">
         <i class="fas fa-search no-results__icon"></i>
@@ -121,6 +115,192 @@
           No hay empleados que coincidan con tu búsqueda. Intenta con otros términos.
         </p>
       </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" *ngIf="modalVisible" (click)="cerrarModal()">
+    <div class="modal-container" (click)="$event.stopPropagation()">
+      <app-empleado
+        (cerrarModal)="cerrarModal()"
+        (empleadoCreado)="onEmpleadoCreado($event)"
+      ></app-empleado>
+    </div>
+  </div>
+
+  <div class="modal-overlay" *ngIf="modalEditarVisible" (click)="cerrarModal()">
+    <div class="modal-container" (click)="$event.stopPropagation()">
+      <app-empleado
+        [empleadoAEditar]="empleadoAEditar"
+        (cerrarModal)="cerrarModal()"
+        (empleadoEditado)="onEmpleadoEditado($event)"
+      ></app-empleado>
+    </div>
+  </div>
+
+  <div class="modal-overlay" *ngIf="modalCambiarDepartamentoVisible" (click)="cerrarModalCambioDepartamento()">
+    <div class="modal-container" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3 class="modal-title">
+          <i class="fas fa-exchange-alt"></i>
+          Cambiar Departamento
+        </h3>
+        <button 
+          class="modal-close-btn" 
+          (click)="cerrarModalCambioDepartamento()"
+          aria-label="Cerrar modal"
+        >
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div class="employee-info" *ngIf="empleadoACambiar">
+          <h4>Empleado seleccionado:</h4>
+          <div class="employee-card employee-card--selected">
+            <div class="employee-card__info">
+              <div class="employee-card__header">
+                <h4 class="employee-card__name">
+                  {{ empleadoACambiar.nombreEmpleado }} {{ empleadoACambiar.apellidoPaternoEmpleado }} {{ empleadoACambiar.apellidoMaternoEmpleado }}
+                </h4>
+                <span class="employee-card__position">
+                  {{ empleadoACambiar.puesto.nombre || 'Sin puesto asignado' }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="department-selection">
+          <label for="departamento-select" class="form-label">
+            <i class="fas fa-building"></i>
+            Seleccionar nuevo departamento:
+          </label>
+          
+          <select 
+            id="departamento-select"
+            class="form-select"
+            [(ngModel)]="departamentoSeleccionadoParaCambio"
+          >
+            <option [ngValue]="null">-- Selecciona un departamento --</option>
+            <option 
+              *ngFor="let dept of departamentosDisponibles" 
+              [ngValue]="dept.id"
+            >
+              {{ dept.nombreDepartamento }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button 
+          type="button" 
+          class="btn btn--secondary" 
+          (click)="cerrarModalCambioDepartamento()"
+          [disabled]="isMoviendoEmpleado"
+        >
+          Cancelar
+        </button>
+        
+        <button 
+          type="button" 
+          class="btn btn--primary" 
+          (click)="realizarCambioDepartamento()"
+          [disabled]="!departamentoSeleccionadoParaCambio || isMoviendoEmpleado"
+        >
+          <span *ngIf="isMoviendoEmpleado">
+            <i class="fas fa-spinner fa-spin"></i>
+            Moviendo...
+          </span>
+          <span *ngIf="!isMoviendoEmpleado">
+            <i class="fas fa-exchange-alt"></i>
+            Cambiar Departamento
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" *ngIf="modalEliminarVisible" (click)="cerrarModalEliminar()">
+    <div class="modal-container modal-container--danger" (click)="$event.stopPropagation()">
+      
+      <div class="modal-header modal-header--danger">
+        <div class="modal-header-icon">
+          <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <h3 class="modal-title">Confirmar Eliminación</h3>
+        <button 
+          type="button" 
+          class="modal-close-btn" 
+          (click)="cerrarModalEliminar()"
+          [disabled]="isEliminandoEmpleado"
+          aria-label="Cerrar modal"
+        >
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div class="modal-message">
+          <p class="modal-message-text">
+            ¿Está seguro que desea eliminar al empleado?
+          </p>
+          
+          <div class="modal-employee-info" *ngIf="empleadoAEliminar">
+            <div class="employee-info">
+              <div class="employee-info-avatar">
+                <i class="fas fa-user"></i>
+              </div>
+              <div class="employee-info-details">
+                <h4 class="employee-info-name">
+                  {{ empleadoAEliminar.nombreEmpleado }} 
+                  {{ empleadoAEliminar.apellidoPaternoEmpleado }} 
+                  {{ empleadoAEliminar.apellidoMaternoEmpleado }}
+                </h4>
+                <p class="employee-info-code">
+                  Código: {{ empleadoAEliminar.codigoEmpleado }}
+                </p>
+                <p class="employee-info-position">
+                  {{ empleadoAEliminar.puesto.nombre || 'Sin puesto asignado' }}
+                </p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="modal-warning">
+            <i class="fas fa-exclamation-circle"></i>
+            <span>Esta acción no se puede deshacer</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button 
+          type="button" 
+          class="btn btn--secondary"
+          (click)="cerrarModalEliminar()"
+          [disabled]="isEliminandoEmpleado"
+        >
+          Cancelar
+        </button>
+        
+        <button 
+          type="button" 
+          class="btn btn--danger"
+          (click)="confirmarEliminacion()"
+          [disabled]="isEliminandoEmpleado"
+        >
+          <span *ngIf="!isEliminandoEmpleado">
+            <i class="fas fa-trash"></i>
+            Eliminar Empleado
+          </span>
+          <span *ngIf="isEliminandoEmpleado">
+            <i class="fas fa-spinner fa-spin"></i>
+            Eliminando...
+          </span>
+        </button>
+      </div>
+      
     </div>
   </div>
 </div>
