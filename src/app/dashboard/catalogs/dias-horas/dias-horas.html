@@ -57,7 +57,7 @@
             *ngFor="let emp of empleados" 
             [value]="emp.id"
           >
-            {{emp.nombreEmpleado}}
+          {{ emp.nombreEmpleado }} {{ emp.apellidoPaternoEmpleado }} {{ emp.apellidoMaternoEmpleado }}
           </option>
         </select>
         <i class="fas fa-chevron-down select-wrapper__icon"></i>
