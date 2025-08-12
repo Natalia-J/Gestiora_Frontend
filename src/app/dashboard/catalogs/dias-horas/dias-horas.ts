@@ -42,33 +42,27 @@ interface TurnoInfo {
 })
 export class DiasHoras implements OnInit, OnDestroy {
 
-  // Data properties
   periodosEmpleado: PeriodoEmpleadoResponseBin[] = [];
   departamentos: Departamento[] = [];
   empleados: Empleado[] = [];
   inconsistencias: CatalogoItem[] = [];
   registros: RegistroHoras[] = [];
 
-  // Form state
   codigoBusqueda: string = '';
   departamentoSelected: string = '';
   empleadoSelected: string = '';
   periodoSelected: string = '';
 
-  // UI state
   mostrarTabla: boolean = false;
   turnoInfo: TurnoInfo | null = null;
   loading: boolean = false;
   saving: boolean = false;
 
-  // Services
   horasDiasService = inject(DiasHorasService);
   periodoService = inject(PeriodosService);
   catalogsService = inject(CatalogosService);
   toastService = inject(ToastrService)
-  // toastService = inject(ToastService)
 
-  // Subject para manejar unsubscribe
   private destroy$ = new Subject<void>();
 
   ngOnInit(): void {
@@ -187,15 +181,12 @@ export class DiasHoras implements OnInit, OnDestroy {
 
     this.loading = true;
     
-    // Preparar parámetros para la búsqueda
     const searchParams: BusquedaDatosRequest = {
       codigoEmpleado: this.codigoBusqueda || '',
       departamentoId: this.departamentoSelected ? parseInt(this.departamentoSelected) : 0,
       empleadoId: this.empleadoSelected ? parseInt(this.empleadoSelected) : 0,
       periodoId: parseInt(this.periodoSelected)
     };
-
-    // Hacer la petición al servicio
 
      this.horasDiasService.buscarDatosEmpleado(searchParams)
       .pipe(takeUntil(this.destroy$))
@@ -237,34 +228,28 @@ private processTableData(data: any[]): void {
     horaSalida: this.formatTimeFromServer(item.horaSalida) || '',
     horasTrabajadas: item.horasTrabajadas || 0,
     esDiaDescanso: item.esDiaDescanso || false,
-    // Asegurar que tanto el registro como las opciones usen el mismo tipo
     inconsistencia: item.inconsistencia ? String(item.inconsistencia) : '',
     comentario: item.comentario || '',
     hasChanges: false
   }));
 }
 
-  // Formatear hora del servidor (14:00:00) a formato de input time (14:00)
 private formatTimeFromServer(timeString: string): string {
   if (!timeString) return '';
   
-  // Si viene en formato "14:00:00", tomar solo "14:00" para el input
   if (timeString.length === 8) {
     return timeString.substring(0, 5);
   }
   
   return timeString;
 }
-  // Formatear hora para enviar al servidor (14:00) a formato completo (14:00:00)
 private formatTimeForServer(timeString: string): string {
   if (!timeString) return '';
   
-  // Si viene en formato "14:00", agregar ":00"
   if (timeString.length === 5) {
     return `${timeString}:00`;
   }
   
-  // Si ya tiene formato completo, retornarlo tal como está
   return timeString;
 }
 
@@ -288,7 +273,6 @@ private formatTimeForServer(timeString: string): string {
   onFieldChange(registro: RegistroHoras): void {
     
     registro.hasChanges = true;
-    // Calcular horas trabajadas automáticamente si se tienen ambas horas
     if (registro.horaEntrada && registro.horaSalida) {
       registro.horasTrabajadas = this.calculateWorkedHours(
         registro.horaEntrada, 
@@ -306,13 +290,12 @@ private formatTimeForServer(timeString: string): string {
     const entrada = horaE * 60 + minE;
     let salida = horaS * 60 + minS;
     
-    // Si la hora de salida es menor que la de entrada, asumimos que es al día siguiente
     if (salida < entrada) {
       salida += 24 * 60;
     }
     
     const minutosTrabajados = salida - entrada;
-    return Math.round((minutosTrabajados / 60) * 100) / 100; // Redondear a 2 decimales
+    return Math.round((minutosTrabajados / 60) * 100) / 100;
   }
 
   update(registro: RegistroHoras): void {
@@ -321,8 +304,7 @@ private formatTimeForServer(timeString: string): string {
 
     this.saving = true;
 
-    // Format the date properly
-    const fechaFormatted = registro.fecha.toISOString().split('T')[0]; // YYYY-MM-DD format
+    const fechaFormatted = registro.fecha.toISOString().split('T')[0];
 // 
     const dataToSave: GuardarRegistroRequest = {
       horaEntrada: this.formatTimeForServer(registro.horaEntrada),
@@ -331,7 +313,6 @@ private formatTimeForServer(timeString: string): string {
       periodoId: parseInt(this.periodoSelected),
       empleadoId: parseInt(this.empleadoSelected),
       inconsistenciaId: registro.inconsistencia && registro.inconsistencia !== '' ? parseInt(registro.inconsistencia) : 0,
-      // comentario: registro.comentario
     };
 
     this.horasDiasService.guardarRegistro(dataToSave)
@@ -350,7 +331,6 @@ private formatTimeForServer(timeString: string): string {
           this.toastService.error(error.error,"asd")
           this.saving = false;
           console.error('Error guardando registro:', error);
-          // Opcional: Mostrar mensaje de error
           this.showNotification('Error al guardar el registro', 'error');
         }
       });
@@ -358,7 +338,6 @@ private formatTimeForServer(timeString: string): string {
 
 
 onHoraEntradaChange(registro: RegistroHoras, newValue: string): void {
-  // Asegurar formato HH:MM:SS
   registro.horaEntrada = this.ensureFullTimeFormat(newValue);
   this.onFieldChange(registro);
 }
@@ -368,7 +347,7 @@ onHoraSalidaChange(registro: RegistroHoras, event: Event): void {
   const newValue = target.value;
   
   
-  registro.horaSalida = this.ensureFullTimeFormat(newValue);
+registro.horaSalida = this.ensureFullTimeFormat(newValue);
   this.onFieldChange(registro);
 }
 
@@ -376,29 +355,22 @@ onHoraSalidaChange(registro: RegistroHoras, event: Event): void {
 private ensureFullTimeFormat(timeString: string): string {
   if (!timeString) return '';
   
-  // Si viene en formato HH:MM, agregar :SS
   if (timeString.length === 5) {
     return `${timeString}:00`;
   }
   
-  // Si ya tiene formato completo, retornarlo tal como está
   return timeString;
 }
 
 
-  // Added notification method for better UX
   private showNotification(message: string, type: 'success' | 'error'): void {
-    // You can implement a proper notification system here
-    // For now, just using console and alert as fallback
     if (type === 'success') {
       console.log('✅', message);
     } else {
       console.error('❌', message);
     }
-    // You could integrate with a toast library like ngx-toastr here
   }
 
-  // Save all changes at once (bonus feature)
   saveAllChanges(): void {
     const changedRegistros = this.registros.filter(r => r.hasChanges);
     if (changedRegistros.length === 0) return;
@@ -406,12 +378,10 @@ private ensureFullTimeFormat(timeString: string): string {
     changedRegistros.forEach(registro => this.update(registro));
   }
 
-  // Función para trackBy en el ngFor para mejor performance
   trackByFn(index: number, item: RegistroHoras): any {
     return item.id || index;
   }
 
-  // Función para resetear el formulario
   resetForm(): void {
     this.departamentoSelected = '';
     this.empleadoSelected = '';
@@ -423,12 +393,10 @@ private ensureFullTimeFormat(timeString: string): string {
     this.turnoInfo = null;
   }
 
-  // Getter para mostrar si hay filtros aplicados
   get hasFiltersApplied(): boolean {
     return !!(this.departamentoSelected || this.empleadoSelected || this.periodoSelected || this.codigoBusqueda);
   }
 
-  // Getter para validar si todos los campos requeridos están llenos
   get canLoadData(): boolean {
     return !!(
       (this.departamentoSelected && this.empleadoSelected && this.periodoSelected) || 
@@ -436,35 +404,30 @@ private ensureFullTimeFormat(timeString: string): string {
     );
   }
 
-  // Getter para el nombre del empleado seleccionado
   get selectedEmployeeName(): string {
     if (!this.empleadoSelected) return '';
     const empleado = this.empleados.find(emp => emp.id.toString() === this.empleadoSelected);
     return empleado ? empleado.nombreCompleto : '';
   }
 
-  // Getter para el nombre del departamento seleccionado
   get selectedDepartmentName(): string {
     if (!this.departamentoSelected) return '';
     const departamento = this.departamentos.find(dept => dept.id.toString() === this.departamentoSelected);
     return departamento ? departamento.nombreDepartamento : '';
   }
 
-  // Getter para el período seleccionado
   get selectedPeriodName(): string {
     if (!this.periodoSelected) return '';
     const periodo = this.periodosEmpleado.find(per => per.id.toString() === this.periodoSelected);
     return periodo ? periodo.rangoFechas : '';
   }
 
-  // Método para obtener el nombre de la inconsistencia
   getInconsistenciaName(inconsistenciaId: string): string {
     if (!inconsistenciaId) return 'Sin inconsistencias';
     const inconsistencia = this.inconsistencias.find(inc => inc.id === inconsistenciaId);
     return inconsistencia ? inconsistencia.name : 'Sin inconsistencias';
   }
 
-  // Método para validar si todos los campos requeridos están llenos
   get canLoadDataValidation(): boolean {
     return !!(
       (this.departamentoSelected && this.empleadoSelected && this.periodoSelected) || 
@@ -479,35 +442,28 @@ private ensureFullTimeFormat(timeString: string): string {
     this.turnoInfo = null;
   }
 
-  // Método para obtener el total de horas trabajadas
   get totalHorasTrabajadas(): number {
     return this.registros.reduce((total, registro) => total + (registro.horasTrabajadas || 0), 0);
   }
 
-  // Método para obtener el total de días de descanso
   get totalDiasDescanso(): number {
     return this.registros.filter(registro => registro.esDiaDescanso).length;
   }
 
-  // Método para obtener registros con inconsistencias
   get registrosConInconsistencias(): number {
     
     return this.registros.filter(registro => registro.inconsistencia && registro.inconsistencia !== '').length;
   }
 
-  // Getter to check if there are unsaved changes
   get hasUnsavedChanges(): boolean {
     return this.registros.some(registro => registro.hasChanges);
   }
 
-  // Getter for pending changes count
   get pendingChangesCount(): number {
     return this.registros.filter(registro => registro.hasChanges).length;
   }
 
-  // Método para verificar si una inconsistencia está seleccionada
  isInconsistenciaSelected(inconsistenciaId: string, registroInconsistencia: string): boolean {
-  // Comparar como strings para evitar problemas de tipos
   return String(inconsistenciaId) === String(registroInconsistencia);
 }
 }

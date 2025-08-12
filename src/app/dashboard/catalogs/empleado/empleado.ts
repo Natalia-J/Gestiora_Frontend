@@ -46,16 +46,103 @@ export class Empleado implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.isEditMode = !!this.empleadoAEditar;
     this.initializeForm();
-    this.loadCatalogos();
-    this.loadDepartamentos();
-    this.loadTurnos();
-    this.loadPuestos();
     
-    if (this.isEditMode && this.empleadoAEditar) {
-      this.loadEmpleadoData();
-    }
+    // Cargar todos los datos necesarios antes de poblar el formulario
+    this.loadAllRequiredData().then(() => {
+      if (this.isEditMode && this.empleadoAEditar) {
+        this.loadEmpleadoData();
+      }
+    });
     
     document.body.style.overflow = 'hidden';
+  }
+
+  private async loadAllRequiredData(): Promise<void> {
+    this.isLoading = true;
+    
+    try {
+      await Promise.all([
+        this.loadCatalogosAsync(),
+        this.loadDepartamentosAsync(),
+        this.loadTurnosAsync(),
+        this.loadPuestosAsync()
+      ]);
+    } catch (error) {
+      this.toastr.error('Error al cargar los datos necesarios', 'Error');
+    } finally {
+      this.isLoading = false;
+    }
+  }
+
+  private loadCatalogosAsync(): Promise<void> {
+  return new Promise((resolve, reject) => {
+    this.catalogosService.getCatalogos().subscribe({
+      next: (data) => {
+        this.catalogos = data;
+        resolve();
+      },
+      error: (error) => reject(error)
+    });
+  });
+}
+
+  private loadDepartamentosAsync(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.departamentoService.listar().subscribe({
+        next: (data) => {
+          this.departamentos = data;
+          resolve();
+        },
+        error: (error) => reject(error)
+      });
+    });
+  }
+
+  private loadTurnosAsync(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.turnoService.obtenerTurnos().subscribe({
+        next: (data) => {
+          console.log("turnos cargados:", JSON.stringify(data));
+          this.turnos = data;
+          resolve();
+        },
+        error: (error) => reject(error)
+      });
+    });
+  }
+
+  private loadPuestosAsync(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.puestoService.obtenerTodos().subscribe({
+        next: (data) => {
+          console.log('puestos cargados:', data);
+          this.puestos = data;
+          resolve();
+        },
+        error: (error) => reject(error)
+      });
+    });
+  }
+
+  private loadEmpleadoData(): void {
+    if (!this.empleadoAEditar) {
+      console.warn('No hay empleado para editar');
+      return;
+    }
+    
+    this.isLoading = true;
+    this.empleadoService.obtenerPorId(this.empleadoAEditar.id).subscribe({
+      next: (empleado) => {
+        console.log('Datos del empleado cargados:', empleado);
+        this.populateForm(empleado);
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('Error al cargar empleado:', error);
+        this.toastr.error('Error al cargar los datos del empleado', 'Error');
+        this.isLoading = false;
+      }
+    });
   }
 
   ngOnDestroy(): void {
@@ -109,67 +196,54 @@ export class Empleado implements OnInit, OnDestroy {
     });
   }
 
-  private loadEmpleadoData(): void {
-    if (!this.empleadoAEditar) return;
-    
-    this.isLoading = true;
-    this.empleadoService.obtenerPorId(this.empleadoAEditar.id).subscribe({
-      next: (empleado) => {
-        this.populateForm(empleado);
-        this.isLoading = false;
-      },
-      error: () => {
-        this.toastr.error('Error al cargar los datos del empleado', 'Error');
-        this.isLoading = false;
-      }
-    });
-  }
-
   private populateForm(empleado: any): void {
-    this.empleadoForm.patchValue({
-      codigoEmpleado: empleado.codigoEmpleado,
-      nombre: empleado.nombreEmpleado,
-      apellidoPaterno: empleado.apellidoPaternoEmpleado,
-      apellidoMaterno: empleado.apellidoMaternoEmpleado,
-      fechaAlta: empleado.fechaAlta ? this.formatDate(empleado.fechaAlta) : '',
-      tipoContrato: empleado.tipoContrato?.id,
-      tipoPeriodo: empleado.tipoPeriodo?.id,
-      salarioDiario: empleado.salarioDiario,
-      baseCotizacion: empleado.baseCotizacion?.id,
-      
-      departamento: empleado.departamento?.id,
-      puesto: empleado.puesto?.id,
-      sindicato: empleado.sindicato?.id,
-      tipoPrestacion: empleado.tipoPrestacion?.id,
-      baseDePago: empleado.baseDePago?.id,
-      metodoPago: empleado.metodoPago?.id,
-      turnoTrabajo: empleado.turnoTrabajo?.turnoid,
-      zonaSalario: empleado.zonaSalario?.id,
-      tipoRegimen: empleado.tipoRegimen?.id,
-      afore: empleado.afore,
-      correo: empleado.correo,
-      numTelefono: empleado.numTelefono,
+    if(empleado){
+      this.empleadoForm.patchValue(empleado)
+    }
 
-      numSeguridadSocial: empleado.numSeguridadSocial,
-      registroPatronalImss: empleado.registroPatronalImss,
-      estadoCivil: empleado.estadoCivil?.id,
-      genero: empleado.genero?.id,
-      fechaNacimiento: empleado.fechaNacimiento ? this.formatDate(empleado.fechaNacimiento) : '',
-      entidadFederativa: empleado.entidadFederativa?.id,
-      ciudad: empleado.ciudad,
-      curp: empleado.curp,
-      rfc: empleado.rfc,
+    // this.empleadoForm.patchValue({
+    //   codigoEmpleado: empleado.codigoEmpleado,
+    //   nombre: empleado.nombreEmpleado,
+    //   apellidoPaterno: empleado.apellidoPaternoEmpleado,
+    //   apellidoMaterno: empleado.apellidoMaternoEmpleado,
+    //   fechaAlta: empleado.fechaAlta ? this.formatDate(empleado.fechaAlta) : '',
+    //   tipoContrato: empleado.tipoContrato?.id,
+    //   tipoPeriodo: empleado.tipoPeriodo?.id,
+    //   salarioDiario: empleado.salarioDiario,
+    //   baseCotizacion: empleado.baseCotizacion?.id,
       
-      direccion: {
-        calle: empleado.direccion?.calle || '',
-        numExterno: empleado.direccion?.numExterno || '',
-        numInterno: empleado.direccion?.numInterno || '',
-        colonia: empleado.direccion?.colonia || '',
-        codigoPostal: empleado.direccion?.codigoPostal || '',
-        localidad: empleado.direccion?.localidad || '',
-      },
-    });
-    console.log('turno:', empleado.turnoTrabajo?.tunoid);
+    //   departamento: empleado.departamento?.id,
+    //   puesto: empleado.puesto?.id,
+    //   sindicato: empleado.sindicato?.id,
+    //   tipoPrestacion: empleado.tipoPrestacion?.id,
+    //   baseDePago: empleado.baseDePago?.id,
+    //   metodoPago: empleado.metodoPago?.id,
+    //   turnoTrabajo: empleado.turnoTrabajo?.turnoId,
+    //   zonaSalario: empleado.zonaSalario?.id,
+    //   tipoRegimen: empleado.tipoRegimen?.id,
+    //   afore: empleado.afore,
+    //   correo: empleado.correo,
+    //   numTelefono: empleado.numTelefono,
+
+    //   numSeguridadSocial: empleado.numSeguridadSocial,
+    //   registroPatronalImss: empleado.registroPatronalImss,
+    //   estadoCivil: empleado.estadoCivil?.id,
+    //   genero: empleado.genero?.id,
+    //   fechaNacimiento: empleado.fechaNacimiento ? this.formatDate(empleado.fechaNacimiento) : '',
+    //   entidadFederativa: empleado.entidadFederativa?.id,
+    //   ciudad: empleado.ciudad,
+    //   curp: empleado.curp,
+    //   rfc: empleado.rfc,
+      
+    //   direccion: {
+    //     calle: empleado.direccion?.calle || '',
+    //     numExterno: empleado.direccion?.numExterno || '',
+    //     numInterno: empleado.direccion?.numInterno || '',
+    //     colonia: empleado.direccion?.colonia || '',
+    //     codigoPostal: empleado.direccion?.codigoPostal || '',
+    //     localidad: empleado.direccion?.localidad || '',
+    //   },
+    // });
   }
 
   private formatDate(dateString: string): string {
@@ -206,7 +280,7 @@ export class Empleado implements OnInit, OnDestroy {
   private loadTurnos(): void {
     this.turnoService.obtenerTurnos().subscribe({
       next: (data) => {
-        console.log(data)
+        console.log("turnos:" + JSON.stringify(data))
         this.turnos = data;
       },
       error: () => {
@@ -366,13 +440,4 @@ export class Empleado implements OnInit, OnDestroy {
   get submitButtonLoadingText(): string {
     return this.isEditMode ? 'Actualizando...' : 'Creando...';
   }
-
-  debugTurno(): void {
-  const turnoControl = this.empleadoForm.get('turnoTrabajo');
-  console.log('Valor actual del turno:', turnoControl?.value);
-  console.log('Turno válido:', turnoControl?.valid);
-  console.log('Turno errores:', turnoControl?.errors);
-  console.log('Turnos disponibles:', this.turnos);
-  console.log('Form status:', this.empleadoForm.status);
-}
 }

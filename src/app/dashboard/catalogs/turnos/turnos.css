@@ -1,115 +1,212 @@
-.modal-overlay {
+/* ===============================================
+   VARIABLES CSS Y CONFIGURACIÓN BASE
+   =============================================== */
+:root {
+  --primary-color: #2d2b5e;
+  --primary-light: #3d3b7e;
+  --primary-dark: #1d1b4e;
+  --secondary-color: #6c7293;
+  --accent-color: #4f46e5;
+  
+  --success-color: #10b981;
+  --error-color: #ef4444;
+  --warning-color: #f59e0b;
+  
+  --background-color: #f8fafc;
+  --surface-color: #ffffff;
+  --border-color: #e2e8f0;
+  --text-primary: #1e293b;
+  --text-secondary: #64748b;
+  --text-muted: #94a3b8;
+  
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  
+  --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===============================================
+   OVERLAY Y MODAL BASE
+   =============================================== */
+.turnos-modal__overlay {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(170, 171, 174, 0.2);
+  right: 0;
+  bottom: 0;
+  background: rgba(45, 43, 94, 0.75);
+  backdrop-filter: blur(4px);
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   z-index: 1000;
+  animation: fadeIn 0.3s ease-out;
   padding: 1rem;
 }
-.modal {
-  position: relative; /* para que el botón se posicione respecto al modal */
-  /* resto de estilos */
-}
 
-.btn-cerrar {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  background: transparent;
-  border: none;
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: #555;
-  cursor: pointer;
-  transition: color 0.3s;
-}
-
-.btn-cerrar:hover {
-  color: #262651;
-}
-
-
-.modal {
-  background: #fff;
-  border-radius: 10px;
-  width: 600px; /* más pequeño que el otro para que no sea tan grande */
-  height: auto; /* auto para ajustar según contenido */
-  box-shadow: 0 10px 40px 15px rgba(80, 80, 97, 0.3);
-  display: flex;
-  flex-direction: column;
+.turnos-modal {
+  background: var(--surface-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xl);
+  width: 100%;
+  max-width: 1200px;
+  max-height: 90vh;
   overflow: hidden;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  animation: slideIn 0.3s ease-out;
+  border: 1px solid var(--border-color);
 }
 
-.modal h2 {
-  padding: 1rem 1.5rem;
-  border-bottom: 1px solid #e0e0e0;
-  font-size: 1.2rem;
+/* ===============================================
+   HEADER DEL MODAL
+   =============================================== */
+.turnos-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 2rem;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+  color: white;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.turnos-modal__title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1.5rem;
   font-weight: 600;
-  color: #2b3d4e;
-  font-family: 'Poppins', sans-serif;
   margin: 0;
 }
 
-.boton-container {
+.turnos-modal__icon {
+  font-size: 1.25rem;
+  opacity: 0.9;
+}
+
+.turnos-modal__close-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: white;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
   display: flex;
-  justify-content: flex-end;
-  margin-top: 1rem;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: 1.125rem;
 }
 
+.turnos-modal__close-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+}
 
-.contenido-modal {
-  flex: 1;
-  padding: 1rem 1.5rem;
+/* ===============================================
+   CONTENIDO PRINCIPAL
+   =============================================== */
+.turnos-modal__content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  height: calc(90vh - 5rem);
+  min-height: 600px;
+}
+
+/* ===============================================
+   PANEL DE FORMULARIO (IZQUIERDA)
+   =============================================== */
+.turnos-form {
+  padding: 2rem;
+  border-right: 1px solid var(--border-color);
   overflow-y: auto;
+  background: var(--background-color);
 }
 
+.turnos-form__header {
+  margin-bottom: 2rem;
+}
 
-form.formulario label {
+.turnos-form__title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 1rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.turnos-form__divider {
+  height: 3px;
+  background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+  border-radius: var(--radius-sm);
+  width: 3rem;
+}
+
+.turnos-form__form {
   display: flex;
   flex-direction: column;
-  margin-bottom: 1rem;
-  font-weight: 600;
-  color: #2b3d4e;
-  font-family: 'Poppins', sans-serif;
+  gap: 1.5rem;
 }
 
-form.formulario input,
-form.formulario select {
-  padding: 0.5em;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 1rem;
-  font-family: inherit;
-  margin-top: 0.3rem;
-  transition: border-color 0.3s;
+/* ===============================================
+   CAMPOS DEL FORMULARIO
+   =============================================== */
+.turnos-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
-form.formulario input:focus,
-form.formulario select:focus {
-  border-color: #262651;
+.turnos-form__field--half {
+  flex: 1;
+}
+
+.turnos-form__row {
+  display: flex;
+  gap: 1rem;
+}
+
+.turnos-form__label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  margin-bottom: 0.25rem;
+}
+
+.turnos-form__field-icon {
+  color: var(--primary-color);
+  font-size: 0.875rem;
+  width: 1rem;
+}
+
+.turnos-form__input,
+.turnos-form__select {
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  transition: var(--transition);
+  background: var(--surface-color);
+  color: var(--text-primary);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.turnos-form__input:focus,
+.turnos-form__select:focus {
   outline: none;
-}
-
-form.formulario button {
-  margin-top: 1rem;
-  padding: 0.6em 1.2em;
-  border-radius: 6px;
-  font-weight: 600;
-  cursor: pointer;
-  font-size: 1rem;
-  background: linear-gradient(135deg, #30304b, #383958);
-  color: white;
-  border: none;
-  transition: background 0.3s;
-}
-
-form.formulario button:disabled {
-  background: #999;
-  cursor: not-allowed;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(45, 43, 94, 0.1);
 }

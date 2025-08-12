@@ -10,7 +10,7 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: linear-gradient(135deg,#567C8D 10%, #CDCDCD 40%, #567C8D 90%);
+    background: linear-gradient(135deg,#121430b4 10%, #CDCDCD 40%, #1f243ba6 90%);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     padding: 1rem;
   }
@@ -34,7 +34,7 @@
     left: 0;
     right: 0;
     height: 8px;
-    background: linear-gradient(90deg, #567C8D, #2F4156);
+    background: linear-gradient(90deg, #1d1f33, #1d1843);
   }
   
   .register-header {
@@ -143,13 +143,13 @@
   }
   
   .btn-primary {
-    background: linear-gradient(135deg, #567C8D 0%, #2F4156 100%);
+    background: linear-gradient(135deg, #1a1836 0%, #191831 100%);
     color: white;
   }
   
   .btn-primary:hover:not(:disabled) {
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 8px 25px rgba(23, 28, 53, 0.3);
   }
   
   .btn-primary:active {
@@ -176,7 +176,7 @@
   }
   
   .login-link a {
-    color: #2F4156;
+    color: #222744;
     text-decoration: none;
     font-weight: 600;
     transition: color 0.3s ease;

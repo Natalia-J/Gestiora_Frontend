@@ -1,1 +1,159 @@
-<p>nomina works!</p>
+<div class="nomina">
+  <!-- Header -->
+  <div class="nomina__header">
+    <div class="nomina__header-content">
+      <div class="nomina__title-section">
+        <h2 class="nomina__title">
+          <i class="fas fa-file-invoice-dollar nomina__title-icon"></i>
+          Nómina del Empleado
+        </h2>
+        <p class="nomina__subtitle" *ngIf="nombreEmpleado">
+          {{ nombreEmpleado }} - ID: {{ idEmployee }}
+        </p>
+        <p class="nomina__subtitle" *ngIf="!nombreEmpleado">
+          Empleado ID: {{ idEmployee }}
+        </p>
+      </div>
+      
+      <div class="nomina__actions">
+        <button 
+          type="button"
+          class="nomina__btn nomina__btn--reload"
+          [disabled]="isLoading"
+          (click)="reintentarCarga()"
+          title="Recargar vista previa">
+          <i class="fas fa-sync-alt nomina__btn-icon" 
+             [class.nomina__btn-icon--spinning]="isLoading"></i>
+          <span class="nomina__btn-text">Recargar</span>
+        </button>
+        
+        <button 
+          type="button"
+          class="nomina__btn nomina__btn--download"
+          [disabled]="!puedeDescargar"
+          (click)="descargarPdf()"
+          title="Descargar PDF">
+          <i class="fas fa-download nomina__btn-icon" 
+             [class.nomina__btn-icon--spinning]="isDownloading"></i>
+          <span class="nomina__btn-text">
+            {{ isDownloading ? 'Descargando...' : 'Descargar PDF' }}
+          </span>
+        </button>
+      </div>
+    </div>
+    
+    <!-- Status Bar -->
+    <div class="nomina__status-bar">
+      <div class="nomina__status-item">
+        <i class="fas fa-info-circle nomina__status-icon"></i>
+        <span class="nomina__status-text">{{ estadoCarga }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PDF Viewer Container -->
+  <div class="nomina__viewer-container">
+    
+    <!-- Loading State -->
+    <div class="nomina__loading" *ngIf="isLoading">
+      <div class="nomina__loading-content">
+        <div class="nomina__loading-spinner">
+          <i class="fas fa-spinner fa-spin"></i>
+        </div>
+        <h3 class="nomina__loading-title">Cargando Nómina</h3>
+        <p class="nomina__loading-text">
+          Obteniendo la vista previa del documento...
+        </p>
+        <div class="nomina__loading-progress">
+          <div class="nomina__loading-progress-bar"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Error State -->
+    <div class="nomina__error" *ngIf="hasError && !isLoading">
+      <div class="nomina__error-content">
+        <div class="nomina__error-icon">
+          <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <h3 class="nomina__error-title">Error al Cargar</h3>
+        <p class="nomina__error-message">{{ errorMessage }}</p>
+        <button 
+          type="button"
+          class="nomina__btn nomina__btn--retry"
+          (click)="reintentarCarga()">
+          <i class="fas fa-redo nomina__btn-icon"></i>
+          <span class="nomina__btn-text">Reintentar</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- PDF Viewer -->
+    <div class="nomina__pdf-viewer" *ngIf="pdfUrl && !isLoading && !hasError">
+      <div class="nomina__pdf-container">
+        <iframe 
+          class="nomina__pdf-frame"
+          [src]="pdfUrl"
+          type="application/pdf"
+          title="Vista previa de nómina">
+        </iframe>
+        
+        <!-- PDF Fallback Message -->
+        <div class="nomina__pdf-fallback">
+          <div class="nomina__fallback-content">
+            <i class="fas fa-file-pdf nomina__fallback-icon"></i>
+            <h4 class="nomina__fallback-title">PDF no Compatible</h4>
+            <p class="nomina__fallback-text">
+              Su navegador no puede mostrar PDFs directamente.
+            </p>
+            <button 
+              type="button"
+              class="nomina__btn nomina__btn--download"
+              (click)="descargarPdf()">
+              <i class="fas fa-download nomina__btn-icon"></i>
+              <span class="nomina__btn-text">Descargar para Ver</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Download Progress Overlay -->
+    <div class="nomina__download-overlay" *ngIf="isDownloading">
+      <div class="nomina__download-content">
+        <div class="nomina__download-spinner">
+          <i class="fas fa-download"></i>
+        </div>
+        <h4 class="nomina__download-title">Preparando Descarga</h4>
+        <p class="nomina__download-text">Generando archivo PDF...</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Info -->
+  <div class="nomina__footer" *ngIf="pdfUrl && !isLoading && !hasError">
+    <div class="nomina__footer-content">
+      <div class="nomina__info-items">
+        <div class="nomina__info-item">
+          <i class="fas fa-calendar-alt nomina__info-icon"></i>
+          <span class="nomina__info-text">
+            Generado: {{ 'now' | date:'dd/MM/yyyy HH:mm' }}
+          </span>
+        </div>
+        <div class="nomina__info-item">
+          <i class="fas fa-user nomina__info-icon"></i>
+          <span class="nomina__info-text">
+            ID Empleado: {{ idEmployee }}
+          </span>
+        </div>
+      </div>
+      
+      <div class="nomina__tips">
+        <i class="fas fa-lightbulb nomina__tips-icon"></i>
+        <span class="nomina__tips-text">
+          Tip: Usa Ctrl+P para imprimir directamente desde el navegador
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

@@ -217,6 +217,12 @@
                   {{ isSaving[empleado.codigoEmpleado] ? 'Guardando...' : 'Guardar' }}
                 </span>
               </button>
+
+              <button      class="prenomina__save-btn" type="button" (click)="generarNominaSingle(empleado.prenominaId)">
+                    <span class="prenomina__save-btn-text">
+            Nomina
+                </span>
+              </button>
             </td>
           </tr>
         </tbody>

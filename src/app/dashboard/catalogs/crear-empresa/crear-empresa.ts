@@ -23,8 +23,6 @@ export class CrearEmpresa {
 
   constructor(private empresaService: EmpresaService) {}
 
-
-
   guardar(): void {
     const formGeneral = this.datosGeneralesComponent?.formDatosGenerales;
     const formAdicional = this.datosAdicionalesComponent?.formDatosAdicionales;

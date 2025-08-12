@@ -22,7 +22,6 @@
     </div>
   </div>
 
-  <!-- Filters Section -->
   <div class="dias-horas__filters">
     <div class="filter-group">
       <label class="filter-group__label">Departamento</label>
@@ -58,7 +57,7 @@
             *ngFor="let emp of empleados" 
             [value]="emp.id"
           >
-            {{emp.nombreCompleto}}
+            {{emp.nombreEmpleado}}
           </option>
         </select>
         <i class="fas fa-chevron-down select-wrapper__icon"></i>
@@ -86,7 +85,6 @@
     </div>
   </div>
 
-  <!-- Info Card -->
   <div class="dias-horas__info-card" *ngIf="turnoInfo">
     <div class="info-card">
       <div class="info-card__header">

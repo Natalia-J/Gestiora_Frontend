@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { PeriodoRequest, RegistroEmpleado } from '../../../schemas/reporte-empleado.schema';
 import { CatalogosService } from '../../../services/catalogosService';
 import { ToastrService } from 'ngx-toastr';
@@ -6,6 +6,11 @@ import { CommonModule } from '@angular/common';
 import { PrenominaService } from '../../../services/prenomina-service';
 import { TipoPeriodos } from '../../../services/tipo-periodos';
 import { PrenominaRequest, RegistroPrenomina } from '../../../schemas/prenomina-Empleados.schemas';
+
+export interface NominaView{
+  vista: string;
+  idEmployee: number;
+}
 
 @Component({
   selector: 'app-prenomina',
@@ -20,23 +25,33 @@ periodos: any[] = [];
   isLoading = false;
   isGeneratingPayroll = false;
   isSaving: { [key: string]: boolean } = {};
+  @Output() cambiarVista: EventEmitter<NominaView> = new EventEmitter<NominaView>();
 
-  // Servicios inyectados
+
+
+
   private readonly catalogsService = inject(CatalogosService);
   private readonly prenominaService = inject(PrenominaService);
   private readonly toastService = inject(ToastrService);
   private readonly tipoPeriodosService = inject(TipoPeriodos);
 
-  // Mapeo de nombres de períodos
   readonly periodoNames: { [key: number]: string } = {
     1: 'Semanal',
     2: 'Quincenal',
     3: 'Mensual'
   };
 
+
+
   ngOnInit(): void {
     this.loadPeriodos();
   }
+
+  generarNominaSingle(idEmployee: any){
+  this.cambiarVista.emit({vista: 'nomina', idEmployee: idEmployee})
+
+
+}
 
   private loadPeriodos(): void {
     this.isLoading = true;
@@ -59,77 +74,92 @@ periodos: any[] = [];
       }
     });
   }
+selectTab(periodoId: number): void {
+  if (this.periodoSelected === periodoId) return;
 
-  selectTab(periodoId: number): void {
-    if (this.periodoSelected === periodoId) return;
-    
-    this.periodoSelected = periodoId;
-    this.registroEmpleado = [];
-    this.isLoading = true;
+  this.periodoSelected = periodoId;
+  this.registroEmpleado = [];
+  this.isLoading = true;
 
-    this.prenominaService.getPrenominaPorTipoPeriodo(periodoId).subscribe({
-      next: (empleados) => {
-        this.registroEmpleado = empleados;
-        this.isLoading = false;
-        
-        if (empleados.length === 0) {
-          this.toastService.info('No se encontraron empleados para este período', 'Información');
+  this.prenominaService.getPrenominaPorTipoPeriodo(periodoId).subscribe({
+    next: (empleados) => {
+      console.log('Empleados completos:', empleados);
+      
+      empleados.forEach(e => {
+        console.log('Empleado:', e);
+        console.log('prenominaId:', (e as any).prenominaId);
+      });
+
+      this.registroEmpleado = empleados.map(e => ({
+        ...e,
+        prenominaId: (e as any).prenominaId || (e as any).id || 0,
+        id: this.extractEmpleadoId(e.codigoEmpleado)
+      }));
+      
+      this.isLoading = false;
+
+      if (empleados.length === 0) {
+        this.toastService.info('No se encontraron empleados para este período', 'Información');
+      }
+    },
+    error: (error) => {
+      console.error('Error al cargar empleados:', error);
+      this.toastService.error('Error al cargar empleados para el período seleccionado', 'Error');
+      this.isLoading = false;
+    }
+  });
+}
+
+
+
+guardarPrenomina(empleado: RegistroPrenomina): void {
+  const empleadoKey = empleado.codigoEmpleado;
+  if (this.isSaving[empleadoKey] || !this.periodoSelected) return;
+
+  this.isSaving[empleadoKey] = true;
+
+  const prenominaRequest = {
+    bono: empleado.Bonos || 0,
+    comisiones: empleado.comisiones || 0,
+    gratificaciones: empleado.gratificaciones || 0,
+    aguinaldoProporcional: empleado.aguinaldoProporcional || 0,
+    primaVacacional: empleado.primaVacacional || 0,
+    imss: empleado.imss || 0,
+    infonavit: empleado.infonavit || 0,
+    otrasDeducciones: empleado.otrasDeducciones || 0
+  };
+
+  this.prenominaService.guardarPrenomina(
+    empleado.prenominaId,
+    this.periodoSelected!,
+    prenominaRequest
+  ).subscribe({
+    next: () => {
+      this.toastService.success(`Prenómina guardada correctamente para ${empleado.nombreEmpleado}`, 'Éxito');
+      this.prenominaService.getPrenominaPorEmpleado(empleado.prenominaId).subscribe({
+        next: (updated) => {
+          empleado.isr = updated.isr;
+          empleado.totalNeto = this.calculateTotalNeto(empleado);
+          this.isSaving[empleadoKey] = false;
+        },
+        error: (err) => {
+          console.error('Error al obtener prenómina actualizada:', err);
+          this.isSaving[empleadoKey] = false;
         }
-      },
-      error: (error) => {
-        console.error('Error al cargar empleados:', error);
-        this.toastService.error('Error al cargar empleados para el período seleccionado', 'Error');
-        this.isLoading = false;
-      }
-    });
-  }
+      });
+    },
+    error: (error) => {
+      console.error('Error al guardar prenómina:', error);
+      this.toastService.error(`Error al guardar la prenómina de ${empleado.nombreEmpleado}`, 'Error');
+      this.isSaving[empleadoKey] = false;
+    }
+  });
+}
 
-  guardarPrenomina(empleado: RegistroPrenomina): void {
-    const empleadoKey = empleado.codigoEmpleado;
-    
-    if (this.isSaving[empleadoKey] || !this.periodoSelected) return;
 
-    this.isSaving[empleadoKey] = true;
 
-    const prenominaRequest: PrenominaRequest = {
-      bono: empleado.Bonos || 0,
-      comisiones: empleado.comisiones || 0,
-      gratificaciones: empleado.gratificaciones || 0,
-      aguinaldoProporcional: empleado.aguinaldoProporcional || 0,
-      primaVacacional: empleado.primaVacacional || 0,
-      imss: empleado.imss || 0,
-      infonavit: empleado.infonavit || 0,
-      otrasDeducciones: empleado.otrasDeducciones || 0
-    };
-
-    // Necesitamos el ID numérico del empleado para la API
-    const empleadoId = this.extractEmpleadoId(empleado.codigoEmpleado);
-    
-    this.prenominaService.guardarPrenomina(empleadoId, this.periodoSelected, prenominaRequest).subscribe({
-      next: () => {
-        this.toastService.success(
-          `Prenómina guardada correctamente para ${empleado.nombreEmpleado}`, 
-          'Éxito'
-        );
-        this.isSaving[empleadoKey] = false;
-        
-        // Recargar datos para mostrar los valores actualizados
-        this.selectTab(this.periodoSelected!);
-      },
-      error: (error) => {
-        console.error('Error al guardar prenómina:', error);
-        this.toastService.error(
-          `Error al guardar la prenómina de ${empleado.nombreEmpleado}`, 
-          'Error'
-        );
-        this.isSaving[empleadoKey] = false;
-      }
-    });
-  }
 
   private extractEmpleadoId(codigoEmpleado: string): number {
-    // Asumiendo que el código del empleado contiene o es un ID numérico
-    // Ajusta esta lógica según tu formato de código de empleado
     const match = codigoEmpleado.match(/\d+/);
     return match ? parseInt(match[0], 10) : 0;
   }
@@ -142,7 +172,6 @@ periodos: any[] = [];
                     (empleado.gratificaciones || 0) + 
                     (empleado.aguinaldoProporcional || 0) + 
                     (empleado.primaVacacional || 0);
-
     const deducciones = (empleado.imss || 0) + 
                        (empleado.infonavit || 0) + 
                        (empleado.otrasDeducciones || 0) + 
@@ -176,7 +205,6 @@ periodos: any[] = [];
     const value = parseFloat(event.target.value) || 0;
     (empleado as any)[field] = value;
     
-    // Recalcular total neto si es necesario
     empleado.totalNeto = this.calculateTotalNeto(empleado);
   }
 

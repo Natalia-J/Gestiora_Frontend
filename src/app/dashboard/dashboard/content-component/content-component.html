@@ -13,8 +13,8 @@
   <app-dias-horas *ngIf="vistaActiva === 'dias-horas'"></app-dias-horas>
   <app-percepciones *ngIf="vistaActiva === 'percepciones'"></app-percepciones>
   <app-deducciones *ngIf="vistaActiva === 'deducciones'"></app-deducciones>
-  <app-prenomina *ngIf="vistaActiva === 'prenomina'"></app-prenomina>
-  <app-nomina *ngIf="vistaActiva === 'nomina'"></app-nomina>
+  <app-prenomina *ngIf="vistaActiva === 'prenomina'" (cambiarVista)="cambiarVista($event)"></app-prenomina>
+  <app-nomina *ngIf="vistaActiva === 'nomina'" [idEmployee]="idEmployee"></app-nomina>
   <app-reportes *ngIf="vistaActiva === 'reportes'"></app-reportes>
   <app-turnos *ngIf="vistaActiva === 'turnos'" (cerrar)="vistaActiva = ''"></app-turnos>
   <app-puestos *ngIf="vistaActiva === 'puestos'" (cerrar)="vistaActiva = ''"></app-puestos>

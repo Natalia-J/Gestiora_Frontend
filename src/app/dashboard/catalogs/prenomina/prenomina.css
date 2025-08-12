@@ -1,42 +1,6 @@
-/* ===== VARIABLES CSS ===== */
-:root {
-  --prenomina-primary: #2d2b5e;
-  --prenomina-primary-light: #3e3b73;
-  --prenomina-primary-dark: #1f1d42;
-  --prenomina-secondary: #f8f9fa;
-  --prenomina-accent: #007bff;
-  --prenomina-success: #28a745;
-  --prenomina-warning: #ffc107;
-  --prenomina-danger: #dc3545;
-  --prenomina-light: #ffffff;
-  --prenomina-dark: #343a40;
-  --prenomina-gray-100: #f8f9fa;
-  --prenomina-gray-200: #e9ecef;
-  --prenomina-gray-300: #dee2e6;
-  --prenomina-gray-400: #ced4da;
-  --prenomina-gray-500: #adb5bd;
-  --prenomina-gray-600: #6c757d;
-  --prenomina-gray-700: #495057;
-  --prenomina-gray-800: #343a40;
-  --prenomina-gray-900: #212529;
-
-  --prenomina-shadow-sm: 0 2px 4px rgba(45, 43, 94, 0.08);
-  --prenomina-shadow-md: 0 4px 12px rgba(45, 43, 94, 0.12);
-  --prenomina-shadow-lg: 0 8px 24px rgba(45, 43, 94, 0.16);
-  --prenomina-shadow-xl: 0 16px 32px rgba(45, 43, 94, 0.20);
-
-  --prenomina-border-radius-sm: 4px;
-  --prenomina-border-radius-md: 8px;
-  --prenomina-border-radius-lg: 12px;
-  --prenomina-border-radius-xl: 16px;
-
-  --prenomina-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  --prenomina-transition-fast: all 0.15s ease-in-out;
-}
-
 /* ===== MAIN CONTAINER ===== */
 .prenomina {
-  background: var(--prenomina-secondary);
+  background: #f8f9fa;
   min-height: 100vh;
   padding: 1.5rem;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -44,12 +8,12 @@
 
 /* ===== HEADER SECTION ===== */
 .prenomina__header {
-  background: var(--prenomina-light);
-  border-radius: var(--prenomina-border-radius-lg);
+  background: #2d2b5e;
+  border-radius: 12px;
   padding: 2rem;
   margin-bottom: 2rem;
-  box-shadow: var(--prenomina-shadow-sm);
-  border: 1px solid var(--prenomina-gray-200);
+  box-shadow: 0 2px 4px rgba(45, 43, 94, 0.08);
+  border: 1px solid #e9ecef;
 }
 
 .prenomina__title-section {
@@ -59,7 +23,7 @@
 .prenomina__title {
   font-size: 2.25rem;
   font-weight: 700;
-  color: var(--prenomina-primary);
+  color: #fefeff;
   margin: 0 0 0.75rem 0;
   display: flex;
   align-items: center;
@@ -69,12 +33,12 @@
 
 .prenomina__title-icon {
   font-size: 2rem;
-  color: var(--prenomina-accent);
+  color: #f9fafb;
 }
 
 .prenomina__subtitle {
   font-size: 1.125rem;
-  color: var(--prenomina-gray-600);
+  color: #ffffff;
   margin: 0;
   font-weight: 400;
   line-height: 1.6;
@@ -85,11 +49,11 @@
   display: flex;
   gap: 0.5rem;
   margin-bottom: 2rem;
-  background: var(--prenomina-light);
+  background: #ffffff;
   padding: 0.5rem;
-  border-radius: var(--prenomina-border-radius-lg);
-  box-shadow: var(--prenomina-shadow-sm);
-  border: 1px solid var(--prenomina-gray-200);
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(45, 43, 94, 0.08);
+  border: 1px solid #e9ecef;
 }
 
 .prenomina__tab {
@@ -97,9 +61,9 @@
   padding: 1rem 1.5rem;
   background: transparent;
   border: none;
-  border-radius: var(--prenomina-border-radius-md);
+  border-radius: 8px;
   cursor: pointer;
-  transition: var(--prenomina-transition);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -112,9 +76,9 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, var(--prenomina-primary) 0%, var(--prenomina-primary-light) 100%);
+  background: linear-gradient(135deg, #2d2b5e 0%, #3e3b73 100%);
   opacity: 0;
-  transition: var(--prenomina-transition);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 1;
 }
 
@@ -131,16 +95,16 @@
   z-index: 2;
   font-weight: 600;
   font-size: 1rem;
-  color: var(--prenomina-gray-700);
-  transition: var(--prenomina-transition);
+  color: #495057;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .prenomina__tab:hover .prenomina__tab-text {
-  color: var(--prenomina-primary);
+  color: #2d2b5e;
 }
 
 .prenomina__tab--active .prenomina__tab-text {
-  color: var(--prenomina-light);
+  color: #ffffff;
 }
 
 /* ===== LOADING STATE ===== */
@@ -150,23 +114,23 @@
   align-items: center;
   justify-content: center;
   padding: 4rem 2rem;
-  background: var(--prenomina-light);
-  border-radius: var(--prenomina-border-radius-lg);
-  box-shadow: var(--prenomina-shadow-sm);
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(45, 43, 94, 0.08);
 }
 
 .prenomina__loading-spinner {
   width: 40px;
   height: 40px;
-  border: 4px solid var(--prenomina-gray-300);
-  border-top: 4px solid var(--prenomina-primary);
+  border: 4px solid #dee2e6;
+  border-top: 4px solid #2d2b5e;
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin-bottom: 1rem;
 }
 
 .prenomina__loading-text {
-  color: var(--prenomina-gray-600);
+  color: #6c757d;
   font-size: 1.125rem;
   margin: 0;
 }
@@ -178,10 +142,10 @@
 
 /* ===== TABLE SECTION ===== */
 .prenomina__table-container {
-  background: var(--prenomina-light);
-  border-radius: var(--prenomina-border-radius-lg);
-  box-shadow: var(--prenomina-shadow-md);
-  border: 1px solid var(--prenomina-gray-200);
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(45, 43, 94, 0.12);
+  border: 1px solid #e9ecef;
   overflow: hidden;
 }
 
@@ -198,7 +162,7 @@
 }
 
 .prenomina__table-head {
-  background: linear-gradient(135deg, var(--prenomina-primary) 0%, var(--prenomina-primary-light) 100%);
+  background: linear-gradient(135deg, #2d2b5e 0%, #3e3b73 100%);
 }
 
 .prenomina__table-row--header {
@@ -208,13 +172,13 @@
 .prenomina__table-cell {
   padding: 1rem 0.75rem;
   text-align: left;
-  border-bottom: 1px solid var(--prenomina-gray-200);
+  border-bottom: 1px solid #e9ecef;
   vertical-align: middle;
   position: relative;
 }
 
 .prenomina__table-cell--header {
-  color: var(--prenomina-light);
+  color: #ffffff;
   font-weight: 600;
   font-size: 0.875rem;
   text-transform: uppercase;
@@ -225,7 +189,7 @@
 
 .prenomina__table-cell--sticky {
   position: sticky;
-  background: var(--prenomina-light);
+  background: #ffffff;
   z-index: 10;
 }
 
@@ -240,15 +204,15 @@
 }
 
 .prenomina__table-head .prenomina__table-cell--sticky {
-  background: var(--prenomina-primary);
+  background: #2d2b5e;
 }
 
 .prenomina__table-row--even {
-  background: var(--prenomina-gray-100);
+  background: #f8f9fa;
 }
 
 .prenomina__table-row--even .prenomina__table-cell--sticky {
-  background: var(--prenomina-gray-100);
+  background: #f8f9fa;
 }
 
 .prenomina__table-cell--actions {
@@ -260,10 +224,10 @@
 /* ===== TABLE CONTENT STYLES ===== */
 .prenomina__code-badge {
   display: inline-block;
-  background: var(--prenomina-primary);
-  color: var(--prenomina-light);
+  background: #2d2b5e;
+  color: #ffffff;
   padding: 0.375rem 0.75rem;
-  border-radius: var(--prenomina-border-radius-sm);
+  border-radius: 4px;
   font-weight: 600;
   font-size: 0.8125rem;
   letter-spacing: 0.5px;
@@ -271,20 +235,20 @@
 
 .prenomina__name-text {
   font-weight: 600;
-  color: var(--prenomina-gray-800);
+  color: #343a40;
   display: block;
   line-height: 1.4;
 }
 
 .prenomina__readonly-value {
-  color: var(--prenomina-gray-600);
+  color: #6c757d;
   font-weight: 500;
   font-size: 0.875rem;
 }
 
 .prenomina__total-value {
   font-weight: 700;
-  color: var(--prenomina-success);
+  color: #28a745;
   font-size: 0.875rem;
 }
 
@@ -292,28 +256,28 @@
 .prenomina__input {
   width: 100%;
   padding: 0.5rem 0.75rem;
-  border: 2px solid var(--prenomina-gray-300);
-  border-radius: var(--prenomina-border-radius-sm);
+  border: 2px solid #dee2e6;
+  border-radius: 4px;
   font-size: 0.875rem;
-  background: var(--prenomina-light);
-  color: var(--prenomina-gray-800);
-  transition: var(--prenomina-transition-fast);
+  background: #ffffff;
+  color: #343a40;
+  transition: all 0.15s ease-in-out;
   font-family: inherit;
 }
 
 .prenomina__input:focus {
   outline: none;
-  border-color: var(--prenomina-primary);
+  border-color: #2d2b5e;
   box-shadow: 0 0 0 3px rgba(45, 43, 94, 0.1);
-  background: var(--prenomina-light);
+  background: #ffffff;
 }
 
 .prenomina__input:hover {
-  border-color: var(--prenomina-gray-400);
+  border-color: #ced4da;
 }
 
 .prenomina__input::placeholder {
-  color: var(--prenomina-gray-500);
+  color: #adb5bd;
   font-style: italic;
 }
 
@@ -323,14 +287,14 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.625rem 1rem;
-  background: linear-gradient(135deg, var(--prenomina-success) 0%, #34ce57 100%);
-  color: var(--prenomina-light);
+  background: linear-gradient(135deg, #28a745 0%, #34ce57 100%);
+  color: #ffffff;
   border: none;
-  border-radius: var(--prenomina-border-radius-sm);
+  border-radius: 4px;
   font-size: 0.8125rem;
   font-weight: 600;
   cursor: pointer;
-  transition: var(--prenomina-transition);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   text-decoration: none;
   white-space: nowrap;
   position: relative;
@@ -354,12 +318,12 @@
 
 .prenomina__save-btn:hover {
   transform: translateY(-1px);
-  box-shadow: var(--prenomina-shadow-md);
+  box-shadow: 0 4px 12px rgba(45, 43, 94, 0.12);
 }
 
 .prenomina__save-btn:active {
   transform: translateY(0);
-  box-shadow: var(--prenomina-shadow-sm);
+  box-shadow: 0 2px 4px rgba(45, 43, 94, 0.08);
 }
 
 .prenomina__save-btn:disabled {
@@ -369,12 +333,114 @@
 }
 
 .prenomina__save-btn--loading {
-  background: var(--prenomina-gray-500);
+  background: #adb5bd;
   cursor: wait;
 }
 
 .prenomina__save-btn-text {
   font-size: 0.8125rem;
+}
+
+/* ===== TABLE FOOTER ===== */
+.prenomina__table-footer {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 2rem;
+  margin-top: 2rem;
+  box-shadow: 0 2px 4px rgba(45, 43, 94, 0.08);
+  border: 1px solid #e9ecef;
+}
+
+.prenomina__footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.prenomina__summary {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.prenomina__summary-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.prenomina__summary-label {
+  font-size: 0.875rem;
+  color: #6c757d;
+  font-weight: 500;
+}
+
+.prenomina__summary-value {
+  font-size: 1.125rem;
+  color: #343a40;
+  font-weight: 600;
+}
+
+.prenomina__summary-value--amount {
+  color: #28a745;
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
+.prenomina__generate-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, #2d2b5e 0%, #3e3b73 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+}
+
+.prenomina__generate-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.prenomina__generate-btn:hover::before {
+  left: 100%;
+}
+
+.prenomina__generate-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(45, 43, 94, 0.16);
+}
+
+.prenomina__generate-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 12px rgba(45, 43, 94, 0.12);
+}
+
+.prenomina__generate-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.prenomina__generate-btn-text {
+  font-size: 1rem;
 }
 
 /* ===== EMPTY STATE ===== */
@@ -384,17 +450,17 @@
   align-items: center;
   justify-content: center;
   padding: 4rem 2rem;
-  background: var(--prenomina-light);
-  border-radius: var(--prenomina-border-radius-lg);
-  box-shadow: var(--prenomina-shadow-sm);
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(45, 43, 94, 0.08);
   text-align: center;
-  border: 2px dashed var(--prenomina-gray-300);
+  border: 2px dashed #dee2e6;
 }
 
 .prenomina__empty-icon {
   width: 80px;
   height: 80px;
-  background: var(--prenomina-gray-200);
+  background: #e9ecef;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -404,19 +470,19 @@
 
 .prenomina__empty-icon i {
   font-size: 2rem;
-  color: var(--prenomina-gray-500);
+  color: #adb5bd;
 }
 
 .prenomina__empty-title {
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--prenomina-gray-800);
+  color: #343a40;
   margin: 0 0 0.75rem 0;
 }
 
 .prenomina__empty-description {
   font-size: 1rem;
-  color: var(--prenomina-gray-600);
+  color: #6c757d;
   margin: 0;
   line-height: 1.6;
   max-width: 500px;
@@ -486,6 +552,21 @@
     padding: 0.5rem 0.75rem;
     font-size: 0.75rem;
   }
+
+  .prenomina__footer-content {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+
+  .prenomina__summary {
+    justify-content: center;
+  }
+
+  .prenomina__generate-btn {
+    align-self: center;
+    padding: 0.875rem 1.5rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -519,6 +600,15 @@
   .prenomina__name-text {
     font-size: 0.8125rem;
   }
+
+  .prenomina__summary {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .prenomina__summary-item {
+    text-align: center;
+  }
 }
 
 /* ===== ACCESSIBILITY ===== */
@@ -544,7 +634,8 @@
   }
   
   .prenomina__tabs,
-  .prenomina__save-btn {
+  .prenomina__save-btn,
+  .prenomina__generate-btn {
     display: none;
   }
   
@@ -562,11 +653,11 @@
 /* ===== HIGH CONTRAST MODE ===== */
 @media (prefers-contrast: high) {
   .prenomina__table-cell {
-    border-bottom: 2px solid var(--prenomina-gray-800);
+    border-bottom: 2px solid #343a40;
   }
   
   .prenomina__input:focus {
-    border-color: var(--prenomina-gray-900);
+    border-color: #212529;
     box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.3);
   }
 }

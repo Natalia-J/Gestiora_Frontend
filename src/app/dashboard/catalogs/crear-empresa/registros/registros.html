@@ -1,130 +1,35 @@
-<!-- registros.component.html -->
-<div class="registros-container">
-  <!-- Loading spinner -->
-  <div *ngIf="isLoading" class="loading-spinner">
-    Cargando catálogos...
+<form [formGroup]="formDatosRegistro" (ngSubmit)="onSubmit()">
+
+  <div class="form-group">
+    <label for="regimenEmpresa">Régimen fiscal *</label>
+    <select id="regimenEmpresa" formControlName="regimenEmpresa" required>
+      <option value="" disabled>Selecciona un régimen</option>
+      <option *ngFor="let regimen of rregimenEmpresa" [value]="regimen.id">{{ regimen.name }}</option>
+    </select>
+    <div *ngIf="formDatosRegistro.get('regimenEmpresa')?.touched && formDatosRegistro.get('regimenEmpresa')?.invalid" class="error">
+      Selecciona un régimen válido.
+    </div>
   </div>
 
-  <!-- Formulario principal -->
-  <form [formGroup]="formDatosRegistro" (ngSubmit)="onSubmit()" *ngIf="!isLoading">
-    
-    <!-- Sección de Datos de Registro -->
-    <div class="form-section">
-      <h3 class="section-title">Datos de Registro</h3>
-      
-      <!-- Régimen fiscal -->
-      <div class="form-group">
-        <label for="regimenEmpresa">Régimen fiscal *</label>
-        <select 
-          id="regimenEmpresa" 
-          formControlName="regimenEmpresa" 
-          [class.error]="isFieldInvalid('regimenEmpresa')"
-          required>
-          <option value="" disabled>Selecciona un régimen</option>
-          <option *ngFor="let regimen of regimenEmpresa" [value]="regimen.id">
-            {{ regimen.name }}
-          </option>
-        </select>
-        <div *ngIf="isFieldInvalid('regimenEmpresa')" class="error-message">
-          {{ getFieldError('regimenEmpresa') }}
-        </div>
-      </div>
-
-      <!-- Registro patronal IMSS -->
-      <div class="form-group">
-        <label for="registroPatronalIMSS">Registro patronal del IMSS *</label>
-        <input 
-          id="registroPatronalIMSS" 
-          type="text" 
-          formControlName="registroPatronalIMSS"
-          [class.error]="isFieldInvalid('registroPatronalIMSS')"
-          placeholder="Ingresa el registro patronal" />
-        <div *ngIf="isFieldInvalid('registroPatronalIMSS')" class="error-message">
-          {{ getFieldError('registroPatronalIMSS') }}
-        </div>
-      </div>
-
-      <!-- RFC -->
-      <div class="form-group">
-        <label for="rfc">RFC *</label>
-        <input 
-          id="rfc" 
-          type="text" 
-          formControlName="rfc"
-          [class.error]="isFieldInvalid('rfc')"
-          placeholder="ABCD123456ABC"
-          maxlength="13" />
-        <div *ngIf="isFieldInvalid('rfc')" class="error-message">
-          {{ getFieldError('rfc') }}
-        </div>
-      </div>
-
-      <!-- Registro INFONAVIT -->
-      <div class="form-group">
-        <label for="registroInfonavit">Registro INFONAVIT</label>
-        <input 
-          id="registroInfonavit" 
-          type="text" 
-          formControlName="registroInfonavit"
-          placeholder="Opcional" />
-      </div>
+  <div class="form-group">
+    <label for="registroPatronalIMSS">Registro patronal del IMSS *</label>
+    <input id="registroPatronalIMSS" type="text" formControlName="registroPatronalIMSS" />
+    <div *ngIf="formDatosRegistro.get('registroPatronalIMSS')?.touched && formDatosRegistro.get('registroPatronalIMSS')?.invalid" class="error">
+      Este campo es obligatorio.
     </div>
+  </div>
 
-    <!-- Sección de Configuración de Período -->
-    <div class="form-section periodo-section">
-      <h3 class="section-title">Configuración de Período</h3>
-      
-      <div class="periodo-row">
-        <!-- Tipo de período -->
-        <div class="form-group periodo-dropdown">
-          <label for="periodoEmpresaId">Tipo de Período *</label>
-          <select 
-            id="periodoEmpresaId" 
-            formControlName="periodoEmpresaId"
-            [class.error]="isFieldInvalid('periodoEmpresaId')"
-            required>
-            <option value="" disabled>Selecciona un tipo de período</option>
-            <option *ngFor="let tipo of tipoPeriodo" [value]="tipo.id">
-              {{ tipo.name }}
-            </option>
-          </select>
-          <div *ngIf="isFieldInvalid('periodoEmpresaId')" class="error-message">
-            {{ getFieldError('periodoEmpresaId') }}
-          </div>
-        </div>
-
-        <!-- Fecha de inicio -->
-        <div class="form-group periodo-fecha">
-          <label for="fechaInicio">Fecha de inicio *</label>
-          <input 
-            id="fechaInicio" 
-            type="date" 
-            formControlName="fechaInicio"
-            [class.error]="isFieldInvalid('fechaInicio')"
-            required />
-          <div *ngIf="isFieldInvalid('fechaInicio')" class="error-message">
-            {{ getFieldError('fechaInicio') }}
-          </div>
-        </div>
-      </div>
+  <div class="form-group">
+    <label for="rfc">RFC *</label>
+    <input id="rfc" type="text" formControlName="rfc" />
+    <div *ngIf="formDatosRegistro.get('rfc')?.touched && formDatosRegistro.get('rfc')?.invalid" class="error">
+      Este campo es obligatorio.
     </div>
+  </div>
 
-    <!-- Botón de envío -->
-    <div class="form-actions">
-      <button 
-        type="submit" 
-        class="btn-submit"
-        [disabled]="formDatosRegistro.invalid || isSubmitting"
-        [class.loading]="isSubmitting">
-        <span *ngIf="!isSubmitting">Guardar Registro Completo</span>
-        <span *ngIf="isSubmitting">Guardando...</span>
-      </button>
-    </div>
-
-    <!-- Información de validación del formulario (opcional, para debug) -->
-    <div class="form-debug" *ngIf="false">
-      <p>Estado del formulario: {{ formDatosRegistro.valid ? 'Válido' : 'Inválido' }}</p>
-      <p>Errores: {{ formDatosRegistro.errors | json }}</p>
-    </div>
-  </form>
-</div>
+  <div class="form-group">
+    <label for="registroInfonavit">Registro INFONAVIT</label>
+    <input id="registroInfonavit" type="text" formControlName="registroInfonavit" />
+  </div>
+  
+</form>

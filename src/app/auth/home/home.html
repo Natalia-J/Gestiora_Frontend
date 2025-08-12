@@ -1,34 +1,26 @@
-<!-- home.component.html -->
-<div class="hero-container">
-  <!-- Fondo difuminado solo en la mitad izquierda -->
-  <div class="blur-overlay"></div>
+<header class="app-header">
+  <nav class="app-nav">
+    <a [routerLink]="['/login']" class="app-nav-link">Login</a>
+    <a [routerLink]="['/register']" class="app-nav-link">Register</a>
+  </nav>
+</header>
 
-  <div class="left-panel">
-    <div class="logo">LOGO</div>
-    <div class="content">
-      <p class="subtitle">SOLUCIONES DIGITALES</p>
-      <h1 class="main-title">GESTI<span class="highlight">ORA</span></h1>
-      <p class="description">
-        Gestiora es la plataforma pensada para ayudarte a organizar y optimizar tu flujo de trabajo.
-      </p>
-      <button class="learn-btn">Descubrir más</button>
-    </div>
-  </div>
+<main class="app-container">
+  <section class="app-left-panel">
+    <p class="app-subtitle">SOLUCIONES DIGITALES</p>
+    <h1 class="app-title">GESTI<span class="app-highlight">ORA</span></h1>
+    <p class="app-description">
+      Gestiora es la plataforma pensada para ayudarte a organizar y optimizar tu flujo de trabajo.
+    </p>
+  </section>
 
-  <div class="right-panel">
-    <nav class="navigation">
-        <a [routerLink]="['/login']" class="nav-link">Login</a>
-        <a [routerLink]="['/register']" class="nav-link">Register</a>
-    </nav>
-    <div class="features-box">
-      <h2>¿Qué ofrece Gestiora?</h2>
-      <ul>
-        <li>✔ Gestión de tareas</li>
-        <li>✔ Reportes personalizados</li>
-        <li>✔ Control de usuarios</li>
-        <li>✔ Interfaz intuitiva</li>
-      </ul>
-      <button class="start-btn">Comenzar</button>
-    </div>
-  </div>
-</div>
+  <section class="app-right-panel">
+    <h2 class="app-features-title">¿Qué ofrece Gestiora?</h2>
+    <ul class="app-features-list">
+      <li>Gestión de tareas</li>
+      <li>Reportes personalizados</li>
+      <li>Control de usuarios</li>
+      <li>Interfaz intuitiva</li>
+    </ul>
+  </section>
+</main>

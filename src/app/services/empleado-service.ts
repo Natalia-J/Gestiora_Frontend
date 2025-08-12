@@ -29,7 +29,7 @@ export class EmpleadoService {
     return this.http.get(`${this.apiUrl}/${codigo}`);
   }
 
-    obtenerPorId(id: number): Observable<any> {
+  obtenerPorId(id: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/obtener/${id}`);
   }
 

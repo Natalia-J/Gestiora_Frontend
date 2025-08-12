@@ -27,6 +27,8 @@ export interface CatalogosResponse {
   baseDePago: CatalogoItem[];
   baseCotizacion:CatalogoItem[];
   inconsistencias:CatalogoItem[];
+  tipoPeriodoEmpleado: CatalogoItem[];
+  diaSemana: CatalogoItem[];
 
 }
 

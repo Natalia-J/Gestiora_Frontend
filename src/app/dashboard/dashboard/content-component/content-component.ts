@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { DepartamentoComponent } from '../../catalogs/departamento/departamento';
 import { DiasHoras } from '../../catalogs/dias-horas/dias-horas';
-import { Prenomina } from '../../catalogs/prenomina/prenomina';
+import { NominaView, Prenomina } from '../../catalogs/prenomina/prenomina';
 import { Nomina } from '../../catalogs/nomina/nomina';
 import { Reportes } from '../../catalogs/reportes/reportes';
 import { Percepciones } from '../../catalogs/percepciones/percepciones';
@@ -21,6 +21,7 @@ import { DepartamentoItem } from '../../../services/departamento-service';
 })
 export class ContentComponent {
   @Input() vistaActiva: string = '';
+  idEmployee! :number
   departamentoSeleccionadoInterno?: DepartamentoItem;
 
   mostrarVista(vista: string, departamento?: DepartamentoItem) {
@@ -28,6 +29,11 @@ export class ContentComponent {
     if (departamento) {
       this.departamentoSeleccionadoInterno = departamento;
     }
+  }
+
+  cambiarVista(event: NominaView){
+    this.idEmployee = event.idEmployee
+      this.vistaActiva = event.vista
   }
   
 

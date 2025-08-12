@@ -167,5 +167,4 @@ export interface Departamento {
   codigo: string;
   nombreDepartamento: string;
   empleados: Empleado[];
-  empresa: Empresa;
 }

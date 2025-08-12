@@ -131,7 +131,7 @@
                         class="form-field__select"
                         [class.form-field__select--error]="isFieldInvalid('tipoContrato')">
                   <option value="">Seleccione un tipo</option>
-                  <option *ngFor="let tipo of catalogos?.tipoContratoEmpleado" [value]="tipo.id">
+                  <option *ngFor="let tipo of catalogos?.tipoContratoEmpleado" [ngValue]="tipo.id">
                     {{ tipo.name }}
                   </option>
                 </select>
@@ -148,7 +148,7 @@
                         class="form-field__select"
                         [class.form-field__select--error]="isFieldInvalid('tipoPeriodo')">
                   <option value="">Seleccione un periodo</option>
-                  <option *ngFor="let periodo of catalogos?.tipoPeriodo" [value]="periodo.id">
+                  <option *ngFor="let periodo of catalogos?.tipoPeriodoEmpleado" [ngValue]="periodo.id">
                     {{ periodo.name }}
                   </option>
                 </select>
@@ -184,7 +184,7 @@
                         class="form-field__select"
                         [class.form-field__select--error]="isFieldInvalid('baseCotizacion')">
                   <option value="">Seleccione una base de cotización</option>
-                  <option *ngFor="let base of catalogos?.baseCotizacion" [value]="base.id">
+                  <option *ngFor="let base of catalogos?.baseCotizacion" [ngValue]="base.id">
                     {{ base.name }}
                   </option>
                 </select>
@@ -206,7 +206,7 @@
                         class="form-field__select"
                         [class.form-field__select--error]="isFieldInvalid('departamento')">
                   <option value="">Seleccione un departamento</option>
-                  <option *ngFor="let dept of departamentos" [value]="dept.id">
+                  <option *ngFor="let dept of departamentos" [ngValue]="dept.id">
                     {{ dept.nombreDepartamento }}
                   </option>
                 </select>
@@ -223,7 +223,7 @@
                         class="form-field__select"
                         [class.form-field__select--error]="isFieldInvalid('puesto')">
                   <option value="">Seleccione un puesto</option>
-                  <option *ngFor="let puesto of puestos" [value]="puesto.puestoId">
+                  <option *ngFor="let puesto of puestos" [ngValue]="puesto.puestoId">
                     {{ puesto.nombrePuesto }}
                   </option>
                 </select>
@@ -240,7 +240,7 @@
                         class="form-field__select"
                         [class.form-field__select--error]="isFieldInvalid('sindicato')">
                   <option value="">Seleccione un sindicato</option>
-                  <option *ngFor="let sindicato of catalogos?.sindicatoEmpleado" [value]="sindicato.id">
+                  <option *ngFor="let sindicato of catalogos?.sindicatoEmpleado" [ngValue]="sindicato.id">
                     {{ sindicato.name }}
                   </option>
                 </select>
@@ -257,7 +257,7 @@
                         class="form-field__select"
                         [class.form-field__select--error]="isFieldInvalid('tipoPrestacion')">
                   <option value="">Seleccione un tipo</option>
-                  <option *ngFor="let prestacion of catalogos?.tipoPrestacionEmpleado" [value]="prestacion.id">
+                  <option *ngFor="let prestacion of catalogos?.tipoPrestacionEmpleado" [ngValue]="prestacion.id">
                     {{ prestacion.name }}
                   </option>
                 </select>
@@ -274,7 +274,7 @@
                         class="form-field__select"
                         [class.form-field__select--error]="isFieldInvalid('baseDePago')">
                   <option value="">Seleccione una base</option>
-                  <option *ngFor="let base of catalogos?.baseDePago" [value]="base.id">
+                  <option *ngFor="let base of catalogos?.baseDePago" [ngValue]="base.id">
                     {{ base.name }}
                   </option>
                 </select>
@@ -291,7 +291,7 @@
                         class="form-field__select"
                         [class.form-field__select--error]="isFieldInvalid('metodoPago')">
                   <option value="">Seleccione un método</option>
-                  <option *ngFor="let metodo of catalogos?.metodoPagoEmpleado" [value]="metodo.id">
+                  <option *ngFor="let metodo of catalogos?.metodoPagoEmpleado" [ngValue]="metodo.id">
                     {{ metodo.name }}
                   </option>
                 </select>
@@ -309,7 +309,7 @@
                         class="form-field__select"
                         [class.form-field__select--error]="isFieldInvalid('turnoTrabajo')">
                   <option value="">Seleccione un turno</option>
-                  <option *ngFor="let turno of turnos" [value]="turno.turnoid">
+                  <option *ngFor="let turno of turnos" [ngValue]="turno.turnoId">
                     {{ turno.nombreTurno }}
                   </option>
                 </select>
@@ -326,7 +326,7 @@
                         class="form-field__select"
                         [class.form-field__select--error]="isFieldInvalid('zonaSalario')">
                   <option value="">Seleccione una zona</option>
-                  <option *ngFor="let zona of catalogos?.zonaSalarioGeneral" [value]="zona.id">
+                  <option *ngFor="let zona of catalogos?.zonaSalarioGeneral" [ngValue]="zona.id">
                     {{ zona.name }}
                   </option>
                 </select>
@@ -343,7 +343,7 @@
                         class="form-field__select"
                         [class.form-field__select--error]="isFieldInvalid('tipoRegimen')">
                   <option value="">Seleccione un régimen</option>
-                  <option *ngFor="let regimen of catalogos?.regimenEmpleado" [value]="regimen.id">
+                  <option *ngFor="let regimen of catalogos?.regimenEmpleado" [ngValue]="regimen.id">
                     {{ regimen.name }}
                   </option>
                 </select>
@@ -437,7 +437,7 @@
                         class="form-field__select"
                         [class.form-field__select--error]="isFieldInvalid('estadoCivil')">
                   <option value="">Seleccione estado civil</option>
-                  <option *ngFor="let estado of catalogos?.estadoCivil" [value]="estado.id">
+                  <option *ngFor="let estado of catalogos?.estadoCivil" [ngValue]="estado.id">
                     {{ estado.name }}
                   </option>
                 </select>
@@ -454,7 +454,7 @@
                         class="form-field__select"
                         [class.form-field__select--error]="isFieldInvalid('genero')">
                   <option value="">Seleccione género</option>
-                  <option *ngFor="let genero of catalogos?.genero" [value]="genero.id">
+                  <option *ngFor="let genero of catalogos?.genero" [ngValue]="genero.id">
                     {{ genero.name }}
                   </option>
                 </select>
@@ -484,7 +484,7 @@
                         class="form-field__select"
                         [class.form-field__select--error]="isFieldInvalid('entidadFederativa')">
                   <option value="">Seleccione entidad</option>
-                  <option *ngFor="let entidad of catalogos?.entidadFederativa" [value]="entidad.id">
+                  <option *ngFor="let entidad of catalogos?.entidadFederativa" [ngValue]="entidad.id">
                     {{ entidad.name }}
                   </option>
                 </select>

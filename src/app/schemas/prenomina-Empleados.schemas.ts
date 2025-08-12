@@ -1,6 +1,6 @@
-// ===== INTERFACES PARA PRENÓMINA =====
 
 export interface RegistroPrenomina {
+  prenominaId:number;
   codigoEmpleado: string;
   nombreEmpleado: string;
   sueldoBase: number;
@@ -76,7 +76,7 @@ export interface CampoConfiguracion {
   };
 }
 
-export const CONFIGURACION_CAMPOS: Record<keyof Omit<RegistroPrenomina, 'codigoEmpleado' | 'nombreEmpleado'>, CampoConfiguracion> = {
+export const CONFIGURACION_CAMPOS: Record<keyof Omit<RegistroPrenomina, 'prenominaId' | 'codigoEmpleado' | 'nombreEmpleado' | 'id'>, CampoConfiguracion> = {
   sueldoBase: {
     nombre: 'Sueldo Base',
     editable: false,

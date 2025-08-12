@@ -100,5 +100,5 @@
  } 
 
  .sidebar.expandido ~ .contenido-principal {
-  margin-left: 230px;
+  margin-left: 0px;
 }
